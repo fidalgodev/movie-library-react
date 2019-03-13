@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import { connect } from 'react-redux';
+import { getConf } from '../actions';
 
 import Sidebar from './sidebar/Sidebar';
 import Header from './header/Header';
@@ -37,7 +39,11 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
-const App = () => {
+const App = props => {
+  useEffect(() => {
+    props.getConf();
+  }, []);
+
   return (
     <React.Fragment>
       <GlobalStyle />
@@ -51,4 +57,9 @@ const App = () => {
   );
 };
 
-export default App;
+export default connect(
+  null,
+  {
+    getConf,
+  }
+)(App);
