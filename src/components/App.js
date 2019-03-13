@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { connect } from 'react-redux';
-import { getConf } from '../actions';
+import { getConfig } from '../actions';
 
 import Sidebar from './sidebar/Sidebar';
 import Header from './header/Header';
@@ -41,7 +41,7 @@ const ContentWrapper = styled.div`
 
 const App = props => {
   useEffect(() => {
-    props.getConf();
+    props.getConfig();
   }, []);
 
   return (
@@ -60,6 +60,6 @@ const App = props => {
 export default connect(
   null,
   {
-    getConf,
+    getConfig,
   }
 )(App);
