@@ -40,10 +40,13 @@ const MainWrapper = styled.div`
   --color-primary-lighter: #b0bec5;
   --text-color: #fafafa;
   --link-color: #444;
+  --border-color: rgba(176, 190, 197, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.15);
 `;
 
 const ContentWrapper = styled.div`
   width: 100%;
+  padding: 2rem 4rem;
 `;
 
 const App = props => {

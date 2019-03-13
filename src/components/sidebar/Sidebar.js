@@ -10,9 +10,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   min-height: 100vh;
-  width: 25rem;
+  width: 28rem;
   color: var(--color-primary-dark);
-  padding: 2rem 3rem;
+  margin: 2rem 0;
 `;
 
 const Heading = styled.h2`
@@ -20,7 +20,7 @@ const Heading = styled.h2`
   font-size: 1.1rem;
   text-transform: uppercase;
   letter-spacing: -0.5px;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem 1rem;
   &:not(:first-child) {
     margin-top: 4rem;
   }
@@ -28,21 +28,9 @@ const Heading = styled.h2`
 
 const MenuWrapper = styled.div`
   width: 100%;
-  padding: 2rem 0;
+  padding: 2rem 3rem;
   position: relative;
-  &:after {
-    width: 100%;
-    position: absolute;
-    margin-left: 3rem;
-    display: block;
-    content: '';
-    top: 0;
-    left: 0;
-    height: 100%;
-    opacity: 0.2;
-    z-index: -999;
-    border-right: 2px solid var(--color-primary-lighter);
-  }
+  border-right: 1px solid var(--border-color);
 `;
 
 const Sidebar = props => {
@@ -54,6 +42,7 @@ const Sidebar = props => {
         <MenuItem title={'Popular'} />
         <MenuItem title={'Top Rated'} selected />
         <MenuItem title={'Upcoming'} />
+        <Heading>Genres</Heading>
         <Genres />
       </MenuWrapper>
     </Wrapper>

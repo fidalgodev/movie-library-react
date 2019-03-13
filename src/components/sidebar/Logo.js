@@ -7,11 +7,12 @@ const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 2rem 3rem;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  color: var(--color-primary);
 `;
 
 const Logo = () => {

@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const StyledLink = styled(Link)`
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
   font-weight: 600;
   font-size: 1.2rem;
   opacity: ${props => (props.selected ? '1' : '.6')};
@@ -18,6 +18,10 @@ const StyledLink = styled(Link)`
     props.selected
       ? 'var(--color-primary-dark)'
       : 'var(--color-primary-light)'};
+  border: 1px solid var(--border-color);
+  border: ${props =>
+    props.selected ? '1px solid var(--border-color)' : 'none'};
+  border-radius: 2rem;
   display: flex;
   align-items: center;
   text-decoration: none;

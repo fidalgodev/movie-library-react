@@ -5,29 +5,13 @@ import { getGenres } from '../../actions';
 
 import MenuItem from './MenuItem';
 
-const Heading = styled.h2`
-  font-weight: 700;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
-  margin-bottom: 1rem;
-  &:not(:first-child) {
-    margin-top: 4rem;
-  }
-`;
-
 // Component
 const Genres = ({ getGenres, genres }) => {
   useFetchGenres(getGenres);
   if (!genres) {
     return 'Loading';
   }
-  return (
-    <>
-      <Heading>Genres</Heading>
-      {renderList(genres)}
-    </>
-  );
+  return <>{renderList(genres)}</>;
 };
 
 // Render List of Genres Available
