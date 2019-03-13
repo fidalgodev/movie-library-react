@@ -24,7 +24,7 @@ html {
 }
 
 body {
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700');
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   line-height: 1.6;
@@ -33,6 +33,12 @@ body {
 
 const MainWrapper = styled.div`
   display: flex;
+  --color-primary-dark: #263238;
+  --color-primary: #37474f;
+  --color-primary-light: #546e7a;
+  --color-primary-lighter: #b0bec5;
+  --text-color: #fafafa;
+  --link-color: #444;
 `;
 
 const ContentWrapper = styled.div`
