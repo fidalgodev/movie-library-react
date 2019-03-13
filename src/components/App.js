@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getConfig } from '../actions';
 
@@ -51,15 +52,17 @@ const App = props => {
   }, []);
 
   return (
-    <React.Fragment>
-      <GlobalStyle />
-      <MainWrapper>
-        <Sidebar />
-        <ContentWrapper>
-          <Header />
-        </ContentWrapper>
-      </MainWrapper>
-    </React.Fragment>
+    <BrowserRouter>
+      <React.Fragment>
+        <GlobalStyle />
+        <MainWrapper>
+          <Sidebar />
+          <ContentWrapper>
+            <Header />
+          </ContentWrapper>
+        </MainWrapper>
+      </React.Fragment>
+    </BrowserRouter>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendar,
@@ -8,7 +9,7 @@ import {
   faDotCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
-const ItemWrapper = styled.div`
+const StyledLink = styled(Link)`
   padding: 0.5rem 1rem;
   font-weight: 600;
   font-size: 1.2rem;
@@ -19,6 +20,9 @@ const ItemWrapper = styled.div`
       : 'var(--color-primary-light)'};
   display: flex;
   align-items: center;
+  text-decoration: none;
+  width: 100%;
+  cursor: pointer;
 `;
 
 function renderIcon(title) {
@@ -36,14 +40,14 @@ function renderIcon(title) {
 
 const MenuItem = ({ title, selected }) => {
   return (
-    <ItemWrapper selected={selected}>
+    <StyledLink to="/aa" selected={selected}>
       <FontAwesomeIcon
         icon={renderIcon(title)}
         size="1x"
         style={{ marginRight: '10px' }}
       />
       {title}
-    </ItemWrapper>
+    </StyledLink>
   );
 };
 

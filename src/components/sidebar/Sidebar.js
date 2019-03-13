@@ -40,6 +40,7 @@ const MenuWrapper = styled.div`
     left: 0;
     height: 100%;
     opacity: 0.2;
+    z-index: -999;
     border-right: 2px solid var(--color-primary-lighter);
   }
 `;
