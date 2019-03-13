@@ -9,8 +9,8 @@ const LogoWrapper = styled.div`
   justify-content: center;
   padding: 2rem 3rem;
   text-transform: uppercase;
-  font-weight: 700;
-  font-size: 2rem;
+  font-weight: 300;
+  font-size: 2.5rem;
   margin-bottom: 2rem;
   color: var(--color-primary);
 `;

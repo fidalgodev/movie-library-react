@@ -11,9 +11,10 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin-right: auto;
+  letter-spacing: -0.5px;
 `;
 
 const Header = () => {
