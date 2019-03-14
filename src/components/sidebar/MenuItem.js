@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setSelectedMenu } from '../../actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendar,
@@ -43,15 +44,12 @@ function renderIcon(title) {
   }
 }
 
-const MenuItem = ({ title, selectedItem }) => {
+const MenuItem = ({ title, selectedItem, setSelectedMenu }) => {
   return (
     <StyledLink
-      to={`/${title}`}
-      selected={
-        title === selectedItem || (title === 'Popular' && !selectedItem)
-          ? true
-          : false
-      }
+      to={`/category/${title}`}
+      onClick={() => setSelectedMenu(title)}
+      selected={title === selectedItem ? true : false}
     >
       <FontAwesomeIcon
         icon={renderIcon(title)}
@@ -67,4 +65,9 @@ const mapStateToProps = ({ geral }) => {
   return { selectedItem: geral.selected };
 };
 
-export default connect(mapStateToProps)(MenuItem);
+export default connect(
+  mapStateToProps,
+  {
+    setSelectedMenu,
+  }
+)(MenuItem);

@@ -35,8 +35,7 @@ const MenuWrapper = styled.div`
   border-right: 1px solid var(--border-color);
 `;
 
-const Sidebar = ({ location, setSelectedMenu }) => {
-  useSetSelected(location, setSelectedMenu);
+const Sidebar = () => {
   return (
     <Wrapper>
       <Logo />
@@ -52,14 +51,4 @@ const Sidebar = ({ location, setSelectedMenu }) => {
   );
 };
 
-function useSetSelected(location, cb) {
-  useEffect(() => {
-    const trimmedPath = location.pathname.replace(/\//g, '');
-    cb(trimmedPath);
-  }, [location.pathname]);
-}
-
-export default connect(
-  null,
-  { setSelectedMenu }
-)(Sidebar);
+export default Sidebar;

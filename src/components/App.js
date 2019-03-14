@@ -6,7 +6,9 @@ import { getConfig } from '../actions';
 
 import Sidebar from './sidebar/Sidebar';
 import Header from './header/Header';
-import MoviesList from './MoviesList/MoviesList';
+import Home from './Home';
+import Category from './MoviesList/Category';
+import NotFound from './NotFound';
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -62,12 +64,13 @@ const App = props => {
       <React.Fragment>
         <GlobalStyle />
         <MainWrapper>
-          <Route path="/" component={Sidebar} />
+          <Sidebar />
           <ContentWrapper>
-            <Route path="/" component={Header} />
+            <Header />
             <Switch>
-              <Route path="/" exact component={MoviesList} />
-              <Route path="/:category" exact component={MoviesList} />
+              <Route path="/" exact component={Home} />
+              <Route path="/category/:name" exact component={Category} />
+              <Route component={NotFound} />
             </Switch>
           </ContentWrapper>
         </MainWrapper>
