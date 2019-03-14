@@ -6,6 +6,8 @@ export default (state = {}, action) => {
       return { ...state, base: action.payload };
     case TYPES.GET_GENRES:
       return { ...state, ...action.payload };
+    case TYPES.SELECTED_MENU:
+      return { ...state, selected: action.payload };
     default:
       return state;
   }

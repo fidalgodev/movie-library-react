@@ -18,3 +18,11 @@ export const getGenres = () => async dispatch => {
     payload: res.data,
   });
 };
+
+// Set the selected sidebar item
+export const setSelectedMenu = name => {
+  return {
+    type: TYPES.SELECTED_MENU,
+    payload: name,
+  };
+};
