@@ -5,7 +5,7 @@ import queryString from 'query-string';
 
 import { setSelectedMenu, getMoviesDiscover } from '../../actions';
 import NotFound from '../NotFound';
-import Pagination from '../pagination/Pagination';
+import Pagination from './Pagination';
 
 const MovieWrapper = styled.div`
   padding: 2rem;

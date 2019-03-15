@@ -28,7 +28,10 @@ export const setSelectedMenu = name => {
 };
 
 // Get movies genre
-export const getMoviesGenre = name => async (dispatch, getState) => {
+export const getMoviesGenre = (name, page, sort) => async (
+  dispatch,
+  getState
+) => {
   const { selected, genres } = getState().geral;
   if (!selected) {
     return;
@@ -40,6 +43,8 @@ export const getMoviesGenre = name => async (dispatch, getState) => {
   const res = await tmdbAPI.get('/discover/movie', {
     params: {
       with_genres: genreId,
+      page,
+      sort_by: sort,
     },
   });
   dispatch({

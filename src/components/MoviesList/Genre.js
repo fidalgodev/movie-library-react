@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
+import styled from 'styled-components';
+
 import { setSelectedMenu, getMoviesGenre } from '../../actions';
 import NotFound from '../NotFound';
-import styled from 'styled-components';
+import Pagination from './Pagination';
+import SortBy from './ShortBy';
 
 const MovieWrapper = styled.div`
   padding: 2rem;
@@ -15,14 +19,23 @@ const MovieImg = styled.img`
 
 // Genres Component
 // Gets geral object from State, Match from Router, Action Creators to set Selected menu and Movies from Store
-const Genre = ({ geral, match, setSelectedMenu, getMoviesGenre, movies }) => {
+const Genre = ({
+  geral,
+  match,
+  setSelectedMenu,
+  getMoviesGenre,
+  movies,
+  location,
+}) => {
+  const [sort, setsort] = useState('popularity.desc');
   const { genres, selected, base } = geral;
+  const params = queryString.parse(location.search);
 
   // Call hook to set the sidebar selected menu if valid
   useSetSelected(match.params.name, setSelectedMenu, genres);
 
   // Call hook to fetch movies of the genre
-  useFetchMoviesGenre(match.params.name, getMoviesGenre, genres);
+  useFetchMoviesGenre(match.params.name, getMoviesGenre, params, sort);
 
   // If there is no selected on state, means url used was not valid, return 404
   if (!selected) {
@@ -36,7 +49,13 @@ const Genre = ({ geral, match, setSelectedMenu, getMoviesGenre, movies }) => {
 
   // Get base URL from the geral object
   const baseUrl = base.images.base_url;
-  return <div>{renderMovies(movies.results, baseUrl)}</div>;
+  return (
+    <div>
+      <SortBy changeSort={setsort} />
+      {renderMovies(movies.results, baseUrl)}
+      <Pagination />
+    </div>
+  );
 };
 
 // Function to render list of movies
@@ -50,10 +69,10 @@ function renderMovies(movies, baseUrl) {
 }
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change
-function useFetchMoviesGenre(name, cb) {
+function useFetchMoviesGenre(name, cb, params, sort) {
   useEffect(() => {
-    cb(name);
-  }, [name]);
+    cb(name, params.page, sort);
+  }, [name, params.page, sort]);
 }
 
 // Hook to set the selected menu on the sidebar, if url is valid and genre exists on the state
