@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { getGenres } from '../../actions';
 
 import MenuItem from './MenuItem';
 
-// Component
+const LinkWrap = styled(Link)`
+  text-decoration: none;
+`;
+
+// Sidebar genres component, gets action creator to fetch the genres and the genres from the state
 const Genres = ({ getGenres, genres }) => {
   useFetchGenres(getGenres);
   if (!genres) {
@@ -17,7 +22,9 @@ const Genres = ({ getGenres, genres }) => {
 // Render List of Genres Available
 function renderList(genres) {
   return genres.map(genre => (
-    <MenuItem key={genre.id} title={genre.name} genres />
+    <LinkWrap to={`/genres/${genre.name}`}>
+      <MenuItem key={genre.id} title={genre.name} genres />
+    </LinkWrap>
   ));
 }
 
