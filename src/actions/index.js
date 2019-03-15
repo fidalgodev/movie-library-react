@@ -49,12 +49,16 @@ export const getMoviesGenre = name => async (dispatch, getState) => {
 };
 
 // Get movies discover
-export const getMoviesDiscover = name => async (dispatch, getState) => {
+export const getMoviesDiscover = (name, page) => async (dispatch, getState) => {
   const { selected } = getState().geral;
   if (!selected) {
     return;
   }
-  const res = await tmdbAPI.get(`/movie/${name}`);
+  const res = await tmdbAPI.get(`/movie/${name}`, {
+    params: {
+      page,
+    },
+  });
   dispatch({
     type: TYPES.FETCH_MOVIES_DISCOVER,
     payload: res.data,
