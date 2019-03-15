@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const LogoWrapper = styled.div`
   height: 8rem;
@@ -15,8 +16,17 @@ const LogoWrapper = styled.div`
   color: var(--color-primary);
 `;
 
+const LinkWrapper = styled(Link)`
+  width: 100%;
+  text-decoration: none;
+`;
+
 const Logo = () => {
-  return <LogoWrapper>Movies</LogoWrapper>;
+  return (
+    <LinkWrapper to="/">
+      <LogoWrapper>Movies</LogoWrapper>;
+    </LinkWrapper>
+  );
 };
 
 export default Logo;

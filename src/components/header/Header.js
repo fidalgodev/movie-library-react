@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import SearchBar from './SearchBar';
@@ -17,13 +18,17 @@ const Title = styled.h1`
   letter-spacing: -0.5px;
 `;
 
-const Header = () => {
+const Header = ({ selected }) => {
   return (
     <Wrapper>
-      <Title>Top Rated</Title>
+      <Title>{selected}</Title>
       <SearchBar />
     </Wrapper>
   );
 };
 
-export default Header;
+const mapStateToProps = ({ geral }) => {
+  return { selected: geral.selected };
+};
+
+export default connect(mapStateToProps)(Header);

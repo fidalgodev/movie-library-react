@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Logo from './Logo';
 import Genres from './Genres';
@@ -35,15 +36,25 @@ const MenuWrapper = styled.div`
   border-right: 1px solid var(--border-color);
 `;
 
+const LinkWrap = styled(Link)`
+  text-decoration: none;
+`;
+
 const Sidebar = () => {
   return (
     <Wrapper>
       <Logo />
       <MenuWrapper>
         <Heading>Discover</Heading>
-        <MenuItem title={'Popular'} />
-        <MenuItem title={'Top Rated'} />
-        <MenuItem title={'Upcoming'} />
+        <LinkWrap to="/discover/Popular">
+          <MenuItem title={'Popular'} />
+        </LinkWrap>
+        <LinkWrap to="/discover/Top Rated">
+          <MenuItem title={'Top Rated'} />
+        </LinkWrap>
+        <LinkWrap to="/discover/Upcoming">
+          <MenuItem title={'Upcoming'} />
+        </LinkWrap>
         <Heading>Genres</Heading>
         <Genres />
       </MenuWrapper>

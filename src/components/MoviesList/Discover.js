@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setSelectedMenu, getMoviesGenre } from '../../actions';
+import { setSelectedMenu, getMoviesDiscover } from '../../actions';
 import NotFound from '../NotFound';
 import styled from 'styled-components';
 
@@ -13,16 +13,20 @@ const MovieImg = styled.img`
   height: auto;
 `;
 
-// Genres Component
-// Gets geral object from State, Match from Router, Action Creators to set Selected menu and Movies from Store
-const Genre = ({ geral, match, setSelectedMenu, getMoviesGenre, movies }) => {
-  const { genres, selected, base } = geral;
-
+// Discover Component
+const Discover = ({
+  geral,
+  match,
+  setSelectedMenu,
+  getMoviesDiscover,
+  movies,
+}) => {
+  const { selected, base, staticCategories } = geral;
   // Call hook to set the sidebar selected menu if valid
-  useSetSelected(match.params.name, setSelectedMenu, genres);
+  useSetSelected(match.params.name, setSelectedMenu, staticCategories);
 
-  // Call hook to fetch movies of the genre
-  useFetchMoviesGenre(match.params.name, getMoviesGenre, genres);
+  // Call hook to fetch movies discover, pass in the url query
+  useFetchMoviesDiscover(match.params.name, getMoviesDiscover);
 
   // If there is no selected on state, means url used was not valid, return 404
   if (!selected) {
@@ -36,6 +40,7 @@ const Genre = ({ geral, match, setSelectedMenu, getMoviesGenre, movies }) => {
 
   // Get base URL from the geral object
   const baseUrl = base.images.base_url;
+
   return <div>{renderMovies(movies.results, baseUrl)}</div>;
 };
 
@@ -49,20 +54,21 @@ function renderMovies(movies, baseUrl) {
   ));
 }
 
-// Hook to fetch the movies, will be called everytime the route or the filters from the state change
-function useFetchMoviesGenre(name, cb) {
+// Hook to set the selected menu on the sidebar, if url is valid
+function useSetSelected(name, cb, staticCategories) {
   useEffect(() => {
-    cb(name);
-  }, [name]);
-}
-
-// Hook to set the selected menu on the sidebar, if url is valid and genre exists on the state
-function useSetSelected(name, cb, genres) {
-  useEffect(() => {
-    if (genres.find(el => el.name === name)) {
+    if (staticCategories.find(el => el === name)) {
       cb(name);
     }
   }, [name]);
+}
+
+// Hook to fetch the movies, will be called everytime the route or the filters from the state change
+function useFetchMoviesDiscover(name, cb) {
+  const query = name.replace(/\s+/g, '_').toLowerCase();
+  useEffect(() => {
+    cb(query);
+  }, [query]);
 }
 
 // Map State to Component Props
@@ -72,5 +78,5 @@ const mapStateToProps = ({ geral, movies }) => {
 
 export default connect(
   mapStateToProps,
-  { setSelectedMenu, getMoviesGenre }
-)(Genre);
+  { setSelectedMenu, getMoviesDiscover }
+)(Discover);

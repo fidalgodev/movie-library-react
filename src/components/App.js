@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getConfig } from '../actions';
+import { getConfig, getGenres } from '../actions';
 
 import Sidebar from './sidebar/Sidebar';
 import Header from './header/Header';
 import Home from './Home';
 import Genre from './MoviesList/Genre';
+import Discover from './MoviesList/Discover';
 import NotFound from './NotFound';
 
 const GlobalStyle = createGlobalStyle`
@@ -57,9 +58,10 @@ const ContentWrapper = styled.div`
 const App = props => {
   useEffect(() => {
     props.getConfig();
+    props.getGenres();
   }, []);
 
-  return (
+  return props.base && props.genres ? (
     <BrowserRouter>
       <React.Fragment>
         <GlobalStyle />
@@ -70,18 +72,23 @@ const App = props => {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/genres/:name" exact component={Genre} />
+              <Route path="/discover/:name" exact component={Discover} />
               <Route component={NotFound} />
             </Switch>
           </ContentWrapper>
         </MainWrapper>
       </React.Fragment>
     </BrowserRouter>
+  ) : (
+    <div>Laoding</div>
   );
 };
 
+const mapStateToProps = ({ geral }) => {
+  return { base: geral.base, genres: geral.genres };
+};
+
 export default connect(
-  null,
-  {
-    getConfig,
-  }
+  mapStateToProps,
+  { getConfig, getGenres }
 )(App);
