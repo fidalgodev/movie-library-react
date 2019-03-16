@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'tls';
+import { connect } from 'react-redux';
 
 import Pagination from './Pagination';
 
@@ -14,10 +14,10 @@ const MovieImg = styled.img`
 `;
 
 const MoviesList = ({ movies, base }) => {
-  const { baseUrl } = base.images;
+  const { base_url } = base.images;
   return (
     <div>
-      {renderMovies(movies, baseUrl)}
+      {renderMovies(movies.results, base_url)}
       <Pagination />
     </div>
   );

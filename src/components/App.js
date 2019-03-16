@@ -8,9 +8,9 @@ import { getConfig, getGenres } from '../actions';
 import Sidebar from './sidebar/Sidebar';
 import Header from './header/Header';
 import Home from './Home';
-import Genre from './moviesList/Genre';
-import Discover from './moviesList/Discover';
-import Search from './moviesList/Search';
+import Genre from './movies/Genre';
+import Discover from './movies/Discover';
+import Search from './movies/Search';
 import Movie from './singleMovie/Movie';
 import NotFound from './NotFound';
 
