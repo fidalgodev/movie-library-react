@@ -55,6 +55,10 @@ function useSetSelected(name, cb, staticCategories, setHeader) {
       cb(name);
       setHeader(name);
     }
+    return () => {
+      cb('');
+      setHeader('');
+    };
   }, [name]);
 }
 

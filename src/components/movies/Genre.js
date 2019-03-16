@@ -60,6 +60,10 @@ function useSetSelected(name, cb, genres, setHeader) {
       cb(name);
       setHeader(name);
     }
+    return () => {
+      cb('');
+      setHeader('');
+    };
   }, [name]);
 }
 

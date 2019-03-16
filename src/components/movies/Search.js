@@ -15,8 +15,7 @@ const Search = ({
 }) => {
   const { query } = match.params;
   const params = queryString.parse(location.search);
-  useRemoveSelected(setSelectedMenu);
-  useSetHeader(query, setHeader);
+  useSetHeader(query, setHeader, setSelectedMenu);
   useFetchMoviesSearch(query, getMoviesSearch, params);
 
   //If there are no movies, still fetching, loading
@@ -31,10 +30,14 @@ const Search = ({
   );
 };
 
-function useSetHeader(query, cb) {
+function useSetHeader(query, cb, setSelectedMenu) {
   useEffect(() => {
     const title = `Search results for: ${query}`;
     cb(title);
+    return () => {
+      cb('');
+      setSelectedMenu();
+    };
   }, [query]);
 }
 
@@ -43,12 +46,6 @@ function useFetchMoviesSearch(query, cb, params) {
   useEffect(() => {
     cb(query, params.page);
   }, [query, params.page]);
-}
-
-function useRemoveSelected(cb) {
-  useEffect(() => {
-    cb();
-  }, []);
 }
 
 // Map State to Component Props

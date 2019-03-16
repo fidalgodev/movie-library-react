@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Pagination from './Pagination';
 
@@ -26,10 +27,12 @@ const MoviesList = ({ movies, base }) => {
 // Function to render list of movies
 function renderMovies(movies, baseUrl) {
   return movies.map(movie => (
-    <MovieWrapper key={movie.id}>
-      {movie.original_title}
-      <MovieImg src={`${baseUrl}w780${movie.poster_path}`} />
-    </MovieWrapper>
+    <Link to={`/movie/${movie.id}`} key={movie.id}>
+      <MovieWrapper>
+        {movie.original_title}
+        <MovieImg src={`${baseUrl}w780${movie.poster_path}`} />
+      </MovieWrapper>
+    </Link>
   ));
 }
 
