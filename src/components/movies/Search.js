@@ -1,20 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import styled from 'styled-components';
 
 import { setHeader, setSelectedMenu, getMoviesSearch } from '../../actions';
-import NotFound from '../NotFound';
-import Pagination from './Pagination';
-
-const MovieWrapper = styled.div`
-  padding: 2rem;
-`;
-
-const MovieImg = styled.img`
-  width: 200px;
-  height: auto;
-`;
+import MoviesList from './MoviesList';
 
 const Search = ({
   match,
@@ -23,9 +12,7 @@ const Search = ({
   setHeader,
   getMoviesSearch,
   movies,
-  geral,
 }) => {
-  const { base } = geral;
   const { query } = match.params;
   const params = queryString.parse(location.search);
   useRemoveSelected(setSelectedMenu);
@@ -37,25 +24,12 @@ const Search = ({
     return <div>Loading</div>;
   }
 
-  // Get base URL from the geral object
-  const baseUrl = base.images.base_url;
   return (
     <div>
-      {renderMovies(movies.results, baseUrl)}
-      <Pagination />
+      <MoviesList />
     </div>
   );
 };
-
-// Function to render list of movies
-function renderMovies(movies, baseUrl) {
-  return movies.map(movie => (
-    <MovieWrapper key={movie.id}>
-      {movie.original_title}
-      <MovieImg src={`${baseUrl}w780${movie.poster_path}`} />
-    </MovieWrapper>
-  ));
-}
 
 function useSetHeader(query, cb) {
   useEffect(() => {

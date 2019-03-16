@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setSelectedMenu } from '../actions';
+import { setSelectedMenu, setHeader } from '../actions';
 
-const Home = ({ setSelectedMenu }) => {
+const Home = ({ setSelectedMenu, setHeader }) => {
   useEffect(() => {
     setSelectedMenu('');
+    setHeader('');
   }, []);
 
   return <div> Home</div>;
@@ -12,5 +13,5 @@ const Home = ({ setSelectedMenu }) => {
 
 export default connect(
   null,
-  { setSelectedMenu }
+  { setSelectedMenu, setHeader }
 )(Home);

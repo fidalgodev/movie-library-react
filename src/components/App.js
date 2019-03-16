@@ -8,9 +8,10 @@ import { getConfig, getGenres } from '../actions';
 import Sidebar from './sidebar/Sidebar';
 import Header from './header/Header';
 import Home from './Home';
-import Genre from './MoviesList/Genre';
-import Discover from './MoviesList/Discover';
-import Search from './MoviesList/Search';
+import Genre from './moviesList/Genre';
+import Discover from './moviesList/Discover';
+import Search from './moviesList/Search';
+import Movie from './singleMovie/Movie';
 import NotFound from './NotFound';
 
 const GlobalStyle = createGlobalStyle`
@@ -76,6 +77,7 @@ const App = props => {
               <Route path="/genres/:name" exact component={Genre} />
               <Route path="/discover/:name" exact component={Discover} />
               <Route path="/search/:query" exact component={Search} />
+              <Route path="/movie/:id" exact component={Movie} />
               <Route component={NotFound} />
             </Switch>
           </ContentWrapper>

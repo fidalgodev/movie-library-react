@@ -1,20 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import queryString from 'query-string';
 
 import { setSelectedMenu, getMoviesDiscover, setHeader } from '../../actions';
 import NotFound from '../NotFound';
-import Pagination from './Pagination';
-
-const MovieWrapper = styled.div`
-  padding: 2rem;
-`;
-
-const MovieImg = styled.img`
-  width: 200px;
-  height: auto;
-`;
+import MoviesList from './MoviesList';
 
 // Discover Component
 const Discover = ({
@@ -26,8 +16,9 @@ const Discover = ({
   setHeader,
   movies,
 }) => {
-  const { selected, base, staticCategories } = geral;
+  const { selected, staticCategories } = geral;
   const params = queryString.parse(location.search);
+
   // Call hook to set the sidebar selected menu if valid
   useSetSelected(
     match.params.name,
@@ -49,26 +40,13 @@ const Discover = ({
     return <div>Loading</div>;
   }
 
-  // Get base URL from the geral object
-  const baseUrl = base.images.base_url;
-
+  // Else return movies list
   return (
     <div>
-      {renderMovies(movies.results, baseUrl)}
-      <Pagination />
+      <MoviesList />
     </div>
   );
 };
-
-// Function to render list of movies
-function renderMovies(movies, baseUrl) {
-  return movies.map(movie => (
-    <MovieWrapper key={movie.id}>
-      {movie.original_title}
-      <MovieImg src={`${baseUrl}w780${movie.poster_path}`} />
-    </MovieWrapper>
-  ));
-}
 
 // Hook to set the selected menu on the sidebar, if url is valid
 function useSetSelected(name, cb, staticCategories, setHeader) {
