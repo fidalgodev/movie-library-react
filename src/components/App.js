@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
+import history from '../history';
 import { connect } from 'react-redux';
 import { getConfig, getGenres } from '../actions';
 
@@ -9,6 +10,7 @@ import Header from './header/Header';
 import Home from './Home';
 import Genre from './MoviesList/Genre';
 import Discover from './MoviesList/Discover';
+import Search from './MoviesList/Search';
 import NotFound from './NotFound';
 
 const GlobalStyle = createGlobalStyle`
@@ -62,7 +64,7 @@ const App = props => {
   }, []);
 
   return props.base && props.genres ? (
-    <BrowserRouter>
+    <Router history={history}>
       <React.Fragment>
         <GlobalStyle />
         <MainWrapper>
@@ -73,12 +75,13 @@ const App = props => {
               <Route path="/" exact component={Home} />
               <Route path="/genres/:name" exact component={Genre} />
               <Route path="/discover/:name" exact component={Discover} />
+              <Route path="/search/:query" exact component={Search} />
               <Route component={NotFound} />
             </Switch>
           </ContentWrapper>
         </MainWrapper>
       </React.Fragment>
-    </BrowserRouter>
+    </Router>
   ) : (
     <div>Laoding</div>
   );

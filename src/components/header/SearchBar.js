@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import history from '../../history';
 
 const Input = styled.input`
   background-color: var(--color-primary-dark);
@@ -26,7 +27,8 @@ const SearchBar = () => {
 
   function onFormSubmit(e) {
     e.preventDefault();
-    console.log(input);
+    setInput('');
+    history.push(`/search/${input}`);
   }
 
   return (

@@ -12,6 +12,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...action.payload };
     case TYPES.SELECTED_MENU:
       return { ...state, selected: action.payload };
+    case TYPES.REMOVE_SELECTED_MENU:
+      return { ...state, selected: null };
+    case TYPES.SET_HEADER:
+      return { ...state, header: action.payload };
     default:
       return state;
   }

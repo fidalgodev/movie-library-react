@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import styled from 'styled-components';
 
-import { setSelectedMenu, getMoviesGenre } from '../../actions';
+import { setSelectedMenu, getMoviesGenre, setHeader } from '../../actions';
 import NotFound from '../NotFound';
 import Pagination from './Pagination';
 import SortBy from './ShortBy';
@@ -24,6 +24,7 @@ const Genre = ({
   match,
   setSelectedMenu,
   getMoviesGenre,
+  setHeader,
   movies,
   location,
 }) => {
@@ -32,7 +33,7 @@ const Genre = ({
   const params = queryString.parse(location.search);
 
   // Call hook to set the sidebar selected menu if valid
-  useSetSelected(match.params.name, setSelectedMenu, genres);
+  useSetSelected(match.params.name, setSelectedMenu, genres, setHeader);
 
   // Call hook to fetch movies of the genre
   useFetchMoviesGenre(match.params.name, getMoviesGenre, params, sort);
@@ -76,10 +77,11 @@ function useFetchMoviesGenre(name, cb, params, sort) {
 }
 
 // Hook to set the selected menu on the sidebar, if url is valid and genre exists on the state
-function useSetSelected(name, cb, genres) {
+function useSetSelected(name, cb, genres, setHeader) {
   useEffect(() => {
     if (genres.find(el => el.name === name)) {
       cb(name);
+      setHeader(name);
     }
   }, [name]);
 }
@@ -91,5 +93,5 @@ const mapStateToProps = ({ geral, movies }) => {
 
 export default connect(
   mapStateToProps,
-  { setSelectedMenu, getMoviesGenre }
+  { setSelectedMenu, getMoviesGenre, setHeader }
 )(Genre);

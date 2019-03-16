@@ -21,6 +21,11 @@ export const getGenres = () => async dispatch => {
 
 // Set the selected sidebar item
 export const setSelectedMenu = name => {
+  if (!name) {
+    return {
+      type: TYPES.REMOVE_SELECTED_MENU,
+    };
+  }
   return {
     type: TYPES.SELECTED_MENU,
     payload: name,
@@ -68,4 +73,26 @@ export const getMoviesDiscover = (name, page) => async (dispatch, getState) => {
     type: TYPES.FETCH_MOVIES_DISCOVER,
     payload: res.data,
   });
+};
+
+// Get movies search
+export const getMoviesSearch = (query, page) => async dispatch => {
+  const res = await tmdbAPI.get(`/search/movie`, {
+    params: {
+      query,
+      page,
+    },
+  });
+  dispatch({
+    type: TYPES.FETCH_MOVIES_SEARCH,
+    payload: res.data,
+  });
+};
+
+// Set header title
+export const setHeader = title => {
+  return {
+    type: TYPES.SET_HEADER,
+    payload: title,
+  };
 };

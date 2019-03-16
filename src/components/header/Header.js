@@ -18,17 +18,17 @@ const Title = styled.h1`
   letter-spacing: -0.5px;
 `;
 
-const Header = ({ selected }) => {
+const Header = ({ header }) => {
   return (
     <Wrapper>
-      <Title>{selected}</Title>
+      <Title>{header}</Title>
       <SearchBar />
     </Wrapper>
   );
 };
 
 const mapStateToProps = ({ geral }) => {
-  return { selected: geral.selected };
+  return { header: geral.header };
 };
 
 export default connect(mapStateToProps)(Header);

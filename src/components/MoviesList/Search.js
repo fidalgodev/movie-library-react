@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import queryString from 'query-string';
+import styled from 'styled-components';
 
-import { setSelectedMenu, getMoviesDiscover, setHeader } from '../../actions';
+import { setHeader, setSelectedMenu, getMoviesSearch } from '../../actions';
 import NotFound from '../NotFound';
 import Pagination from './Pagination';
 
@@ -16,33 +16,21 @@ const MovieImg = styled.img`
   height: auto;
 `;
 
-// Discover Component
-const Discover = ({
-  geral,
+const Search = ({
   match,
   location,
   setSelectedMenu,
-  getMoviesDiscover,
   setHeader,
+  getMoviesSearch,
   movies,
+  geral,
 }) => {
-  const { selected, base, staticCategories } = geral;
+  const { base } = geral;
+  const { query } = match.params;
   const params = queryString.parse(location.search);
-  // Call hook to set the sidebar selected menu if valid
-  useSetSelected(
-    match.params.name,
-    setSelectedMenu,
-    staticCategories,
-    setHeader
-  );
-
-  // Call hook to fetch movies discover, pass in the url query
-  useFetchMoviesDiscover(match.params.name, getMoviesDiscover, params);
-
-  // If there is no selected on state, means url used was not valid, return 404
-  if (!selected) {
-    return <NotFound />;
-  }
+  useRemoveSelected(setSelectedMenu);
+  useSetHeader(query, setHeader);
+  useFetchMoviesSearch(query, getMoviesSearch, params);
 
   //If there are no movies, still fetching, loading
   if (!movies.results) {
@@ -51,7 +39,6 @@ const Discover = ({
 
   // Get base URL from the geral object
   const baseUrl = base.images.base_url;
-
   return (
     <div>
       {renderMovies(movies.results, baseUrl)}
@@ -70,22 +57,24 @@ function renderMovies(movies, baseUrl) {
   ));
 }
 
-// Hook to set the selected menu on the sidebar, if url is valid
-function useSetSelected(name, cb, staticCategories, setHeader) {
+function useSetHeader(query, cb) {
   useEffect(() => {
-    if (staticCategories.find(el => el === name)) {
-      cb(name);
-      setHeader(name);
-    }
-  }, [name]);
+    const title = `Search results for: ${query}`;
+    cb(title);
+  }, [query]);
 }
 
-// Hook to fetch the movies, will be called everytime the route or the filters from the state change
-function useFetchMoviesDiscover(name, cb, params) {
-  const query = name.replace(/\s+/g, '_').toLowerCase();
+// Hook to fetch the movies, will be called everytime the route for the search changes
+function useFetchMoviesSearch(query, cb, params) {
   useEffect(() => {
     cb(query, params.page);
   }, [query, params.page]);
+}
+
+function useRemoveSelected(cb) {
+  useEffect(() => {
+    cb();
+  }, []);
 }
 
 // Map State to Component Props
@@ -95,5 +84,9 @@ const mapStateToProps = ({ geral, movies }) => {
 
 export default connect(
   mapStateToProps,
-  { setSelectedMenu, getMoviesDiscover, setHeader }
-)(Discover);
+  {
+    setHeader,
+    setSelectedMenu,
+    getMoviesSearch,
+  }
+)(Search);
