@@ -19,7 +19,7 @@ const MoviesList = ({ movies, base }) => {
   return (
     <div>
       {renderMovies(movies.results, base_url)}
-      <Pagination />
+      <Pagination movies={movies} />
     </div>
   );
 };

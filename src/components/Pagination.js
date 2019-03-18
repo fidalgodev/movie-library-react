@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -10,7 +9,6 @@ const Pagination = ({ movies }) => {
   if (page < total_pages && page === 1) {
     return (
       <div>
-        On page 1, render page 2 only
         <Link to={`?page=${page + 1}`}>Page {page + 1}</Link>
       </div>
     );
@@ -20,7 +18,6 @@ const Pagination = ({ movies }) => {
   else if (page < total_pages) {
     return (
       <div>
-        On page whatever, render prev e next
         <Link to={`?page=${page - 1}`}>Page {page - 1}</Link>
         <Link to={`?page=${page + 1}`}>Page {page + 1}</Link>
       </div>
@@ -37,8 +34,4 @@ const Pagination = ({ movies }) => {
   }
 };
 
-const mapStateToProps = ({ movies }) => {
-  return { movies };
-};
-
-export default connect(mapStateToProps)(Pagination);
+export default Pagination;
