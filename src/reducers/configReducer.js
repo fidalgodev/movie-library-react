@@ -16,6 +16,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, selected: null };
     case TYPES.SET_HEADER:
       return { ...state, header: action.payload };
+    case TYPES.REMOVE_HEADER:
+      return { ...state, header: null };
     default:
       return state;
   }

@@ -4,6 +4,7 @@ const SortBy = ({ changeSort }) => {
   function handleChange(e) {
     changeSort(e.target.value);
   }
+
   return (
     <select onChange={handleChange}>
       <option value="popularity.desc">Popularity</option>

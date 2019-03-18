@@ -5,14 +5,15 @@ import history from '../history';
 import { connect } from 'react-redux';
 import { getConfig, getGenres } from '../actions';
 
-import Sidebar from './sidebar/Sidebar';
-import Header from './header/Header';
-import Home from './Home';
-import Genre from './movies/Genre';
-import Discover from './movies/Discover';
-import Search from './movies/Search';
-import Movie from './singleMovie/Movie';
+import Sidebar from '../containers/Sidebar';
+import Discover from '../containers/Discover';
+import Genre from '../containers/Genre';
+import Search from '../containers/Search';
+import Movie from '../containers/Movie';
+
 import NotFound from './NotFound';
+import Home from './Home';
+import Header from './Header';
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -78,6 +79,7 @@ const App = props => {
               <Route path="/discover/:name" exact component={Discover} />
               <Route path="/search/:query" exact component={Search} />
               <Route path="/movie/:id" exact component={Movie} />
+              <Route path="/404" component={NotFound} />
               <Route component={NotFound} />
             </Switch>
           </ContentWrapper>
@@ -85,7 +87,7 @@ const App = props => {
       </React.Fragment>
     </Router>
   ) : (
-    <div>Laoding</div>
+    <div>Loding</div>
   );
 };
 

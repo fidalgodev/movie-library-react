@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { setSelectedMenu } from '../../actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendar,
@@ -10,7 +8,7 @@ import {
   faDotCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
-const StyledLink = styled.div`
+const StyledItem = styled.div`
   padding: 1rem 2rem;
   font-weight: 600;
   font-size: 1.2rem;
@@ -43,29 +41,17 @@ function renderIcon(title) {
   }
 }
 
-const MenuItem = ({ title, selectedItem, setSelectedMenu }) => {
+const MenuItem = ({ title, selected }) => {
   return (
-    <StyledLink
-      onClick={() => setSelectedMenu(title)}
-      selected={title === selectedItem ? true : false}
-    >
+    <StyledItem selected={selected}>
       <FontAwesomeIcon
         icon={renderIcon(title)}
         size="1x"
         style={{ marginRight: '10px' }}
       />
       {title}
-    </StyledLink>
+    </StyledItem>
   );
 };
 
-const mapStateToProps = ({ geral }) => {
-  return { selectedItem: geral.selected };
-};
-
-export default connect(
-  mapStateToProps,
-  {
-    setSelectedMenu,
-  }
-)(MenuItem);
+export default MenuItem;

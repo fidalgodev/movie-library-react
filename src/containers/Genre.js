@@ -2,39 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { setSelectedMenu, getMoviesGenre, setHeader } from '../../actions';
-import NotFound from '../NotFound';
-import MoviesList from './MoviesList';
-import SortBy from './ShortBy';
+import { setSelectedMenu, getMoviesGenre } from '../actions';
+import MoviesList from '../components/MoviesList';
+import SortBy from '../components/ShortBy';
 
 // Genres Component
 // Gets geral object from State, Match from Router, Action Creators to set Selected menu and Movies from Store
 const Genre = ({
-  geral,
   match,
   setSelectedMenu,
   getMoviesGenre,
-  setHeader,
   movies,
   location,
 }) => {
   const [sort, setsort] = useState('popularity.desc');
-  const { genres, selected, base } = geral;
   const params = queryString.parse(location.search);
 
-  // Call hook to set the sidebar selected menu if valid
-  useSetSelected(match.params.name, setSelectedMenu, genres, setHeader);
+  // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
+  useEffect(() => {
+    setSelectedMenu(match.params.name);
+    return () => setSelectedMenu();
+  }, [match.params.name]);
 
   // Call hook to fetch movies of the genre
   useFetchMoviesGenre(match.params.name, getMoviesGenre, params, sort);
 
-  // If there is no selected on state, means url used was not valid, return 404
-  if (!selected) {
-    return <NotFound />;
-  }
-
   //If there are no movies, still fetching, loading
-  if (!movies.results) {
+  if (Object.entries(movies).length === 0) {
     return <div>Loading</div>;
   }
 
@@ -53,20 +47,6 @@ function useFetchMoviesGenre(name, cb, params, sort) {
   }, [name, params.page, sort]);
 }
 
-// Hook to set the selected menu on the sidebar, if url is valid and genre exists on the state
-function useSetSelected(name, cb, genres, setHeader) {
-  useEffect(() => {
-    if (genres.find(el => el.name === name)) {
-      cb(name);
-      setHeader(name);
-    }
-    return () => {
-      cb('');
-      setHeader('');
-    };
-  }, [name]);
-}
-
 // Map State to Component Props
 const mapStateToProps = ({ geral, movies }) => {
   return { geral, movies };
@@ -74,5 +54,5 @@ const mapStateToProps = ({ geral, movies }) => {
 
 export default connect(
   mapStateToProps,
-  { setSelectedMenu, getMoviesGenre, setHeader }
+  { setSelectedMenu, getMoviesGenre }
 )(Genre);

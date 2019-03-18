@@ -1,5 +1,6 @@
 import * as TYPES from './types';
 import tmdbAPI from '../api/tmdb';
+import history from '../history';
 
 // Action Creator to get the config object from the API
 export const getConfig = () => async dispatch => {
@@ -19,17 +20,24 @@ export const getGenres = () => async dispatch => {
   });
 };
 
-// Set the selected sidebar item
-export const setSelectedMenu = name => {
+// Set the current selected menu (discover or genre), if is valid
+export const setSelectedMenu = name => (dispatch, getState) => {
+  const { staticCategories, genres } = getState().geral;
   if (!name) {
-    return {
-      type: TYPES.REMOVE_SELECTED_MENU,
-    };
+    dispatch({ type: TYPES.REMOVE_SELECTED_MENU });
+    dispatch(setHeader());
+  } else if (
+    staticCategories.find(category => category === name) ||
+    genres.find(genre => genre.name === name)
+  ) {
+    dispatch({
+      type: TYPES.SELECTED_MENU,
+      payload: name,
+    });
+    dispatch(setHeader(name));
+  } else {
+    history.push('/404');
   }
-  return {
-    type: TYPES.SELECTED_MENU,
-    payload: name,
-  };
 };
 
 // Get movies genre
@@ -37,6 +45,9 @@ export const getMoviesGenre = (name, page, sort) => async (
   dispatch,
   getState
 ) => {
+  dispatch({
+    type: TYPES.CLEAR_PREVIOUS_MOVIES,
+  });
   const { selected, genres } = getState().geral;
   if (!selected) {
     return;
@@ -60,6 +71,9 @@ export const getMoviesGenre = (name, page, sort) => async (
 
 // Get movies discover
 export const getMoviesDiscover = (name, page) => async (dispatch, getState) => {
+  dispatch({
+    type: TYPES.CLEAR_PREVIOUS_MOVIES,
+  });
   const { selected } = getState().geral;
   if (!selected) {
     return;
@@ -77,6 +91,9 @@ export const getMoviesDiscover = (name, page) => async (dispatch, getState) => {
 
 // Get movies search
 export const getMoviesSearch = (query, page) => async dispatch => {
+  dispatch({
+    type: TYPES.CLEAR_PREVIOUS_MOVIES,
+  });
   const res = await tmdbAPI.get(`/search/movie`, {
     params: {
       query,
@@ -91,6 +108,11 @@ export const getMoviesSearch = (query, page) => async dispatch => {
 
 // Set header title
 export const setHeader = title => {
+  if (!title) {
+    return {
+      type: TYPES.REMOVE_HEADER,
+    };
+  }
   return {
     type: TYPES.SET_HEADER,
     payload: title,

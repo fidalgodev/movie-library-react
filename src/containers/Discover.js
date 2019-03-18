@@ -2,41 +2,30 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { setSelectedMenu, getMoviesDiscover, setHeader } from '../../actions';
-import NotFound from '../NotFound';
-import MoviesList from './MoviesList';
+import { setSelectedMenu, getMoviesDiscover } from '../actions';
+import MoviesList from '../components/MoviesList';
 
 // Discover Component
 const Discover = ({
-  geral,
   match,
   location,
   setSelectedMenu,
   getMoviesDiscover,
-  setHeader,
   movies,
 }) => {
-  const { selected, staticCategories } = geral;
   const params = queryString.parse(location.search);
 
-  // Call hook to set the sidebar selected menu if valid
-  useSetSelected(
-    match.params.name,
-    setSelectedMenu,
-    staticCategories,
-    setHeader
-  );
+  // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
+  useEffect(() => {
+    setSelectedMenu(match.params.name);
+    return () => setSelectedMenu();
+  }, [match.params.name]);
 
   // Call hook to fetch movies discover, pass in the url query
   useFetchMoviesDiscover(match.params.name, getMoviesDiscover, params);
 
-  // If there is no selected on state, means url used was not valid, return 404
-  if (!selected) {
-    return <NotFound />;
-  }
-
   //If there are no movies, still fetching, loading
-  if (!movies.results) {
+  if (Object.entries(movies).length === 0) {
     return <div>Loading</div>;
   }
 
@@ -47,20 +36,6 @@ const Discover = ({
     </div>
   );
 };
-
-// Hook to set the selected menu on the sidebar, if url is valid
-function useSetSelected(name, cb, staticCategories, setHeader) {
-  useEffect(() => {
-    if (staticCategories.find(el => el === name)) {
-      cb(name);
-      setHeader(name);
-    }
-    return () => {
-      cb('');
-      setHeader('');
-    };
-  }, [name]);
-}
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change
 function useFetchMoviesDiscover(name, cb, params) {
@@ -77,5 +52,5 @@ const mapStateToProps = ({ geral, movies }) => {
 
 export default connect(
   mapStateToProps,
-  { setSelectedMenu, getMoviesDiscover, setHeader }
+  { setSelectedMenu, getMoviesDiscover }
 )(Discover);

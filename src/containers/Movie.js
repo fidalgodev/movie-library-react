@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { getMovie, setHeader } from '../../actions';
+import { getMovie, setHeader } from '../actions';
 
 const MovieWrapper = styled.div`
   padding: 2rem;
