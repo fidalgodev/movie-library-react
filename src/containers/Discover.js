@@ -18,6 +18,7 @@ const Discover = ({
   // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
   useEffect(() => {
     setSelectedMenu(match.params.name);
+    // Clean up to remove selected menu from state
     return () => setSelectedMenu();
   }, [match.params.name]);
 

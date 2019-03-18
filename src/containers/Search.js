@@ -13,6 +13,7 @@ const Search = ({ match, location, setHeader, getMoviesSearch, movies }) => {
   useEffect(() => {
     const title = `Search results for: ${query}`;
     setHeader(title);
+    // Clean up to remove page header
     return () => {
       setHeader();
     };

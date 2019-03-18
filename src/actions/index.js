@@ -121,10 +121,35 @@ export const setHeader = title => {
 
 // Get single movie
 export const getMovie = id => async dispatch => {
+  dispatch({
+    type: TYPES.CLEAR_PREVIOUS_MOVIE,
+  });
   const res = await tmdbAPI.get(`/movie/${id}`);
   dispatch({
     type: TYPES.FETCH_MOVIE,
     payload: res.data,
   });
-  return res.data;
+  dispatch(getCredits());
+};
+
+// Get credits
+export const getCredits = () => async (dispatch, getState) => {
+  const { id } = getState().movie;
+  const res = await tmdbAPI.get(`/movie/${id}/credits`);
+  dispatch({
+    type: TYPES.FETCH_CAST,
+    payload: res.data.cast,
+  });
+};
+
+// Get Person
+export const getPerson = id => async dispatch => {
+  dispatch({
+    type: TYPES.CLEAR_PREVIOUS_PERSON,
+  });
+  const res = await tmdbAPI.get(`/person/${id}`);
+  dispatch({
+    type: TYPES.FETCH_PERSON,
+    payload: res.data,
+  });
 };

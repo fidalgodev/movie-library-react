@@ -10,6 +10,7 @@ import Discover from '../containers/Discover';
 import Genre from '../containers/Genre';
 import Search from '../containers/Search';
 import Movie from '../containers/Movie';
+import Cast from '../containers/Cast';
 
 import NotFound from './NotFound';
 import Home from './Home';
@@ -79,6 +80,7 @@ const App = props => {
               <Route path="/discover/:name" exact component={Discover} />
               <Route path="/search/:query" exact component={Search} />
               <Route path="/movie/:id" exact component={Movie} />
+              <Route path="/cast/:id" exact component={Cast} />
               <Route path="/404" component={NotFound} />
               <Route component={NotFound} />
             </Switch>
