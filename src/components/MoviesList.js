@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Pagination from './Pagination';
 import Stars from 'react-rating';

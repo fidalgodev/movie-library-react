@@ -22,6 +22,7 @@ const MainWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   width: 100%;
+  margin-left: 28rem;
   padding: 2rem 4rem;
 `;
 
