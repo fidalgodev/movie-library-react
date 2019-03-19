@@ -4,9 +4,11 @@ import queryString from 'query-string';
 
 import { setSelectedMenu, getMoviesDiscover } from '../actions';
 import MoviesList from '../components/MoviesList';
+import Loader from '../components/Loader';
 
 // Discover Component
 const Discover = ({
+  geral,
   match,
   location,
   setSelectedMenu,
@@ -14,6 +16,7 @@ const Discover = ({
   movies,
 }) => {
   const params = queryString.parse(location.search);
+  const { base_url } = geral.base.images;
 
   // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
   useEffect(() => {
@@ -27,15 +30,11 @@ const Discover = ({
 
   //If there are no movies, still fetching, loading
   if (Object.entries(movies).length === 0) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
 
   // Else return movies list
-  return (
-    <div>
-      <MoviesList />
-    </div>
-  );
+  return <MoviesList movies={movies} baseUrl={base_url} />;
 };
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change

@@ -2,10 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 const LoaderWrapper = styled.div`
-  width: 4rem;
-  height: 4rem;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Loading = styled.div`
+  width: 3rem;
+  height: 3rem;
   background-color: var(--color-primary-dark);
-  box-shadow: -10rem 0rem 0rem var(--color-primary);
+  box-shadow: -5rem 0rem 0rem var(--color-primary);
   border-radius: 50%;
   -webkit-animation: circle_classic 1s ease-in-out infinite alternate;
   -moz-animation: circle_classic 1s ease-in-out infinite alternate;
@@ -44,7 +52,11 @@ const LoaderWrapper = styled.div`
 `;
 
 const Loader = () => {
-  return <LoaderWrapper />;
+  return (
+    <LoaderWrapper>
+      <Loading />
+    </LoaderWrapper>
+  );
 };
 
 export default Loader;

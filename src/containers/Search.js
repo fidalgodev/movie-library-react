@@ -4,10 +4,19 @@ import queryString from 'query-string';
 
 import { setHeader, getMoviesSearch } from '../actions';
 import MoviesList from '../components/MoviesList';
+import Loader from '../components/Loader';
 
-const Search = ({ match, location, setHeader, getMoviesSearch, movies }) => {
+const Search = ({
+  geral,
+  match,
+  location,
+  setHeader,
+  getMoviesSearch,
+  movies,
+}) => {
   const { query } = match.params;
   const params = queryString.parse(location.search);
+  const { base_url } = geral.base.images;
 
   // Change Header everytime query change
   useEffect(() => {
@@ -24,7 +33,7 @@ const Search = ({ match, location, setHeader, getMoviesSearch, movies }) => {
 
   //If there are no movies, still fetching, loading
   if (Object.entries(movies).length === 0) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
 
   //If there are no results
@@ -34,11 +43,7 @@ const Search = ({ match, location, setHeader, getMoviesSearch, movies }) => {
 
   // Else show the results
   else {
-    return (
-      <div>
-        <MoviesList />
-      </div>
-    );
+    return <MoviesList movies={movies} baseUrl={base_url} />;
   }
 };
 

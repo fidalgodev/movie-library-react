@@ -10,7 +10,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 100vh;
   width: 28rem;
   color: var(--color-primary-dark);
   margin: 2rem 0;

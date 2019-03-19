@@ -86,6 +86,7 @@ const SearchBar = () => {
       return;
     }
     setInput('');
+    setState(false);
     history.push(`/search/${input}`);
   }
 
