@@ -36,6 +36,11 @@ const MenuWrapper = styled.div`
 
 const LinkWrap = styled(Link)`
   text-decoration: none;
+  display: block;
+
+  &:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const Sidebar = ({ genres, staticCategories, selected }) => {

@@ -9,23 +9,30 @@ const Form = styled.form`
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  transition: all 2s cubic-bezier(0.42, 0, 0.58, 1);
+  justify-content: center;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  background-color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary);
+  width: ${props => (props.state ? '30rem' : '4rem')};
+  cursor: ${props => (props.state ? 'auto' : 'pointer')};
+  padding: 2rem;
+  height: 4rem;
+  outline: none;
+  border-radius: 10rem;
+  transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
 `;
 
 const Input = styled.input`
-  background-color: var(--color-primary-dark);
-  border: 1px solid var(--color-primary);
-  border-radius: 10rem;
   font-size: 1.3rem;
+  line-height: 1;
   font-weight: 300;
-  height: 4rem;
-  width: ${props => (props.state ? '30rem' : '4rem')};
+  background-color: transparent;
+  width: 100%;
+  margin-left: ${props => (props.state ? '1rem' : '0rem')};
   color: var(--text-color);
-  padding: 2rem;
-  box-shadow: 0 4px 8px var(--shadow-color);
-  cursor: ${props => (props.state ? 'default' : 'pointer')};
-  transition: width 0.2s cubic-bezier(0.42, 0, 0.58, 1);
+  border: none;
+  transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
+
   &:focus,
   &:active {
     outline: none;
@@ -37,12 +44,10 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
+  line-height: 1;
   pointer-events: ${props => (props.state ? 'auto' : 'none')};
   cursor: ${props => (props.state ? 'pointer' : 'none')};
-  position: absolute;
-  padding: 1rem;
-  right: 0;
-  margin-right: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
   background-color: transparent;
   border: none;
   outline: none;
@@ -53,6 +58,7 @@ const SearchBar = () => {
   const [input, setInput] = useState('');
   const [state, setState] = useState(false);
   const node = useRef();
+  const inputFocus = useRef();
 
   useEffect(() => {
     // add when mounted
@@ -75,21 +81,34 @@ const SearchBar = () => {
 
   function onFormSubmit(e) {
     e.preventDefault();
+    if (input.length === 0) {
+      console.log('invalid');
+      return;
+    }
     setInput('');
     history.push(`/search/${input}`);
   }
 
   return (
-    <Form onClick={() => setState(!state)} onSubmit={onFormSubmit} ref={node}>
+    <Form
+      state={state}
+      onClick={() => {
+        setState(true);
+        inputFocus.current.focus();
+      }}
+      onSubmit={onFormSubmit}
+      ref={node}
+    >
+      <Button type="submit" state={state}>
+        <FontAwesomeIcon icon={faSearch} size="1x" />
+      </Button>
       <Input
         onChange={e => setInput(e.target.value)}
+        ref={inputFocus}
         value={input}
         state={state}
         placeholder="Search for a movie..."
       />
-      <Button type="submit" state={state}>
-        <FontAwesomeIcon icon={faSearch} size="1x" />
-      </Button>
     </Form>
   );
 };

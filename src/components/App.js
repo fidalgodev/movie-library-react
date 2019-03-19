@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import history from '../history';
 import { connect } from 'react-redux';
@@ -14,49 +14,22 @@ import Cast from '../containers/Cast';
 
 import NotFound from './NotFound';
 import Header from './Header';
-
-const GlobalStyle = createGlobalStyle`
-* {
-  margin: 0;
-  padding: 0;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html {
-  box-sizing: border-box;
-  font-size: 62.5%; //1rem = 10px
-}
-
-body {
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
-}
-`;
+import Loader from './Loader';
 
 const MainWrapper = styled.div`
   display: flex;
-  --color-primary-dark: #263238;
-  --color-primary: #37474f;
-  --color-primary-light: #546e7a;
-  --color-primary-lighter: #b0bec5;
-  --text-color: #fafafa;
-  --link-color: #444;
-  --border-color: rgba(176, 190, 197, 0.5);
-  --shadow-color: rgba(0, 0, 0, 0.15);
 `;
 
 const ContentWrapper = styled.div`
   width: 100%;
   padding: 2rem 4rem;
+`;
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
 `;
 
 const App = props => {
@@ -68,7 +41,6 @@ const App = props => {
   return props.base && props.genres ? (
     <Router history={history}>
       <React.Fragment>
-        <GlobalStyle />
         <MainWrapper>
           <Sidebar />
           <ContentWrapper>
@@ -92,7 +64,9 @@ const App = props => {
       </React.Fragment>
     </Router>
   ) : (
-    <div>Loding</div>
+    <LoaderWrapper>
+      <Loader />
+    </LoaderWrapper>
   );
 };
 
