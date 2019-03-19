@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import history from '../history';
 import { connect } from 'react-redux';
 import { getConfig, getGenres } from '../actions';
@@ -13,7 +13,6 @@ import Movie from '../containers/Movie';
 import Cast from '../containers/Cast';
 
 import NotFound from './NotFound';
-import Home from './Home';
 import Header from './Header';
 
 const GlobalStyle = createGlobalStyle`
@@ -75,7 +74,11 @@ const App = props => {
           <ContentWrapper>
             <Header />
             <Switch>
-              <Route path="/" exact component={Home} />
+              <Route
+                path="/"
+                exact
+                render={() => <Redirect from="/" to="/discover/Popular" />}
+              />
               <Route path="/genres/:name" exact component={Genre} />
               <Route path="/discover/:name" exact component={Discover} />
               <Route path="/search/:query" exact component={Search} />
