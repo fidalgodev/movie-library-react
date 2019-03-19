@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const StyledItem = styled.div`
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   font-weight: 600;
   font-size: 1.2rem;
   opacity: ${props => (props.selected ? '1' : '.6')};
@@ -17,15 +17,26 @@ const StyledItem = styled.div`
     props.selected
       ? 'var(--color-primary-dark)'
       : 'var(--color-primary-light)'};
-  border: 1px solid var(--border-color);
-  border: ${props =>
-    props.selected ? '1px solid var(--border-color)' : 'none'};
+  border-color: ${props =>
+    props.selected
+      ? 'var(--color-primary-dark)'
+      : 'var(--color-primary-light)'};
+  border: ${props => (props.selected ? '1px solid' : '1px solid transparent')};
   border-radius: 2rem;
   display: flex;
   align-items: center;
   text-decoration: none;
   width: 100%;
   cursor: pointer;
+  transition: color 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+
+  :not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  &:hover {
+    border: 1px solid;
+  }
 `;
 
 function renderIcon(title) {
