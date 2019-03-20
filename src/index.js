@@ -32,7 +32,8 @@ html {
   --text-color: #fafafa;
   --link-color: #444;
   --border-color: rgba(176, 190, 197, 0.5);
-  --shadow-color: rgba(0, 0, 0, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --shadow-color-dark: rgba(0, 0, 0, 0.25);
 }
 
 body {
