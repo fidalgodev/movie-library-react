@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { setSelectedMenu, getMoviesGenre } from '../actions';
+import { setSelectedMenu, getMoviesGenre, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
 import SortBy from '../components/ShortBy';
 import Loader from '../components/Loader';
@@ -14,6 +14,7 @@ const Genre = ({
   match,
   setSelectedMenu,
   getMoviesGenre,
+  clearMovies,
   movies,
   location,
 }) => {
@@ -29,7 +30,13 @@ const Genre = ({
   }, [match.params.name]);
 
   // Call hook to fetch movies of the genre
-  useFetchMoviesGenre(match.params.name, getMoviesGenre, params, sort);
+  useFetchMoviesGenre(
+    match.params.name,
+    getMoviesGenre,
+    params,
+    sort,
+    clearMovies
+  );
 
   // If loading
   if (movies.loading) {
@@ -45,9 +52,10 @@ const Genre = ({
 };
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change
-function useFetchMoviesGenre(genre, getMoviesGenre, params, sort) {
+function useFetchMoviesGenre(genre, getMoviesGenre, params, sort, clearMovies) {
   useEffect(() => {
     getMoviesGenre(genre, params.page, sort);
+    return () => clearMovies();
   }, [genre, params.page, sort]);
 }
 
@@ -58,5 +66,5 @@ const mapStateToProps = ({ geral, movies }) => {
 
 export default connect(
   mapStateToProps,
-  { setSelectedMenu, getMoviesGenre }
+  { setSelectedMenu, getMoviesGenre, clearMovies }
 )(Genre);

@@ -124,6 +124,13 @@ export const setHeader = title => {
   };
 };
 
+// Set loading to true for next render
+export const clearMovies = () => {
+  return {
+    type: TYPES.FETCH_MOVIES_LOADING,
+  };
+};
+
 // Get single movie
 export const getMovie = id => async dispatch => {
   dispatch({ type: TYPES.FETCH_MOVIE_LOADING });

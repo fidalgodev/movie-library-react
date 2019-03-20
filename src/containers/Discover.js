@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { setSelectedMenu, getMoviesDiscover } from '../actions';
+import { setSelectedMenu, getMoviesDiscover, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
 import Loader from '../components/Loader';
 
@@ -13,6 +13,7 @@ const Discover = ({
   location,
   setSelectedMenu,
   getMoviesDiscover,
+  clearMovies,
   movies,
 }) => {
   const params = queryString.parse(location.search);
@@ -26,22 +27,29 @@ const Discover = ({
   }, [match.params.name]);
 
   // Call hook to fetch movies discover, pass in the url query
-  useFetchMoviesDiscover(match.params.name, getMoviesDiscover, params);
+  useFetchMoviesDiscover(
+    match.params.name,
+    getMoviesDiscover,
+    params,
+    clearMovies
+  );
 
   // If loading
   if (movies.loading) {
     return <Loader />;
   }
 
+  console.log('loaded fast');
   // Else return movies list
   return <MoviesList movies={movies} baseUrl={base_url} />;
 };
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change
-function useFetchMoviesDiscover(name, getMoviesDiscover, params) {
+function useFetchMoviesDiscover(name, getMoviesDiscover, params, clearMovies) {
   const query = name.replace(/\s+/g, '_').toLowerCase();
   useEffect(() => {
     getMoviesDiscover(query, params.page);
+    return () => clearMovies();
   }, [query, params.page]);
 }
 
@@ -52,5 +60,5 @@ const mapStateToProps = ({ geral, movies }) => {
 
 export default connect(
   mapStateToProps,
-  { setSelectedMenu, getMoviesDiscover }
+  { setSelectedMenu, getMoviesDiscover, clearMovies }
 )(Discover);

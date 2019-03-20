@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { setHeader, getMoviesSearch } from '../actions';
+import { setHeader, getMoviesSearch, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
 import Loader from '../components/Loader';
 
@@ -12,6 +12,7 @@ const Search = ({
   location,
   setHeader,
   getMoviesSearch,
+  clearMovies,
   movies,
 }) => {
   const { query } = match.params;
@@ -28,7 +29,7 @@ const Search = ({
   }, [query]);
 
   // Fetch movies hook
-  useFetchMoviesSearch(query, getMoviesSearch, params);
+  useFetchMoviesSearch(query, getMoviesSearch, params, clearMovies);
 
   // If loading
   if (movies.loading) {
@@ -47,9 +48,10 @@ const Search = ({
 };
 
 // Hook to fetch the movies, will be called everytime the route for the search changes
-function useFetchMoviesSearch(query, getMoviesSearch, params) {
+function useFetchMoviesSearch(query, getMoviesSearch, params, clearMovies) {
   useEffect(() => {
     getMoviesSearch(query, params.page);
+    return () => clearMovies();
   }, [query, params.page]);
 }
 
@@ -60,8 +62,5 @@ const mapStateToProps = ({ geral, movies }) => {
 
 export default connect(
   mapStateToProps,
-  {
-    setHeader,
-    getMoviesSearch,
-  }
+  { setHeader, getMoviesSearch, clearMovies }
 )(Search);
