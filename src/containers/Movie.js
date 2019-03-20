@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import history from '../history';
 import queryString from 'query-string';
 
-import { getMovie, getRecommendations } from '../actions';
+import {
+  getMovie,
+  getRecommendations,
+  clearRecommendations,
+  clearMovie,
+} from '../actions';
 import Credits from '../components/Credits';
 import Loader from '../components/Loader';
 import MoviesList from '../components/MoviesList';
@@ -24,8 +29,10 @@ const Movie = ({
   match,
   movie,
   getMovie,
+  clearMovie,
   recommended,
   getRecommendations,
+  clearRecommendations,
 }) => {
   const { base_url } = geral.base.images;
   const params = queryString.parse(location.search);
@@ -33,11 +40,13 @@ const Movie = ({
   // Fetch movie id when id on url changes
   useEffect(() => {
     getMovie(match.params.id);
+    return () => clearMovie();
   }, [match.params.id]);
 
   // Fetch recommended movies everytime recommendations page change
   useEffect(() => {
     getRecommendations(match.params.id, params.page);
+    return () => clearRecommendations();
   }, [params.page]);
 
   // If loading
@@ -78,5 +87,5 @@ const mapStateToProps = ({ movie, geral, recommended }) => ({
 
 export default connect(
   mapStateToProps,
-  { getMovie, getRecommendations }
+  { getMovie, clearMovie, getRecommendations, clearRecommendations }
 )(Movie);
