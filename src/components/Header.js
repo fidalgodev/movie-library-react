@@ -7,6 +7,7 @@ import SearchBar from './SearchBar';
 const Wrapper = styled.div`
   display: flex;
   padding: 1rem;
+  height: 8rem;
   align-items: center;
   color: var(--color-primary);
 `;

@@ -13,7 +13,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 100vh;
   overflow-y: auto;
   width: 28rem;
   color: var(--color-primary-dark);

@@ -42,6 +42,10 @@ body {
   font-weight: 400;
   line-height: 1.6;
 }
+
+#root {
+  min-height: 100vh;
+}
 `;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

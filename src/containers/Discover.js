@@ -38,10 +38,10 @@ const Discover = ({
 };
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change
-function useFetchMoviesDiscover(name, cb, params) {
+function useFetchMoviesDiscover(name, getMoviesDiscover, params) {
   const query = name.replace(/\s+/g, '_').toLowerCase();
   useEffect(() => {
-    cb(query, params.page);
+    getMoviesDiscover(query, params.page);
   }, [query, params.page]);
 }
 

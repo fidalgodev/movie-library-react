@@ -22,15 +22,9 @@ const MainWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   width: 100%;
+  min-height: 100vh;
   margin-left: 28rem;
   padding: 2rem 4rem;
-`;
-
-const LoaderWrapper = styled.div`
-  display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
 `;
 
 const App = props => {
@@ -65,9 +59,9 @@ const App = props => {
       </React.Fragment>
     </Router>
   ) : (
-    <LoaderWrapper>
+    <ContentWrapper>
       <Loader />
-    </LoaderWrapper>
+    </ContentWrapper>
   );
 };
 

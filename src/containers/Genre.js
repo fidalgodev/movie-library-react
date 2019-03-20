@@ -45,10 +45,10 @@ const Genre = ({
 };
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change
-function useFetchMoviesGenre(name, cb, params, sort) {
+function useFetchMoviesGenre(genre, getMoviesGenre, params, sort) {
   useEffect(() => {
-    cb(name, params.page, sort);
-  }, [name, params.page, sort]);
+    getMoviesGenre(genre, params.page, sort);
+  }, [genre, params.page, sort]);
 }
 
 // Map State to Component Props

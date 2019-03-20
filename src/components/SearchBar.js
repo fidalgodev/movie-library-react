@@ -19,7 +19,7 @@ const Form = styled.form`
   height: 4rem;
   outline: none;
   border-radius: 10rem;
-  transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 `;
 
 const Input = styled.input`
@@ -31,7 +31,7 @@ const Input = styled.input`
   margin-left: ${props => (props.state ? '1rem' : '0rem')};
   color: var(--text-color);
   border: none;
-  transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 
   &:focus,
   &:active {
@@ -47,7 +47,6 @@ const Button = styled.button`
   line-height: 1;
   pointer-events: ${props => (props.state ? 'auto' : 'none')};
   cursor: ${props => (props.state ? 'pointer' : 'none')};
-  transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
   background-color: transparent;
   border: none;
   outline: none;

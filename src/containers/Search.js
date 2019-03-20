@@ -48,9 +48,9 @@ const Search = ({
 };
 
 // Hook to fetch the movies, will be called everytime the route for the search changes
-function useFetchMoviesSearch(query, cb, params) {
+function useFetchMoviesSearch(query, getMoviesSearch, params) {
   useEffect(() => {
-    cb(query, params.page);
+    getMoviesSearch(query, params.page);
   }, [query, params.page]);
 }
 
