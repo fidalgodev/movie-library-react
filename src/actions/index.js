@@ -153,6 +153,21 @@ export const getCredits = () => async (dispatch, getState) => {
   });
 };
 
+// Get recommended movies based on another
+export const getRecommendations = (id, page) => async dispatch => {
+  dispatch({ type: TYPES.FETCH_RECOMMENDATIONS_LOADING });
+  const res = await tmdbAPI.get(`/movie/${id}/recommendations`, {
+    params: {
+      page,
+    },
+  });
+  await dispatch({
+    type: TYPES.FETCH_RECOMMENDATIONS,
+    payload: res.data,
+  });
+  dispatch({ type: TYPES.FETCH_RECOMMENDATIONS_FINISHED });
+};
+
 // Get Person details
 export const getPerson = id => async dispatch => {
   dispatch({ type: TYPES.FETCH_PERSON_LOADING });
