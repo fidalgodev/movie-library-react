@@ -28,8 +28,8 @@ const Discover = ({
   // Call hook to fetch movies discover, pass in the url query
   useFetchMoviesDiscover(match.params.name, getMoviesDiscover, params);
 
-  //If there are no movies, still fetching, loading
-  if (Object.entries(movies).length === 0) {
+  // If loading
+  if (movies.loading) {
     return <Loader />;
   }
 

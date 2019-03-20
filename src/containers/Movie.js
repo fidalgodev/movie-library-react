@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import history from '../history';
+import Loader from '../components/Loader';
 
 import { getMovie } from '../actions';
 
@@ -24,9 +25,9 @@ const Movie = ({ geral, match, movie, getMovie }) => {
     getMovie(match.params.id);
   }, [match.params.id]);
 
-  // If empty, fetching
-  if (Object.entries(movie).length === 0) {
-    return <div> Loading...</div>;
+  // If loading
+  if (movie.loading) {
+    return <Loader />;
   }
 
   function renderBack() {

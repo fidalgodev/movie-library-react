@@ -31,8 +31,8 @@ const Genre = ({
   // Call hook to fetch movies of the genre
   useFetchMoviesGenre(match.params.name, getMoviesGenre, params, sort);
 
-  //If there are no movies, still fetching, loading
-  if (Object.entries(movies).length === 0) {
+  // If loading
+  if (movies.loading) {
     return <Loader />;
   }
 

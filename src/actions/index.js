@@ -2,6 +2,14 @@ import * as TYPES from './types';
 import tmdbAPI from '../api/tmdb';
 import history from '../history';
 
+// When app inits
+export const init = () => async dispatch => {
+  dispatch({ type: TYPES.SET_LOADING });
+  await dispatch(getConfig());
+  await dispatch(getGenres());
+  dispatch({ type: TYPES.REMOVE_LOADING });
+};
+
 // Action Creator to get the config object from the API
 export const getConfig = () => async dispatch => {
   const res = await tmdbAPI.get('/configuration');
@@ -40,18 +48,16 @@ export const setSelectedMenu = name => (dispatch, getState) => {
   }
 };
 
-// Get movies genre
+// Get movies by genre
 export const getMoviesGenre = (name, page, sort) => async (
   dispatch,
   getState
 ) => {
-  dispatch({
-    type: TYPES.CLEAR_PREVIOUS_MOVIES,
-  });
   const { selected, genres } = getState().geral;
   if (!selected) {
     return;
   }
+  dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
   const genreId = genres
     .filter(el => el.name === name)
     .map(el => el.id)
@@ -63,47 +69,46 @@ export const getMoviesGenre = (name, page, sort) => async (
       sort_by: sort,
     },
   });
-  dispatch({
+  await dispatch({
     type: TYPES.FETCH_MOVIES_GENRE,
     payload: res.data,
   });
+  dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
 };
 
 // Get movies discover
 export const getMoviesDiscover = (name, page) => async (dispatch, getState) => {
-  dispatch({
-    type: TYPES.CLEAR_PREVIOUS_MOVIES,
-  });
   const { selected } = getState().geral;
   if (!selected) {
     return;
   }
+  dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
   const res = await tmdbAPI.get(`/movie/${name}`, {
     params: {
       page,
     },
   });
-  dispatch({
+  await dispatch({
     type: TYPES.FETCH_MOVIES_DISCOVER,
     payload: res.data,
   });
+  dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
 };
 
 // Get movies search
 export const getMoviesSearch = (query, page) => async dispatch => {
-  dispatch({
-    type: TYPES.CLEAR_PREVIOUS_MOVIES,
-  });
+  dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
   const res = await tmdbAPI.get(`/search/movie`, {
     params: {
       query,
       page,
     },
   });
-  dispatch({
+  await dispatch({
     type: TYPES.FETCH_MOVIES_SEARCH,
     payload: res.data,
   });
+  dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
 };
 
 // Set header title
@@ -121,18 +126,17 @@ export const setHeader = title => {
 
 // Get single movie
 export const getMovie = id => async dispatch => {
-  dispatch({
-    type: TYPES.CLEAR_PREVIOUS_MOVIE,
-  });
+  dispatch({ type: TYPES.FETCH_MOVIE_LOADING });
   const res = await tmdbAPI.get(`/movie/${id}`);
-  dispatch({
+  await dispatch({
     type: TYPES.FETCH_MOVIE,
     payload: res.data,
   });
-  dispatch(getCredits());
+  await dispatch(getCredits());
+  dispatch({ type: TYPES.FETCH_MOVIE_FINISHED });
 };
 
-// Get credits
+// Get credits of single movie
 export const getCredits = () => async (dispatch, getState) => {
   const { id } = getState().movie;
   const res = await tmdbAPI.get(`/movie/${id}/credits`);
@@ -142,14 +146,13 @@ export const getCredits = () => async (dispatch, getState) => {
   });
 };
 
-// Get Person
+// Get Person details
 export const getPerson = id => async dispatch => {
-  dispatch({
-    type: TYPES.CLEAR_PREVIOUS_PERSON,
-  });
+  dispatch({ type: TYPES.FETCH_PERSON_LOADING });
   const res = await tmdbAPI.get(`/person/${id}`);
-  dispatch({
+  await dispatch({
     type: TYPES.FETCH_PERSON,
     payload: res.data,
   });
+  dispatch({ type: TYPES.FETCH_PERSON_FINISHED });
 };

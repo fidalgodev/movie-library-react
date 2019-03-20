@@ -3,18 +3,18 @@ import styled from 'styled-components';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import history from '../history';
 import { connect } from 'react-redux';
-import { getConfig, getGenres } from '../actions';
+import { init } from '../actions';
 
-import Sidebar from '../containers/Sidebar';
-import Discover from '../containers/Discover';
-import Genre from '../containers/Genre';
-import Search from '../containers/Search';
-import Movie from '../containers/Movie';
-import Cast from '../containers/Cast';
+import Sidebar from './Sidebar';
+import Discover from './Discover';
+import Genre from './Genre';
+import Search from './Search';
+import Movie from './Movie';
+import Cast from './Cast';
 
-import NotFound from './NotFound';
-import Header from './Header';
-import Loader from './Loader';
+import NotFound from '../components/NotFound';
+import Header from '../components/Header';
+import Loader from '../components/Loader';
 
 const MainWrapper = styled.div`
   display: flex;
@@ -27,13 +27,15 @@ const ContentWrapper = styled.div`
   padding: 2rem 4rem;
 `;
 
-const App = props => {
+const App = ({ init, isLoading }) => {
   useEffect(() => {
-    props.getConfig();
-    props.getGenres();
+    init();
   }, []);
-
-  return props.base && props.genres ? (
+  return isLoading ? (
+    <ContentWrapper>
+      <Loader />
+    </ContentWrapper>
+  ) : (
     <Router history={history}>
       <React.Fragment>
         <MainWrapper>
@@ -58,18 +60,14 @@ const App = props => {
         </MainWrapper>
       </React.Fragment>
     </Router>
-  ) : (
-    <ContentWrapper>
-      <Loader />
-    </ContentWrapper>
   );
 };
 
 const mapStateToProps = ({ geral }) => {
-  return { base: geral.base, genres: geral.genres };
+  return { isLoading: geral.loading };
 };
 
 export default connect(
   mapStateToProps,
-  { getConfig, getGenres }
+  { init }
 )(App);

@@ -12,7 +12,7 @@ const MoviesWrapper = styled.div`
   margin-top: 4rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 25rem));
-  justify-content: space-around;
+  justify-content: space-between;
   align-content: space-between;
   align-items: start;
   grid-gap: 4rem 2rem;

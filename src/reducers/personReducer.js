@@ -1,11 +1,13 @@
 import * as TYPES from '../actions/types';
 
-export default (state = {}, action) => {
+export default (state = { loading: true }, action) => {
   switch (action.type) {
     case TYPES.FETCH_PERSON:
-      return action.payload;
-    case TYPES.CLEAR_PREVIOUS_PERSON:
-      return {};
+      return { ...state, ...action.payload };
+    case TYPES.FETCH_PERSON_LOADING:
+      return { ...state, loading: true };
+    case TYPES.FETCH_PERSON_FINISHED:
+      return { ...state, loading: false };
     default:
       return state;
   }

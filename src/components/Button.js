@@ -56,7 +56,7 @@ function getIcon(icon) {
 
 const Button = ({ to, title, solid, icon, left }) => {
   return (
-    <StyledButton to={to} left={left} solid={solid}>
+    <StyledButton to={to} left={left ? 1 : 0} solid={solid ? 1 : 0}>
       <FontAwesomeIcon
         icon={getIcon(icon)}
         size="1x"

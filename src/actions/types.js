@@ -1,17 +1,39 @@
 // TYPES AS CONST SO ITS EASIER TO SPOT ERRORS
+
+// Get basic cfg obj from API and Genres for the sidebar
 export const GET_CONFIG = 'GET_CONFIG';
 export const GET_GENRES = 'GET_GENRES';
+
+// Set the selected menu on sidebar is valid
 export const SELECTED_MENU = 'SELECTED_MENU';
+export const REMOVE_SELECTED_MENU = 'REMOVE_SELECTED_MENU';
+
+// Fetching
 export const FETCH_MOVIE = 'FETCH_MOVIE';
 export const FETCH_CAST = 'FETCH_CAST';
 export const FETCH_MOVIES_GENRE = 'FETCH_MOVIES_GENRE';
 export const FETCH_MOVIES_DISCOVER = 'FETCH_MOVIES_DISCOVER';
 export const FETCH_MOVIES_SEARCH = 'FETCH_MOVIES_SEARCH';
 export const FETCH_MOVIES_RECOMMENDED = 'FETCH_MOVIES_RECOMMENDED';
+export const FETCH_PERSON = 'FETCH_PERSON';
+
+// Header of the App
 export const SET_HEADER = 'SET_HEADER';
 export const REMOVE_HEADER = 'REMOVE_HEADER';
-export const REMOVE_SELECTED_MENU = 'REMOVE_SELECTED_MENU';
-export const CLEAR_PREVIOUS_MOVIES = 'CLEAR_PREVIOUS_MOVIES';
-export const CLEAR_PREVIOUS_MOVIE = 'CLEAR_PREVIOUS_MOVIE';
-export const FETCH_PERSON = 'FETCH_PERSON';
-export const CLEAR_PREVIOUS_PERSON = 'CLEAR_PREVIOUS_PERSON';
+
+// LOADINGS
+// geral loading
+export const SET_LOADING = 'SET_LOADING';
+export const REMOVE_LOADING = 'REMOVE_LOADING';
+
+// movies loading
+export const FETCH_MOVIES_LOADING = 'FETCH_MOVIES_LOADING';
+export const FETCH_MOVIES_FINISHED = 'FETCH_MOVIES_FINISHED';
+
+// single movie loading
+export const FETCH_MOVIE_LOADING = 'FETCH_MOVIE_LOADING';
+export const FETCH_MOVIE_FINISHED = 'FETCH_MOVIE_FINISHED';
+
+// fetching person loading
+export const FETCH_PERSON_LOADING = 'FETCH_PERSON_LOADING';
+export const FETCH_PERSON_FINISHED = 'FETCH_PERSON_FINISHED';

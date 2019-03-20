@@ -17,7 +17,6 @@ const Search = ({
   const { query } = match.params;
   const params = queryString.parse(location.search);
   const { base_url } = geral.base.images;
-
   // Change Header everytime query change
   useEffect(() => {
     const title = `Search results for: ${query}`;
@@ -31,8 +30,8 @@ const Search = ({
   // Fetch movies hook
   useFetchMoviesSearch(query, getMoviesSearch, params);
 
-  //If there are no movies, still fetching, loading
-  if (Object.entries(movies).length === 0) {
+  // If loading
+  if (movies.loading) {
     return <Loader />;
   }
 
