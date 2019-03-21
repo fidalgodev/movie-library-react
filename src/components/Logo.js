@@ -3,25 +3,25 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
+import LogoSvg from '../svg/logo.svg';
 
-const LogoWrapper = styled(FontAwesomeIcon)`
-  display: flex;
-  margin: 0 auto;
-  font-size: 6rem;
-  text-transform: uppercase;
-  color: var(--color-primary);
+const LogoWrapper = styled.img`
+  max-width: 100%;
 `;
 
 const LinkWrapper = styled(Link)`
   width: 100%;
+  min-height: 18rem;
+  display: flex;
   text-decoration: none;
+  margin: 2rem 0rem;
   padding: 2rem 3rem;
 `;
 
 const Logo = () => {
   return (
     <LinkWrapper to="/">
-      <LogoWrapper icon={faFilm} />
+      <LogoWrapper src={LogoSvg} />
     </LinkWrapper>
   );
 };

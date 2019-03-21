@@ -161,7 +161,10 @@ const MovieItem = ({ movie, baseUrl }) => {
       <MovieImg
         error={error ? 1 : 0}
         src={`${baseUrl}w780${movie.poster_path}`}
+        // Image loaded, set loaded to true
         onLoad={() => setLoaded(true)}
+        // If no image, error will occurr, we set error to true
+        // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
         onError={e => {
           setError(true);
           if (e.target.src !== `${NothingSvg}`) {
@@ -188,6 +191,7 @@ const MovieItem = ({ movie, baseUrl }) => {
   );
 };
 
+// Function to get the year only from the date string
 function splitYear(date) {
   const [year] = date.split('-');
   return year;

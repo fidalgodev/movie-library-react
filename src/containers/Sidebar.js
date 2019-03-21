@@ -16,7 +16,6 @@ const Wrapper = styled.div`
   overflow-y: auto;
   width: 28rem;
   color: var(--color-primary-dark);
-  margin: 2rem 0;
 `;
 
 const Heading = styled.h2`
