@@ -39,7 +39,6 @@ const Discover = ({
     return <Loader />;
   }
 
-  console.log('loaded fast');
   // Else return movies list
   return <MoviesList movies={movies} baseUrl={base_url} />;
 };

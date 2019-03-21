@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import NotfoundSvg from '../svg/empty.svg';
 
 import Button from './Button';
 
@@ -42,7 +43,7 @@ const NotFound = () => {
         <Title>Upps!</Title>
         <SubTitle>This doesn't exist...</SubTitle>
       </TitleWrapper>
-      <Svg src="./svg/empty.svg" alt="Not found" />
+      <Svg src={`${NotfoundSvg}`} alt="Not found" />
       <Button to="/" title="Home" solid icon="faHome" left />
     </Wrapper>
   );
