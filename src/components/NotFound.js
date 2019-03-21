@@ -36,12 +36,13 @@ const Svg = styled.img`
   height: 50vh;
 `;
 
-const NotFound = () => {
+const NotFound = ({ title, subtitle }) => {
+  console.log(title);
   return (
     <Wrapper>
       <TitleWrapper>
-        <Title>Upps!</Title>
-        <SubTitle>This doesn't exist...</SubTitle>
+        <Title>{title}</Title>
+        <SubTitle>{subtitle}</SubTitle>
       </TitleWrapper>
       <Svg src={`${NotfoundSvg}`} alt="Not found" />
       <Button to="/" title="Home" solid icon="faHome" left />

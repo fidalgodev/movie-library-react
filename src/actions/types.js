@@ -18,10 +18,6 @@ export const FETCH_MOVIES_RECOMMENDED = 'FETCH_MOVIES_RECOMMENDED';
 export const FETCH_PERSON = 'FETCH_PERSON';
 export const FETCH_RECOMMENDATIONS = 'FETCH_RECOMMENDATIONS';
 
-// Header of the App
-export const SET_HEADER = 'SET_HEADER';
-export const REMOVE_HEADER = 'REMOVE_HEADER';
-
 // LOADINGS
 // geral loading
 export const SET_LOADING = 'SET_LOADING';

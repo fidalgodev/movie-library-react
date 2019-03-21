@@ -61,21 +61,19 @@ const Movie = ({
   }
 
   return (
-    <div>
-      <MovieWrapper>
-        <h1>{movie.original_title}</h1>
-        <MovieImg src={`${base_url}w780${movie.poster_path}`} />
-        <p>{movie.overview}</p>
-        <Credits cast={movie.cast} baseUrl={base_url} />
-        {renderBack()}
-        <h1> Recommended movies based on this:</h1>
-        {recommended.loading ? (
-          <Loader />
-        ) : (
-          <MoviesList movies={recommended} baseUrl={base_url} />
-        )}
-      </MovieWrapper>
-    </div>
+    <MovieWrapper>
+      <h1>{movie.original_title}</h1>
+      <MovieImg src={`${base_url}w780${movie.poster_path}`} />
+      <p>{movie.overview}</p>
+      <Credits cast={movie.cast} baseUrl={base_url} />
+      {renderBack()}
+      <h1> Recommended movies based on this:</h1>
+      {recommended.loading ? (
+        <Loader />
+      ) : (
+        <MoviesList movies={recommended} baseUrl={base_url} />
+      )}
+    </MovieWrapper>
   );
 };
 

@@ -13,7 +13,7 @@ import Movie from './Movie';
 import Cast from './Cast';
 
 import NotFound from '../components/NotFound';
-import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
 import Loader from '../components/Loader';
 
 const MainWrapper = styled.div`
@@ -41,7 +41,7 @@ const App = ({ init, isLoading }) => {
         <MainWrapper>
           <Sidebar />
           <ContentWrapper>
-            <Header />
+            <SearchBar />
             <Switch>
               <Route
                 path="/"
@@ -53,8 +53,17 @@ const App = ({ init, isLoading }) => {
               <Route path="/search/:query" exact component={Search} />
               <Route path="/movie/:id" exact component={Movie} />
               <Route path="/cast/:id" exact component={Cast} />
-              <Route path="/404" component={NotFound} />
-              <Route component={NotFound} />
+              <Route
+                path="/404"
+                component={() => (
+                  <NotFound title="Upps!" subtitle={`This doesn't exist...`} />
+                )}
+              />
+              <Route
+                component={() => (
+                  <NotFound title="Upps!" subtitle={`This doesn't exist...`} />
+                )}
+              />
             </Switch>
           </ContentWrapper>
         </MainWrapper>

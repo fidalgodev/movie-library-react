@@ -33,7 +33,6 @@ export const setSelectedMenu = name => (dispatch, getState) => {
   const { staticCategories, genres } = getState().geral;
   if (!name) {
     dispatch({ type: TYPES.REMOVE_SELECTED_MENU });
-    dispatch(setHeader());
   } else if (
     staticCategories.find(category => category === name) ||
     genres.find(genre => genre.name === name)
@@ -42,7 +41,6 @@ export const setSelectedMenu = name => (dispatch, getState) => {
       type: TYPES.SELECTED_MENU,
       payload: name,
     });
-    dispatch(setHeader(name));
   } else {
     history.push('/404');
   }
@@ -109,19 +107,6 @@ export const getMoviesSearch = (query, page) => async dispatch => {
     payload: res.data,
   });
   dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
-};
-
-// Set header title
-export const setHeader = title => {
-  if (!title) {
-    return {
-      type: TYPES.REMOVE_HEADER,
-    };
-  }
-  return {
-    type: TYPES.SET_HEADER,
-    payload: title,
-  };
 };
 
 // Set loading to true for next render

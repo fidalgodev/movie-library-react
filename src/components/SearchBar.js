@@ -5,6 +5,13 @@ import history from '../history';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
+const SearhBarWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2rem;
+`;
+
 const Form = styled.form`
   position: relative;
   display: flex;
@@ -90,26 +97,28 @@ const SearchBar = () => {
   }
 
   return (
-    <Form
-      state={state}
-      onClick={() => {
-        setState(true);
-        inputFocus.current.focus();
-      }}
-      onSubmit={onFormSubmit}
-      ref={node}
-    >
-      <Button type="submit" state={state}>
-        <FontAwesomeIcon icon={faSearch} size="1x" />
-      </Button>
-      <Input
-        onChange={e => setInput(e.target.value)}
-        ref={inputFocus}
-        value={input}
+    <SearhBarWrapper>
+      <Form
         state={state}
-        placeholder="Search for a movie..."
-      />
-    </Form>
+        onClick={() => {
+          setState(true);
+          inputFocus.current.focus();
+        }}
+        onSubmit={onFormSubmit}
+        ref={node}
+      >
+        <Button type="submit" state={state}>
+          <FontAwesomeIcon icon={faSearch} size="1x" />
+        </Button>
+        <Input
+          onChange={e => setInput(e.target.value)}
+          ref={inputFocus}
+          value={input}
+          state={state}
+          placeholder="Search for a movie..."
+        />
+      </Form>
+    </SearhBarWrapper>
   );
 };
 

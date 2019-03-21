@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
+import Header from '../components/Header';
 
 import { setSelectedMenu, getMoviesGenre, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
@@ -45,6 +46,7 @@ const Genre = ({
 
   return (
     <React.Fragment>
+      <Header title={geral.selected} subtitle="movies" />
       <SortBy changeSort={setsort} />
       <MoviesList movies={movies} baseUrl={base_url} />
     </React.Fragment>

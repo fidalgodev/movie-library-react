@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
+import Header from '../components/Header';
 
 import { setSelectedMenu, getMoviesDiscover, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
@@ -19,7 +20,7 @@ const Discover = ({
   const params = queryString.parse(location.search);
   const { base_url } = geral.base.images;
 
-  // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
+  // Send url to setSelected Action Creator, it will check if is valid
   useEffect(() => {
     setSelectedMenu(match.params.name);
     // Clean up to remove selected menu from state
@@ -40,7 +41,12 @@ const Discover = ({
   }
 
   // Else return movies list
-  return <MoviesList movies={movies} baseUrl={base_url} />;
+  return (
+    <React.Fragment>
+      <Header title={geral.selected} subtitle="movies" />
+      <MoviesList movies={movies} baseUrl={base_url} />;
+    </React.Fragment>
+  );
 };
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change
