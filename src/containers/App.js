@@ -25,6 +25,7 @@ const ContentWrapper = styled.div`
   min-height: 100vh;
   margin-left: 28rem;
   padding: 2rem 4rem;
+  position: relative;
 `;
 
 const App = ({ init, isLoading }) => {

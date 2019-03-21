@@ -191,7 +191,7 @@ const MovieItem = ({ movie, baseUrl }) => {
   );
 };
 
-// Function to get the year only from the date string
+// Function to get the year only from the date
 function splitYear(date) {
   const [year] = date.split('-');
   return year;
