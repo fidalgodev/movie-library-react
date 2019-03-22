@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import NotfoundSvg from '../svg/empty.svg';
+import { Link } from 'react-router-dom';
 
+import NotfoundSvg from '../svg/empty.svg';
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -31,6 +32,10 @@ const SubTitle = styled.h2`
   font-size: 1.8rem;
 `;
 
+const LinkWrapper = styled(Link)`
+  text-decoration: none;
+`;
+
 const Svg = styled.img`
   max-width: 100%;
   height: 50vh;
@@ -45,7 +50,9 @@ const NotFound = ({ title, subtitle }) => {
         <SubTitle>{subtitle}</SubTitle>
       </TitleWrapper>
       <Svg src={`${NotfoundSvg}`} alt="Not found" />
-      <Button to="/" title="Home" solid icon="home" left />
+      <LinkWrapper to="/">
+        <Button title="Home" solid icon="home" left />
+      </LinkWrapper>
     </Wrapper>
   );
 };

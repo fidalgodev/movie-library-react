@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import Button from './Button';
 
-const Wrapper = styled.div`
+const Wrapper = styled(Link)`
   display: flex;
   align-items: center;
+  text-decoration: none;
   justify-content: ${props => {
     if (props.type === 'one') {
       return 'flex-start';
@@ -20,16 +23,16 @@ const Wrapper = styled.div`
 const Pagination = ({ movies }) => {
   const { page, total_pages } = movies;
 
+  // If only 1 page
+  if (total_pages === 1) {
+    return null;
+  }
+
   // On first page, render page 2 button
   if (page < total_pages && page === 1) {
     return (
-      <Wrapper>
-        <Button
-          to={`?page=${page + 1}`}
-          solid
-          title={`Page ${page + 1}`}
-          icon="arrow-right"
-        />
+      <Wrapper to={`?page=${page + 1}`}>
+        <Button solid title={`Page ${page + 1}`} icon="arrow-right" />
       </Wrapper>
     );
   }
@@ -37,14 +40,8 @@ const Pagination = ({ movies }) => {
   // There is a next and a previous page, render accordingly
   else if (page < total_pages) {
     return (
-      <Wrapper type="both">
-        <Button
-          to={`?page=${page - 1}`}
-          solid
-          left
-          title={`Page ${page - 1}`}
-          icon="arrow-left"
-        />
+      <Wrapper type="both" to={`?page=${page - 1}`}>
+        <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
         <Button
           to={`?page=${page + 1}`}
           solid
@@ -58,14 +55,8 @@ const Pagination = ({ movies }) => {
   // Otherwise on last page of results
   else {
     return (
-      <Wrapper type="one">
-        <Button
-          to={`?page=${page - 1}`}
-          solid
-          left
-          title={`Page ${page - 1}`}
-          icon="arrow-left"
-        />
+      <Wrapper type="one" to={`?page=${page - 1}`}>
+        <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
       </Wrapper>
     );
   }

@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const StyledButton = styled(Link)`
+const StyledButton = styled.button`
   display: flex;
   flex-direction: ${props => (props.left ? 'row' : 'row-reverse')};
   align-items: center;
@@ -38,10 +37,9 @@ const StyledButton = styled(Link)`
   }
 `;
 
-const Button = ({ to, title, solid, icon, left }) => {
-  console.log(icon);
+const Button = ({ title, solid, icon, left }) => {
   return (
-    <StyledButton to={to} left={left ? 1 : 0} solid={solid ? 1 : 0}>
+    <StyledButton left={left ? 1 : 0} solid={solid ? 1 : 0}>
       <FontAwesomeIcon
         icon={icon}
         size="1x"
