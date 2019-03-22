@@ -16,8 +16,32 @@ import NotFound from '../components/NotFound';
 import SearchBar from '../components/SearchBar';
 import Loader from '../components/Loader';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import {
+  faArrowLeft,
+  faArrowRight,
+  faHome,
+  faCalendar,
+  faPoll,
+  faHeart,
+  faDotCircle,
+} from '@fortawesome/free-solid-svg-icons';
+
+library.add(
+  fab,
+  faArrowLeft,
+  faArrowRight,
+  faHome,
+  faCalendar,
+  faPoll,
+  faHeart,
+  faDotCircle
+);
+
 const MainWrapper = styled.div`
   display: flex;
+  user-select: none;
 `;
 
 const ContentWrapper = styled.div`

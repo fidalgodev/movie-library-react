@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import history from '../history';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
+import NothingSvg from '../svg/nothing.svg';
+import Header from '../components/Header';
+import Button from '../components/Button';
 
 import Stars from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -61,8 +64,10 @@ const MovieWrapper = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 120rem;
-  margin: 0 auto;
-  margin-top: 2rem;
+  margin: 2rem auto;
+  opacity: ${props => (props.loaded ? '1' : '0')};
+  visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
+  transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
 `;
 
 const MovieDetails = styled.div`
@@ -79,10 +84,11 @@ const ImageWrapper = styled.div`
 
 const MovieImg = styled.img`
   max-height: 100%;
-  height: auto;
+  height: ${props => (props.error ? '58rem' : 'auto')};
+  object-fit: ${props => (props.error ? 'contain' : 'cover')};
+  padding: ${props => (props.error ? '4rem' : '')};
   max-width: 100%;
   border-radius: 0.8rem;
-  object-fit: cover;
   box-shadow: 0rem 2rem 5rem var(--shadow-color-dark);
 `;
 
@@ -165,6 +171,8 @@ const Movie = ({
   getRecommendations,
   clearRecommendations,
 }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const { base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
@@ -187,15 +195,31 @@ const Movie = ({
 
   function renderBack() {
     if (history.action === 'PUSH') {
-      return <button onClick={history.goBack}>Back</button>;
+      return (
+        <Button solid left to={''} onClick={history.goBack}>
+          Back
+        </Button>
+      );
     }
   }
 
   return (
     <React.Fragment>
-      <MovieWrapper>
+      <MovieWrapper loaded={loaded ? 1 : 0}>
         <ImageWrapper>
-          <MovieImg src={`${base_url}original${movie.poster_path}`} />
+          <MovieImg
+            error={error ? 1 : 0}
+            src={`${base_url}original${movie.poster_path}`}
+            onLoad={() => setLoaded(true)}
+            // If no image, error will occurr, we set error to true
+            // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
+            onError={e => {
+              setError(true);
+              if (e.target.src !== `${NothingSvg}`) {
+                e.target.src = `${NothingSvg}`;
+              }
+            }}
+          />
         </ImageWrapper>
         <MovieDetails>
           <HeaderWrapper>
@@ -239,7 +263,7 @@ const Movie = ({
           {renderBack()}
         </MovieDetails>
       </MovieWrapper>
-      <h1> Recommended movies based on this:</h1>
+      <Header title="Recommended" subtitle="movies" />
       {recommended.loading ? (
         <Loader />
       ) : (

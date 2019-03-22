@@ -2,11 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowLeft,
-  faArrowRight,
-  faHome,
-} from '@fortawesome/free-solid-svg-icons';
 
 const StyledButton = styled(Link)`
   display: flex;
@@ -43,22 +38,12 @@ const StyledButton = styled(Link)`
   }
 `;
 
-function getIcon(icon) {
-  switch (icon) {
-    case 'faArrowRight':
-      return faArrowRight;
-    case 'faArrowLeft':
-      return faArrowLeft;
-    default:
-      return faHome;
-  }
-}
-
 const Button = ({ to, title, solid, icon, left }) => {
+  console.log(icon);
   return (
     <StyledButton to={to} left={left ? 1 : 0} solid={solid ? 1 : 0}>
       <FontAwesomeIcon
-        icon={getIcon(icon)}
+        icon={icon}
         size="1x"
         style={left ? { marginRight: '10px' } : { marginLeft: '10px' }}
       />

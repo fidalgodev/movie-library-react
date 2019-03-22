@@ -45,7 +45,7 @@ const NotFound = ({ title, subtitle }) => {
         <SubTitle>{subtitle}</SubTitle>
       </TitleWrapper>
       <Svg src={`${NotfoundSvg}`} alt="Not found" />
-      <Button to="/" title="Home" solid icon="faHome" left />
+      <Button to="/" title="Home" solid icon="home" left />
     </Wrapper>
   );
 };
