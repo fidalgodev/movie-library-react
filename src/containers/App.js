@@ -26,7 +26,10 @@ import {
   faPoll,
   faHeart,
   faDotCircle,
+  faStar as fasFaStar,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons';
 
 library.add(
   fab,
@@ -36,7 +39,10 @@ library.add(
   faCalendar,
   faPoll,
   faHeart,
-  faDotCircle
+  faDotCircle,
+  fasFaStar,
+  farFaStar,
+  faSearch
 );
 
 const MainWrapper = styled.div`

@@ -6,15 +6,9 @@ import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import NothingSvg from '../svg/nothing.svg';
 import Header from '../components/Header';
-import Button from '../components/Button';
 
 import Stars from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faStar as starSolid,
-  faDotCircle,
-} from '@fortawesome/free-solid-svg-icons';
-import { faStar as starRegular } from '@fortawesome/free-regular-svg-icons';
 
 import {
   getMovie,
@@ -195,11 +189,7 @@ const Movie = ({
 
   function renderBack() {
     if (history.action === 'PUSH') {
-      return (
-        <Button solid left to={''} onClick={history.goBack}>
-          Back
-        </Button>
-      );
+      return <button onClick={history.goBack}>Back</button>;
     }
   }
 
@@ -231,14 +221,14 @@ const Movie = ({
               <Rating
                 emptySymbol={
                   <FontAwesome
-                    icon={starRegular}
+                    icon={['far', 'star']}
                     size="lg"
                     style={{ marginRight: '10px' }}
                   />
                 }
                 fullSymbol={
                   <FontAwesome
-                    icon={starSolid}
+                    icon={['fas', 'star']}
                     size="lg"
                     style={{ marginRight: '10px' }}
                   />
@@ -283,7 +273,7 @@ function renderGenres(genres) {
   return genres.map(genre => (
     <StyledLink to={`/genres/${genre.name}`} key={genre.id}>
       <FontAwesomeIcon
-        icon={faDotCircle}
+        icon="dot-circle"
         size="1x"
         style={{ marginRight: '5px' }}
       />

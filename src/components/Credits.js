@@ -44,7 +44,7 @@ const Credits = ({ cast, baseUrl }) => {
         numberOfCards={totalShow}
         gutter={10}
         showSlither={false}
-        firstAndLastGutter={true}
+        firstAndLastGutter={false}
         freeScrolling={false}
         // Active item configurations
         requestToChangeActive={changeActiveItem}

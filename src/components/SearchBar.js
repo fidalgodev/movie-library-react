@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import history from '../history';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const SearhBarWrapper = styled.div`
   position: absolute;
@@ -108,7 +107,7 @@ const SearchBar = () => {
         ref={node}
       >
         <Button type="submit" state={state}>
-          <FontAwesomeIcon icon={faSearch} size="1x" />
+          <FontAwesomeIcon icon={'search'} size="1x" />
         </Button>
         <Input
           onChange={e => setInput(e.target.value)}
