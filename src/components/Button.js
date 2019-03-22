@@ -7,8 +7,9 @@ const StyledButton = styled.button`
   flex-direction: ${props => (props.left ? 'row' : 'row-reverse')};
   align-items: center;
   text-decoration: none;
+  outline: none;
   cursor: pointer;
-  padding: 1.5rem 2rem;
+  padding: 1.2rem 3rem;
   line-height: 1;
   font-weight: 500;
   font-size: 1.3rem;
@@ -23,17 +24,27 @@ const StyledButton = styled.button`
   background-color: ${props =>
     props.solid ? 'var(--color-primary-dark)' : 'transparent'};
   border-radius: 5rem;
+  box-shadow: ${props =>
+    props.solid ? '0 1rem 5rem var(--shadow-color)' : 'none'};
   transition: all 600ms cubic-bezier(0.075, 0.82, 0.165, 1);
-  box-shadow: 0 1rem 5rem var(--shadow-color);
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 2rem 5rem var(--shadow-color);
+    background-color: ${props =>
+      props.solid ? 'transparent' : 'var(--color-primary-dark)'};
+    color: ${props =>
+      props.solid ? 'var(--color-primary-dark)' : 'var(--text-color)'};
+    border: ${props =>
+      props.solid
+        ? '1px solid var(--color-primary-dark)'
+        : '1px solid transparent'};
+    box-shadow: ${props =>
+      props.solid ? 'none' : '0 1rem 5rem var(--shadow-color)'};
+    transition: all 600ms cubic-bezier(0.075, 0.82, 0.165, 1);
   }
 
   &:active {
     transform: translateY(2px);
-    box-shadow: 0 2rem 5rem var(--shadow-color-dark);
   }
 `;
 

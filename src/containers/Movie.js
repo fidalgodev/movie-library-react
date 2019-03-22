@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import history from '../history';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
-import NothingSvg from '../svg/nothing.svg';
-import Header from '../components/Header';
-import Rating from '../components/Rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import Rating from '../components/Rating';
+import Header from '../components/Header';
 import {
   getMovie,
   getRecommendations,
@@ -18,13 +17,15 @@ import {
 import Credits from '../components/Credits';
 import Loader from '../components/Loader';
 import MoviesList from '../components/MoviesList';
+import Button from '../components/Button';
+import NothingSvg from '../svg/nothing.svg';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   display: block;
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   line-height: 1;
   color: var(--color-primary-light);
@@ -33,7 +34,7 @@ const StyledLink = styled(Link)`
   transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
   &:not(:last-child) {
-    margin-right: 3rem;
+    margin-right: 2rem;
   }
 
   &:hover {
@@ -53,7 +54,7 @@ const LinksWrapper = styled.div`
 
 const MovieWrapper = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   width: 100%;
   max-width: 120rem;
@@ -139,6 +140,15 @@ const ButtonsWrapper = styled.div`
 
 const LeftButtons = styled.div`
   margin-right: auto;
+  display: flex;
+
+  & > *:not(:last-child) {
+    margin-right: 2rem;
+  }
+`;
+
+const AWrapper = styled.a`
+  text-decoration: none;
 `;
 
 const Movie = ({
@@ -176,9 +186,35 @@ const Movie = ({
 
   function renderBack() {
     if (history.action === 'PUSH') {
-      return <button onClick={history.goBack}>Back</button>;
+      return (
+        <div onClick={history.goBack}>
+          <Button title="Go back" solid left icon="arrow-left" />
+        </div>
+      );
     }
   }
+
+  const renderWebsite = link => {
+    if (!link) {
+      return null;
+    }
+    return (
+      <AWrapper target="_blank" href={link}>
+        <Button title="Website" icon="link" />
+      </AWrapper>
+    );
+  };
+
+  const renderImdb = id => {
+    if (!id) {
+      return null;
+    }
+    return (
+      <AWrapper target="_blank" href={`https://www.imdb.com/title/${id}`}>
+        <Button title="IMDB" icon={['fab', 'imdb']} />
+      </AWrapper>
+    );
+  };
 
   return (
     <React.Fragment>
@@ -220,7 +256,10 @@ const Movie = ({
           <Heading>The Cast</Heading>
           <Credits cast={movie.cast} baseUrl={base_url} />
           <ButtonsWrapper>
-            <LeftButtons>dwadwa</LeftButtons>
+            <LeftButtons>
+              {renderWebsite(movie.homepage)}
+              {renderImdb(movie.imdb_id)}
+            </LeftButtons>
             {renderBack()}
           </ButtonsWrapper>
         </MovieDetails>

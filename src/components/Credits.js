@@ -4,12 +4,10 @@ import Loader from './Loader';
 import CastItem from './CastItem';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronRight,
-  faChevronLeft,
-} from '@fortawesome/free-solid-svg-icons';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  margin-bottom: 5rem;
+`;
 
 const Credits = ({ cast, baseUrl }) => {
   if (!cast) {
@@ -51,8 +49,8 @@ const Credits = ({ cast, baseUrl }) => {
         activeItemIndex={currentItem}
         activePosition={'center'}
         chevronWidth={25}
-        rightChevron={<FontAwesomeIcon icon={faChevronRight} size="1x" />}
-        leftChevron={<FontAwesomeIcon icon={faChevronLeft} size="1x" />}
+        rightChevron={<FontAwesomeIcon icon={'chevron-right'} size="1x" />}
+        leftChevron={<FontAwesomeIcon icon={'chevron-left'} size="1x" />}
         outsideChevron={true}
       >
         {items}
