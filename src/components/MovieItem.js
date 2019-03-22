@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import NothingSvg from '../svg/nothing.svg';
 
-import Stars from 'react-rating';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NothingSvg from '../svg/nothing.svg';
+import Rating from '../components/Rating';
 
 const MovieWrapper = styled(Link)`
   display: flex;
@@ -86,16 +85,8 @@ const RatingsWrapper = styled.div`
   display: flex;
   position: relative;
   align-items: center;
-`;
-
-const Rating = styled(Stars)`
-  line-height: 1;
   margin-bottom: 0.5rem;
-`;
-
-const FontAwesome = styled(FontAwesomeIcon)`
   color: var(--color-primary);
-  transition: color 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 
   ${MovieWrapper}:hover & {
     color: var(--color-primary-lighter);
@@ -173,12 +164,7 @@ const MovieItem = ({ movie, baseUrl }) => {
       <DetailsWrapper>
         <Title>{movie.title}</Title>
         <RatingsWrapper>
-          <Rating
-            emptySymbol={<FontAwesome icon={['far', 'star']} size="1x" />}
-            fullSymbol={<FontAwesome icon={['fas', 'star']} size="1x" />}
-            initialRating={movie.vote_average / 2}
-            readonly
-          />
+          <Rating number={movie.vote_average / 2} />
           <Tooltip>
             {movie.vote_average} average rating on {movie.vote_count} votes
           </Tooltip>

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import MovieItem from './MovieItem';
@@ -8,7 +8,7 @@ const MoviesWrapper = styled.div`
   margin-top: 4rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 25rem));
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-content: space-between;
   align-items: start;
   grid-gap: 4rem 2rem;
@@ -16,6 +16,10 @@ const MoviesWrapper = styled.div`
 `;
 
 const MoviesList = ({ movies, baseUrl }) => {
+  if (movies.results.length === 0) {
+    return null;
+  }
+
   return (
     <React.Fragment>
       <MoviesWrapper>

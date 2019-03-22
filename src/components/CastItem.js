@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
 import NoUser from '../svg/user.svg';
 
 const LinkWrapper = styled(Link)`

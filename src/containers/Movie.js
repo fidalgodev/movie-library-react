@@ -6,8 +6,7 @@ import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import NothingSvg from '../svg/nothing.svg';
 import Header from '../components/Header';
-
-import Stars from 'react-rating';
+import Rating from '../components/Rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
@@ -90,21 +89,6 @@ const HeaderWrapper = styled.div`
   margin: 2rem 0rem;
 `;
 
-const Title = styled.h1`
-  text-transform: uppercase;
-  font-weight: 300;
-  font-size: 3rem;
-  line-height: 1;
-  color: var(--color-primary);
-`;
-
-const SubTitle = styled.h2`
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: var(--color-primary);
-`;
-
 const Heading = styled.h3`
   color: var(--color-primary-dark);
   font-weight: 700;
@@ -124,18 +108,10 @@ const RatingsWrapper = styled.div`
   margin-right: auto;
 `;
 
-const Rating = styled(Stars)`
-  line-height: 1;
-`;
-
 const RatingNumber = styled.p`
   font-size: 1.3rem;
   line-height: 1;
   font-weight: 700;
-  color: var(--color-primary);
-`;
-
-const FontAwesome = styled(FontAwesomeIcon)`
   color: var(--color-primary);
 `;
 
@@ -213,29 +189,11 @@ const Movie = ({
         </ImageWrapper>
         <MovieDetails>
           <HeaderWrapper>
-            <Title>{movie.title}</Title>
-            <SubTitle>{movie.tagline}</SubTitle>
+            <Header size="2" title={movie.title} subtitle={movie.tagline} />
           </HeaderWrapper>
           <DetailsWrapper>
             <RatingsWrapper>
-              <Rating
-                emptySymbol={
-                  <FontAwesome
-                    icon={['far', 'star']}
-                    size="lg"
-                    style={{ marginRight: '10px' }}
-                  />
-                }
-                fullSymbol={
-                  <FontAwesome
-                    icon={['fas', 'star']}
-                    size="lg"
-                    style={{ marginRight: '10px' }}
-                  />
-                }
-                initialRating={movie.vote_average / 2}
-                readonly
-              />
+              <Rating number={movie.vote_average / 2} />
               <RatingNumber>{movie.vote_average} </RatingNumber>
             </RatingsWrapper>
             <Info>
