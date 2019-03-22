@@ -7,13 +7,10 @@ import Logo from '../components/Logo';
 import MenuItem from '../components/MenuItem';
 
 const Wrapper = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  overflow-y: auto;
   width: 28rem;
   color: var(--color-primary-dark);
 `;

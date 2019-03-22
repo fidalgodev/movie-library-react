@@ -11,6 +11,7 @@
     "query-string": "^6.4.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-items-carousel": "^2.3.0",
     "react-rating": "^1.6.2",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",

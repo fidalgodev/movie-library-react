@@ -9,7 +9,7 @@ const LogoWrapper = styled.img`
 
 const LinkWrapper = styled(Link)`
   width: 100%;
-  min-height: 18rem;
+  height: 18rem;
   display: flex;
   text-decoration: none;
   margin: 2rem 0rem;
