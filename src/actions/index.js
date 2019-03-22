@@ -119,7 +119,11 @@ export const clearMovies = () => {
 // Get single movie
 export const getMovie = id => async dispatch => {
   dispatch({ type: TYPES.FETCH_MOVIE_LOADING });
-  const res = await tmdbAPI.get(`/movie/${id}`);
+  const res = await tmdbAPI.get(`/movie/${id}`, {
+    params: {
+      append_to_response: 'videos',
+    },
+  });
   await dispatch({
     type: TYPES.FETCH_MOVIE,
     payload: res.data,

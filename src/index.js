@@ -8,10 +8,17 @@ import reduxThunk from 'redux-thunk';
 import App from './containers/App';
 import reducers from './reducers';
 
+import '../node_modules/react-modal-video/scss/modal-video.scss';
+
 const GlobalStyle = createGlobalStyle`
 * {
   margin: 0;
   padding: 0;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
 }
 
 *,

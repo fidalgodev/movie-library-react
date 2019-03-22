@@ -20,13 +20,6 @@ const Search = ({
   const params = queryString.parse(location.search);
   const { base_url } = geral.base.images;
 
-  // Change Header everytime query change
-  useEffect(() => {
-    const title = `Search results for: ${query}`;
-
-    // Clean up to remove page header
-  }, [query]);
-
   // Fetch movies hook
   useFetchMoviesSearch(query, getMoviesSearch, params, clearMovies);
 

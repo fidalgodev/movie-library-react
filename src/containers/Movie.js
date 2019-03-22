@@ -5,8 +5,10 @@ import history from '../history';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ModalVideo from 'react-modal-video';
 
 import Rating from '../components/Rating';
+import NotFound from '../components/NotFound';
 import Header from '../components/Header';
 import {
   getMovie,
@@ -164,6 +166,8 @@ const Movie = ({
 }) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [modalOpened, setmodalOpened] = useState(false);
+  console.log(modalOpened);
   const { base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
@@ -202,6 +206,28 @@ const Movie = ({
       <AWrapper target="_blank" href={link}>
         <Button title="Website" icon="link" />
       </AWrapper>
+    );
+  };
+
+  const renderTrailer = videos => {
+    if (videos.length === 0) {
+      return;
+    }
+    const { key } = videos.find(
+      video => video.type === 'Trailer' && video.site === 'YouTube'
+    );
+    return (
+      <React.Fragment>
+        <div onClick={() => setmodalOpened(true)}>
+          <Button title="Trailer" icon="play" />
+        </div>
+        <ModalVideo
+          channel="youtube"
+          isOpen={modalOpened}
+          videoId={key}
+          onClose={() => setmodalOpened(false)}
+        />
+      </React.Fragment>
     );
   };
 
@@ -259,20 +285,32 @@ const Movie = ({
             <LeftButtons>
               {renderWebsite(movie.homepage)}
               {renderImdb(movie.imdb_id)}
+              {renderTrailer(movie.videos.results)}
             </LeftButtons>
             {renderBack()}
           </ButtonsWrapper>
         </MovieDetails>
       </MovieWrapper>
       <Header title="Recommended" subtitle="movies" />
-      {recommended.loading ? (
-        <Loader />
-      ) : (
-        <MoviesList movies={recommended} baseUrl={base_url} />
-      )}
+      {renderRecommended(recommended, base_url)}
     </React.Fragment>
   );
 };
+
+function renderRecommended(recommended, base_url) {
+  if (recommended.loading) {
+    return <Loader />;
+  } else if (recommended.total_results === 0) {
+    return (
+      <NotFound
+        title="Sorry!"
+        subtitle={`There are no recommended movies...`}
+      />
+    );
+  } else {
+    return <MoviesList movies={recommended} baseUrl={base_url} />;
+  }
+}
 
 // Function to get the year only from the date
 function splitYear(date) {

@@ -42,7 +42,6 @@ const Svg = styled.img`
 `;
 
 const NotFound = ({ title, subtitle }) => {
-  console.log(title);
   return (
     <Wrapper>
       <TitleWrapper>
