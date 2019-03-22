@@ -21,7 +21,6 @@ const Subtitle = styled.h2`
 
 const HeaderWrapper = styled.div`
   margin-bottom: 2rem;
-  margin-top: 1rem;
 `;
 
 const Header = ({ title, subtitle, size }) => (

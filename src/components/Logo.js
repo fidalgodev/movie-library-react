@@ -12,7 +12,7 @@ const LinkWrapper = styled(Link)`
   height: 18rem;
   display: flex;
   text-decoration: none;
-  margin: 2rem 0rem;
+  margin-bottom: 2rem;
   padding: 2rem 3rem;
 `;
 

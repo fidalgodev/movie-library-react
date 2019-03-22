@@ -62,6 +62,7 @@ const ContentWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   padding: 2rem 4rem;
+  margin-top: 2rem;
   position: relative;
 `;
 
