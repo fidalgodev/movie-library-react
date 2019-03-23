@@ -267,18 +267,24 @@ const Movie = ({
           <DetailsWrapper>
             <RatingsWrapper>
               <Rating number={movie.vote_average / 2} />
-              <RatingNumber>{movie.vote_average} </RatingNumber>
+              <RatingNumber>{movie.vote_average}</RatingNumber>
             </RatingsWrapper>
             <Info>
-              {`${movie.spoken_languages[0].name} / ${
-                movie.runtime
-              } min / ${splitYear(movie.release_date)}`}
+              {renderInfo(
+                movie.spoken_languages[0].name,
+                movie.runtime,
+                splitYear(movie.release_date)
+              )}
             </Info>
           </DetailsWrapper>
           <Heading>The Genres</Heading>
           <LinksWrapper>{renderGenres(movie.genres)}</LinksWrapper>
           <Heading>The Synopsis</Heading>
-          <Text>{movie.overview}</Text>
+          <Text>
+            {movie.overview
+              ? movie.overview
+              : 'There is no synopsis available...'}
+          </Text>
           <Heading>The Cast</Heading>
           <Credits cast={movie.cast} baseUrl={base_url} />
           <ButtonsWrapper>
@@ -297,6 +303,13 @@ const Movie = ({
   );
 };
 
+function renderInfo(...info) {
+  return info
+    .filter(el => el !== null)
+    .map(el => (typeof el === 'number' ? `${el} min.` : el))
+    .map((el, i, array) => (i !== array.length - 1 ? `${el} / ` : el));
+}
+
 function renderRecommended(recommended, base_url) {
   if (recommended.loading) {
     return <Loader />;
@@ -314,6 +327,9 @@ function renderRecommended(recommended, base_url) {
 
 // Function to get the year only from the date
 function splitYear(date) {
+  if (!date) {
+    return;
+  }
   const [year] = date.split('-');
   return year;
 }
