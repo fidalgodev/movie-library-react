@@ -38,7 +38,7 @@ const LinkWrapper = styled(Link)`
 
 const Svg = styled.img`
   max-width: 100%;
-  height: 50vh;
+  height: 40vh;
 `;
 
 const NotFound = ({ title, subtitle }) => {

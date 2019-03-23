@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import history from '../history';
@@ -167,13 +167,16 @@ const Movie = ({
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [modalOpened, setmodalOpened] = useState(false);
-  console.log(modalOpened);
   const { base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
   // Fetch movie id when id on url changes
   useEffect(() => {
     getMovie(match.params.id);
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
     return () => clearMovie();
   }, [match.params.id]);
 
@@ -271,7 +274,7 @@ const Movie = ({
             </RatingsWrapper>
             <Info>
               {renderInfo(
-                movie.spoken_languages[0].name,
+                movie.spoken_languages,
                 movie.runtime,
                 splitYear(movie.release_date)
               )}
@@ -303,7 +306,11 @@ const Movie = ({
   );
 };
 
-function renderInfo(...info) {
+function renderInfo(languages, time, data) {
+  const info = [time, data];
+  if (languages.length !== 0) {
+    info.push(languages[0].name);
+  }
   return info
     .filter(el => el !== null)
     .map(el => (typeof el === 'number' ? `${el} min.` : el))

@@ -23,6 +23,10 @@ const Discover = ({
   // Send url to setSelected Action Creator, it will check if is valid
   useEffect(() => {
     setSelectedMenu(match.params.name);
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
     // Clean up to remove selected menu from state
     return () => setSelectedMenu();
   }, [match.params.name]);
@@ -54,6 +58,10 @@ function useFetchMoviesDiscover(name, getMoviesDiscover, params, clearMovies) {
   const query = name.replace(/\s+/g, '_').toLowerCase();
   useEffect(() => {
     getMoviesDiscover(query, params.page);
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
     return () => clearMovies();
   }, [query, params.page]);
 }

@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 
 import Button from './Button';
 
-const Wrapper = styled(Link)`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  text-decoration: none;
   justify-content: ${props => {
     if (props.type === 'one') {
       return 'flex-start';
@@ -17,12 +16,15 @@ const Wrapper = styled(Link)`
       return 'flex-end';
     }
   }};
+`;
+
+const WrapperLink = styled(Link)`
+  text-decoration: none;
   margin-bottom: 2rem;
 `;
 
-const Pagination = ({ movies }) => {
+const Pagination = ({ movies, scrollToMyRef }) => {
   const { page, total_pages } = movies;
-
   // If only 1 page
   if (total_pages === 1) {
     return null;
@@ -31,8 +33,10 @@ const Pagination = ({ movies }) => {
   // On first page, render page 2 button
   if (page < total_pages && page === 1) {
     return (
-      <Wrapper to={`?page=${page + 1}`}>
-        <Button solid title={`Page ${page + 1}`} icon="arrow-right" />
+      <Wrapper>
+        <WrapperLink to={`?page=${page + 1}`} onClick={() => scrollToMyRef()}>
+          <Button solid title={`Page ${page + 1}`} icon="arrow-right" />
+        </WrapperLink>
       </Wrapper>
     );
   }
@@ -40,14 +44,13 @@ const Pagination = ({ movies }) => {
   // There is a next and a previous page, render accordingly
   else if (page < total_pages) {
     return (
-      <Wrapper type="both" to={`?page=${page - 1}`}>
-        <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
-        <Button
-          to={`?page=${page + 1}`}
-          solid
-          title={`Page ${page + 1}`}
-          icon="arrow-right"
-        />
+      <Wrapper type="both">
+        <WrapperLink to={`?page=${page - 1}`} onClick={() => scrollToMyRef()}>
+          <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
+        </WrapperLink>
+        <WrapperLink to={`?page=${page + 1}`} onClick={() => scrollToMyRef()}>
+          <Button solid title={`Page ${page + 1}`} icon="arrow-right" />
+        </WrapperLink>
       </Wrapper>
     );
   }
@@ -55,8 +58,10 @@ const Pagination = ({ movies }) => {
   // Otherwise on last page of results
   else {
     return (
-      <Wrapper type="one" to={`?page=${page - 1}`}>
-        <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
+      <Wrapper type="one">
+        <WrapperLink to={`?page=${page - 1}`} onClick={() => scrollToMyRef()}>
+          <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
+        </WrapperLink>
       </Wrapper>
     );
   }

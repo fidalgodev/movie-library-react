@@ -26,6 +26,10 @@ const Genre = ({
   // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
   useEffect(() => {
     setSelectedMenu(match.params.name);
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
     // Clean up to remove selected menu from state
     return () => setSelectedMenu();
   }, [match.params.name]);
@@ -57,6 +61,10 @@ const Genre = ({
 function useFetchMoviesGenre(genre, getMoviesGenre, params, sort, clearMovies) {
   useEffect(() => {
     getMoviesGenre(genre, params.page, sort);
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
     return () => clearMovies();
   }, [genre, params.page, sort]);
 }

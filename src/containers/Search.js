@@ -53,6 +53,10 @@ const Search = ({
 function useFetchMoviesSearch(query, getMoviesSearch, params, clearMovies) {
   useEffect(() => {
     getMoviesSearch(query, params.page);
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
     return () => clearMovies();
   }, [query, params.page]);
 }
