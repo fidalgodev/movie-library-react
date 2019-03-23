@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Title = styled.h1`
   font-size: ${props => (props.size === '2' ? '4rem' : '2.5rem')};
   font-weight: 200;
-  line-height: 1;
+  line-height: ${props => (props.size === '2' ? '1.2' : '1')};
   color: var(--color-primary-dark);
   letter-spacing: -0.5px;
   text-transform: uppercase;
@@ -13,9 +13,9 @@ const Title = styled.h1`
 
 const Subtitle = styled.h2`
   text-transform: uppercase;
-  line-height: 1;
+  line-height: ${props => (props.size === '2' ? '1.5' : '1')};
   color: var(--color-primary);
-  font-size: ${props => (props.size === '2' ? '2rem' : '1.2rem')};
+  font-size: ${props => (props.size === '2' ? '1.7rem' : '1.2rem')};
   font-weight: 700;
 `;
 

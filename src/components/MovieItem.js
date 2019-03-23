@@ -93,17 +93,6 @@ const RatingsWrapper = styled.div`
   }
 `;
 
-const Year = styled.p`
-  color: var(--color-primary-dark);
-  font-weight: 600;
-  font-size: 1rem;
-  transition: color 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
-
-  ${MovieWrapper}:hover & {
-    color: var(--color-primary-lighter);
-  }
-`;
-
 const Tooltip = styled.span`
   visibility: hidden;
   opacity: 0
@@ -169,16 +158,9 @@ const MovieItem = ({ movie, baseUrl }) => {
             {movie.vote_average} average rating on {movie.vote_count} votes
           </Tooltip>
         </RatingsWrapper>
-        <Year>{splitYear(movie.release_date)}</Year>
       </DetailsWrapper>
     </MovieWrapper>
   );
 };
-
-// Function to get the year only from the date
-function splitYear(date) {
-  const [year] = date.split('-');
-  return year;
-}
 
 export default MovieItem;

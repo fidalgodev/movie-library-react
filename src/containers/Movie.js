@@ -1,22 +1,22 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import history from '../history';
 import queryString from 'query-string';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import history from '../history';
 import ModalVideo from 'react-modal-video';
 
-import Rating from '../components/Rating';
-import NotFound from '../components/NotFound';
-import Header from '../components/Header';
 import {
   getMovie,
   getRecommendations,
   clearRecommendations,
   clearMovie,
 } from '../actions';
-import Credits from '../components/Credits';
+import Rating from '../components/Rating';
+import NotFound from '../components/NotFound';
+import Header from '../components/Header';
+import Cast from '../components/Cast';
 import Loader from '../components/Loader';
 import MoviesList from '../components/MoviesList';
 import Button from '../components/Button';
@@ -128,8 +128,8 @@ const Info = styled.div`
 `;
 
 const Text = styled.p`
-  font-size: 1.3rem;
-  line-height: 1.6;
+  font-size: 1.4rem;
+  line-height: 1.8;
   color: var(--link-color);
   font-weight: 500;
   margin-bottom: 3rem;
@@ -153,6 +153,7 @@ const AWrapper = styled.a`
   text-decoration: none;
 `;
 
+//Movie Component
 const Movie = ({
   location,
   geral,
@@ -170,7 +171,7 @@ const Movie = ({
   const { base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
-  // Fetch movie id when id on url changes
+  // Fetch movie id when id on the url changes
   useEffect(() => {
     getMovie(match.params.id);
     window.scrollTo({
@@ -190,60 +191,6 @@ const Movie = ({
   if (movie.loading) {
     return <Loader />;
   }
-
-  function renderBack() {
-    if (history.action === 'PUSH') {
-      return (
-        <div onClick={history.goBack}>
-          <Button title="Go back" solid left icon="arrow-left" />
-        </div>
-      );
-    }
-  }
-
-  const renderWebsite = link => {
-    if (!link) {
-      return null;
-    }
-    return (
-      <AWrapper target="_blank" href={link}>
-        <Button title="Website" icon="link" />
-      </AWrapper>
-    );
-  };
-
-  const renderTrailer = videos => {
-    if (videos.length === 0) {
-      return;
-    }
-    const { key } = videos.find(
-      video => video.type === 'Trailer' && video.site === 'YouTube'
-    );
-    return (
-      <React.Fragment>
-        <div onClick={() => setmodalOpened(true)}>
-          <Button title="Trailer" icon="play" />
-        </div>
-        <ModalVideo
-          channel="youtube"
-          isOpen={modalOpened}
-          videoId={key}
-          onClose={() => setmodalOpened(false)}
-        />
-      </React.Fragment>
-    );
-  };
-
-  const renderImdb = id => {
-    if (!id) {
-      return null;
-    }
-    return (
-      <AWrapper target="_blank" href={`https://www.imdb.com/title/${id}`}>
-        <Button title="IMDB" icon={['fab', 'imdb']} />
-      </AWrapper>
-    );
-  };
 
   return (
     <React.Fragment>
@@ -289,12 +236,12 @@ const Movie = ({
               : 'There is no synopsis available...'}
           </Text>
           <Heading>The Cast</Heading>
-          <Credits cast={movie.cast} baseUrl={base_url} />
+          <Cast cast={movie.cast} baseUrl={base_url} />
           <ButtonsWrapper>
             <LeftButtons>
               {renderWebsite(movie.homepage)}
               {renderImdb(movie.imdb_id)}
-              {renderTrailer(movie.videos.results)}
+              {renderTrailer(movie.videos.results, modalOpened, setmodalOpened)}
             </LeftButtons>
             {renderBack()}
           </ButtonsWrapper>
@@ -306,6 +253,74 @@ const Movie = ({
   );
 };
 
+//Render the back button if user was pushed into page
+function renderBack() {
+  if (history.action === 'PUSH') {
+    return (
+      <div onClick={history.goBack}>
+        <Button title="Go back" solid left icon="arrow-left" />
+      </div>
+    );
+  }
+}
+
+// Render Personal Website button
+function renderWebsite(link) {
+  if (!link) {
+    return null;
+  }
+  return (
+    <AWrapper target="_blank" href={link}>
+      <Button title="Website" icon="link" />
+    </AWrapper>
+  );
+}
+
+// Render IMDB button
+function renderImdb(id) {
+  if (!id) {
+    return null;
+  }
+  return (
+    <AWrapper target="_blank" href={`https://www.imdb.com/title/${id}`}>
+      <Button title="IMDB" icon={['fab', 'imdb']} />
+    </AWrapper>
+  );
+}
+
+// Render Trailer button. On click triggers state to open modal of trailer
+function renderTrailer(videos, modalOpened, setmodalOpened) {
+  if (videos.length === 0) {
+    return;
+  }
+  const { key } = videos.find(
+    video => video.type === 'Trailer' && video.site === 'YouTube'
+  );
+  return (
+    <React.Fragment>
+      <div onClick={() => setmodalOpened(true)}>
+        <Button title="Trailer" icon="play" />
+      </div>
+      <ModalVideo
+        channel="youtube"
+        isOpen={modalOpened}
+        videoId={key}
+        onClose={() => setmodalOpened(false)}
+      />
+    </React.Fragment>
+  );
+}
+
+// Function to get the year only from the date
+function splitYear(date) {
+  if (!date) {
+    return;
+  }
+  const [year] = date.split('-');
+  return year;
+}
+
+// Render info of movie
 function renderInfo(languages, time, data) {
   const info = [time, data];
   if (languages.length !== 0) {
@@ -317,6 +332,7 @@ function renderInfo(languages, time, data) {
     .map((el, i, array) => (i !== array.length - 1 ? `${el} / ` : el));
 }
 
+// Render recommended movies
 function renderRecommended(recommended, base_url) {
   if (recommended.loading) {
     return <Loader />;
@@ -332,15 +348,7 @@ function renderRecommended(recommended, base_url) {
   }
 }
 
-// Function to get the year only from the date
-function splitYear(date) {
-  if (!date) {
-    return;
-  }
-  const [year] = date.split('-');
-  return year;
-}
-
+// Render Genres with links
 function renderGenres(genres) {
   return genres.map(genre => (
     <StyledLink to={`/genres/${genre.name}`} key={genre.id}>
@@ -354,6 +362,7 @@ function renderGenres(genres) {
   ));
 }
 
+// Get state from store and pass as props to component
 const mapStateToProps = ({ movie, geral, recommended }) => ({
   movie,
   geral,

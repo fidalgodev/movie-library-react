@@ -181,3 +181,33 @@ export const getPerson = id => async dispatch => {
   });
   dispatch({ type: TYPES.FETCH_PERSON_FINISHED });
 };
+
+// Set loading to true for next render
+export const clearPerson = () => {
+  return {
+    type: TYPES.FETCH_PERSON_LOADING,
+  };
+};
+
+// Get movies from an actor
+export const getMoviesforPerson = (id, page) => async dispatch => {
+  dispatch({ type: TYPES.FETCH_MOVIESPERSON_LOADING });
+  const res = await tmdbAPI.get(`/discover/movie`, {
+    params: {
+      with_cast: id,
+      page,
+    },
+  });
+  await dispatch({
+    type: TYPES.FETCH_MOVIESPERSON,
+    payload: res.data,
+  });
+  dispatch({ type: TYPES.FETCH_MOVIESPERSON_FINISHED });
+};
+
+// Set loading to true for next render
+export const clearMoviesforPerson = () => {
+  return {
+    type: TYPES.FETCH_MOVIESPERSON_LOADING,
+  };
+};
