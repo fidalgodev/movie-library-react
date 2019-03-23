@@ -19,7 +19,10 @@ const Genre = ({
   movies,
   location,
 }) => {
-  const [sort, setsort] = useState('popularity.desc');
+  const [option, setOption] = useState({
+    value: 'popularity.desc',
+    label: 'Popularity',
+  });
   const params = queryString.parse(location.search);
   const { base_url } = geral.base.images;
 
@@ -39,7 +42,7 @@ const Genre = ({
     match.params.name,
     getMoviesGenre,
     params,
-    sort,
+    option,
     clearMovies
   );
 
@@ -51,22 +54,28 @@ const Genre = ({
   return (
     <React.Fragment>
       <Header title={geral.selected} subtitle="movies" />
-      <SortBy changeSort={setsort} />
+      <SortBy option={option} setOption={setOption} />
       <MoviesList movies={movies} baseUrl={base_url} />
     </React.Fragment>
   );
 };
 
 // Hook to fetch the movies, will be called everytime the route or the filters from the state change
-function useFetchMoviesGenre(genre, getMoviesGenre, params, sort, clearMovies) {
+function useFetchMoviesGenre(
+  genre,
+  getMoviesGenre,
+  params,
+  option,
+  clearMovies
+) {
   useEffect(() => {
-    getMoviesGenre(genre, params.page, sort);
+    getMoviesGenre(genre, params.page, option.value);
     window.scrollTo({
       top: (0, 0),
       behavior: 'smooth',
     });
     return () => clearMovies();
-  }, [genre, params.page, sort]);
+  }, [genre, params.page, option]);
 }
 
 // Map State to Component Props
