@@ -11,6 +11,7 @@ import Genre from './Genre';
 import Search from './Search';
 import Movie from './Movie';
 import Person from './Person';
+import ShowError from './ShowError';
 
 import NotFound from '../components/NotFound';
 import SearchBar from '../components/SearchBar';
@@ -98,6 +99,7 @@ const App = ({ init, isLoading }) => {
                   <NotFound title="Upps!" subtitle={`This doesn't exist...`} />
                 )}
               />
+              <Route path="/error" component={ShowError} />
               <Route
                 component={() => (
                   <NotFound title="Upps!" subtitle={`This doesn't exist...`} />

@@ -55,23 +55,28 @@ export const getMoviesGenre = (name, page, sort) => async (
   if (!selected) {
     return;
   }
-  dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
-  const genreId = genres
-    .filter(el => el.name === name)
-    .map(el => el.id)
-    .join('');
-  const res = await tmdbAPI.get('/discover/movie', {
-    params: {
-      with_genres: genreId,
-      page,
-      sort_by: sort,
-    },
-  });
-  await dispatch({
-    type: TYPES.FETCH_MOVIES_GENRE,
-    payload: res.data,
-  });
-  dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
+  try {
+    dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
+    const genreId = genres
+      .filter(el => el.name === name)
+      .map(el => el.id)
+      .join('');
+    const res = await tmdbAPI.get('/discover/movie', {
+      params: {
+        with_genres: genreId,
+        page,
+        sort_by: sort,
+      },
+    });
+    await dispatch({
+      type: TYPES.FETCH_MOVIES_GENRE,
+      payload: res.data,
+    });
+    dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
+  } catch (err) {
+    dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
+    history.push('/error');
+  }
 };
 
 // Get movies discover
@@ -80,33 +85,43 @@ export const getMoviesDiscover = (name, page) => async (dispatch, getState) => {
   if (!selected) {
     return;
   }
-  dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
-  const res = await tmdbAPI.get(`/movie/${name}`, {
-    params: {
-      page,
-    },
-  });
-  await dispatch({
-    type: TYPES.FETCH_MOVIES_DISCOVER,
-    payload: res.data,
-  });
-  dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
+  try {
+    dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
+    const res = await tmdbAPI.get(`/movie/${name}`, {
+      params: {
+        page,
+      },
+    });
+    await dispatch({
+      type: TYPES.FETCH_MOVIES_DISCOVER,
+      payload: res.data,
+    });
+    dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
+  } catch (err) {
+    dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
+    history.push('/error');
+  }
 };
 
 // Get movies search
 export const getMoviesSearch = (query, page) => async dispatch => {
-  dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
-  const res = await tmdbAPI.get(`/search/movie`, {
-    params: {
-      query,
-      page,
-    },
-  });
-  await dispatch({
-    type: TYPES.FETCH_MOVIES_SEARCH,
-    payload: res.data,
-  });
-  dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
+  try {
+    dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
+    const res = await tmdbAPI.get(`/search/movie`, {
+      params: {
+        query,
+        page,
+      },
+    });
+    await dispatch({
+      type: TYPES.FETCH_MOVIES_SEARCH,
+      payload: res.data,
+    });
+    dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
+  } catch (err) {
+    dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
+    history.push('/error');
+  }
 };
 
 // Set loading to true for next render
@@ -118,18 +133,23 @@ export const clearMovies = () => {
 
 // Get single movie
 export const getMovie = id => async dispatch => {
-  dispatch({ type: TYPES.FETCH_MOVIE_LOADING });
-  const res = await tmdbAPI.get(`/movie/${id}`, {
-    params: {
-      append_to_response: 'videos',
-    },
-  });
-  await dispatch({
-    type: TYPES.FETCH_MOVIE,
-    payload: res.data,
-  });
-  await dispatch(getCredits());
-  dispatch({ type: TYPES.FETCH_MOVIE_FINISHED });
+  try {
+    dispatch({ type: TYPES.FETCH_MOVIE_LOADING });
+    const res = await tmdbAPI.get(`/movie/${id}`, {
+      params: {
+        append_to_response: 'videos',
+      },
+    });
+    await dispatch({
+      type: TYPES.FETCH_MOVIE,
+      payload: res.data,
+    });
+    await dispatch(getCredits());
+    dispatch({ type: TYPES.FETCH_MOVIE_FINISHED });
+  } catch (err) {
+    dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
+    history.push('/error');
+  }
 };
 
 // Set loading to true for next render
@@ -142,26 +162,37 @@ export const clearMovie = () => {
 // Get credits of single movie
 export const getCredits = () => async (dispatch, getState) => {
   const { id } = getState().movie;
-  const res = await tmdbAPI.get(`/movie/${id}/credits`);
-  dispatch({
-    type: TYPES.FETCH_CAST,
-    payload: res.data.cast,
-  });
+
+  try {
+    const res = await tmdbAPI.get(`/movie/${id}/credits`);
+    dispatch({
+      type: TYPES.FETCH_CAST,
+      payload: res.data.cast,
+    });
+  } catch (err) {
+    dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
+    history.push('/error');
+  }
 };
 
 // Get recommended movies based on another
 export const getRecommendations = (id, page) => async dispatch => {
-  dispatch({ type: TYPES.FETCH_RECOMMENDATIONS_LOADING });
-  const res = await tmdbAPI.get(`/movie/${id}/recommendations`, {
-    params: {
-      page,
-    },
-  });
-  await dispatch({
-    type: TYPES.FETCH_RECOMMENDATIONS,
-    payload: res.data,
-  });
-  dispatch({ type: TYPES.FETCH_RECOMMENDATIONS_FINISHED });
+  try {
+    dispatch({ type: TYPES.FETCH_RECOMMENDATIONS_LOADING });
+    const res = await tmdbAPI.get(`/movie/${id}/recommendations`, {
+      params: {
+        page,
+      },
+    });
+    await dispatch({
+      type: TYPES.FETCH_RECOMMENDATIONS,
+      payload: res.data,
+    });
+    dispatch({ type: TYPES.FETCH_RECOMMENDATIONS_FINISHED });
+  } catch (err) {
+    dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
+    history.push('/error');
+  }
 };
 
 // Set loading to true for next render
@@ -173,13 +204,18 @@ export const clearRecommendations = () => {
 
 // Get Person details
 export const getPerson = id => async dispatch => {
-  dispatch({ type: TYPES.FETCH_PERSON_LOADING });
-  const res = await tmdbAPI.get(`/person/${id}`);
-  await dispatch({
-    type: TYPES.FETCH_PERSON,
-    payload: res.data,
-  });
-  dispatch({ type: TYPES.FETCH_PERSON_FINISHED });
+  try {
+    dispatch({ type: TYPES.FETCH_PERSON_LOADING });
+    const res = await tmdbAPI.get(`/person/${id}`);
+    await dispatch({
+      type: TYPES.FETCH_PERSON,
+      payload: res.data,
+    });
+    dispatch({ type: TYPES.FETCH_PERSON_FINISHED });
+  } catch (err) {
+    dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
+    history.push('/error');
+  }
 };
 
 // Set loading to true for next render
@@ -191,18 +227,23 @@ export const clearPerson = () => {
 
 // Get movies from an actor
 export const getMoviesforPerson = (id, page) => async dispatch => {
-  dispatch({ type: TYPES.FETCH_MOVIESPERSON_LOADING });
-  const res = await tmdbAPI.get(`/discover/movie`, {
-    params: {
-      with_cast: id,
-      page,
-    },
-  });
-  await dispatch({
-    type: TYPES.FETCH_MOVIESPERSON,
-    payload: res.data,
-  });
-  dispatch({ type: TYPES.FETCH_MOVIESPERSON_FINISHED });
+  try {
+    dispatch({ type: TYPES.FETCH_MOVIESPERSON_LOADING });
+    const res = await tmdbAPI.get(`/discover/movie`, {
+      params: {
+        with_cast: id,
+        page,
+      },
+    });
+    await dispatch({
+      type: TYPES.FETCH_MOVIESPERSON,
+      payload: res.data,
+    });
+    dispatch({ type: TYPES.FETCH_MOVIESPERSON_FINISHED });
+  } catch (err) {
+    dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
+    history.push('/error');
+  }
 };
 
 // Set loading to true for next render
@@ -211,3 +252,6 @@ export const clearMoviesforPerson = () => {
     type: TYPES.FETCH_MOVIESPERSON_LOADING,
   };
 };
+
+// Clear error
+export const clearError = () => ({ type: TYPES.CLEAR_ERROR });

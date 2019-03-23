@@ -68,7 +68,7 @@ const SearchBar = () => {
   useEffect(() => {
     // add when mounted
     document.addEventListener('mousedown', handleClick);
-    // return function to be called when unmounted
+    // cleanup event when unmounted
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };

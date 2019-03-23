@@ -5,6 +5,7 @@ import movieReducer from './movieReducer';
 import personReducer from './personReducer';
 import recommendationsReducer from './recommendationsReducer';
 import moviesPersonReducer from './moviesPersonReducer';
+import errorsReducer from './errorsReducer';
 
 export default combineReducers({
   geral: configReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   person: personReducer,
   recommended: recommendationsReducer,
   moviesPerson: moviesPersonReducer,
+  errors: errorsReducer,
 });
