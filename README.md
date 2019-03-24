@@ -39,7 +39,7 @@ npm run build
 - [React JS](https://reactjs.org/)
 - [React Router](https://github.com/ReactTraining/react-router)
 - [Redux](https://redux.js.org/)
-- [Redux Thunk](https://github.com/reduxjs/redux-thunk) t
+- [Redux Thunk](https://github.com/reduxjs/redux-thunk)
 - [Styled Components](https://www.styled-components.com)
 
 ## Contributing
