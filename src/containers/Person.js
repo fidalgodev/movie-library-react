@@ -23,7 +23,8 @@ const PersonWrapper = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 120rem;
-  margin: 4rem auto;
+  margin: 0 auto;
+  margin-bottom: 4rem;
   opacity: ${props => (props.loaded ? '1' : '0')};
   visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
   transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -38,7 +39,7 @@ const PersonDetails = styled.div`
 const ImageWrapper = styled.div`
   width: 40%;
   flex: 1 1 40%;
-  padding: 5rem;
+  padding: 2rem;
 `;
 
 const MovieImg = styled.img`
@@ -46,7 +47,7 @@ const MovieImg = styled.img`
   height: ${props => (props.error ? '58rem' : 'auto')};
   object-fit: ${props => (props.error ? 'contain' : 'cover')};
   padding: ${props => (props.error ? '2rem' : '')};
-  max-width: 100%;
+  max-width: 90%;
   border-radius: 0.8rem;
   box-shadow: ${props =>
     props.error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark);'};

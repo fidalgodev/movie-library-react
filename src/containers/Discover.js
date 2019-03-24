@@ -2,10 +2,17 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
+import styled from 'styled-components';
 
 import { setSelectedMenu, getMoviesDiscover, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
 import Loader from '../components/Loader';
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
 
 // Discover Component
 const Discover = ({
@@ -46,10 +53,10 @@ const Discover = ({
 
   // Else return movies list
   return (
-    <React.Fragment>
+    <Wrapper>
       <Header title={geral.selected} subtitle="movies" />
-      <MoviesList movies={movies} baseUrl={base_url} />;
-    </React.Fragment>
+      <MoviesList movies={movies} baseUrl={base_url} />
+    </Wrapper>
   );
 };
 

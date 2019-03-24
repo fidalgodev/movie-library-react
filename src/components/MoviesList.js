@@ -5,14 +5,13 @@ import MovieItem from './MovieItem';
 import Pagination from './Pagination';
 
 const MoviesWrapper = styled.div`
-  margin-top: 4rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 25rem));
   justify-content: space-evenly;
   align-content: space-between;
   align-items: start;
+  padding: 4rem 0;
   grid-gap: 4rem 2rem;
-  margin-bottom: 4rem;
 `;
 
 const MoviesList = ({ movies, baseUrl }) => {

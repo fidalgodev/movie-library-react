@@ -9,7 +9,6 @@ import MenuItem from '../components/MenuItem';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 25rem;
   padding: 2rem;
   margin: 4rem 0;

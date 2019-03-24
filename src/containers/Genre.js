@@ -2,11 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
+import styled from 'styled-components';
 
 import { setSelectedMenu, getMoviesGenre, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
 import SortBy from '../components/ShortBy';
 import Loader from '../components/Loader';
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
 
 // Genres Component
 // Gets geral object from State, Match from Router, Action Creators to set Selected menu and Movies from Store
@@ -52,11 +59,11 @@ const Genre = ({
   }
 
   return (
-    <React.Fragment>
+    <Wrapper>
       <Header title={geral.selected} subtitle="movies" />
       <SortBy option={option} setOption={setOption} />
       <MoviesList movies={movies} baseUrl={base_url} />
-    </React.Fragment>
+    </Wrapper>
   );
 };
 

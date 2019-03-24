@@ -22,6 +22,25 @@ import MoviesList from '../components/MoviesList';
 import Button from '../components/Button';
 import NothingSvg from '../svg/nothing.svg';
 
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
+
+const MovieWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 120rem;
+  margin: 0 auto;
+  margin-bottom: 7rem;
+  opacity: ${props => (props.loaded ? '1' : '0')};
+  visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
+  transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+`;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   display: block;
@@ -54,18 +73,6 @@ const LinksWrapper = styled.div`
   margin-bottom: 3rem;
 `;
 
-const MovieWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 120rem;
-  margin: 4rem auto;
-  opacity: ${props => (props.loaded ? '1' : '0')};
-  visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
-  transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
-`;
-
 const MovieDetails = styled.div`
   width: 60%;
   padding: 5rem;
@@ -75,7 +82,7 @@ const MovieDetails = styled.div`
 const ImageWrapper = styled.div`
   width: 40%;
   flex: 1 1 40%;
-  padding: 5rem;
+  padding: 2rem;
 `;
 
 const MovieImg = styled.img`
@@ -83,7 +90,7 @@ const MovieImg = styled.img`
   height: ${props => (props.error ? '58rem' : 'auto')};
   object-fit: ${props => (props.error ? 'contain' : 'cover')};
   padding: ${props => (props.error ? '4rem' : '')};
-  max-width: 100%;
+  max-width: 90%;
   border-radius: 0.8rem;
   box-shadow: 0rem 2rem 5rem var(--shadow-color-dark);
 `;
@@ -173,11 +180,11 @@ const Movie = ({
 
   // Fetch movie id when id on the url changes
   useEffect(() => {
-    getMovie(match.params.id);
     window.scrollTo({
       top: (0, 0),
       behavior: 'smooth',
     });
+    getMovie(match.params.id);
     return () => clearMovie();
   }, [match.params.id]);
 
@@ -193,7 +200,7 @@ const Movie = ({
   }
 
   return (
-    <React.Fragment>
+    <Wrapper>
       <MovieWrapper loaded={loaded ? 1 : 0}>
         <ImageWrapper>
           <MovieImg
@@ -249,7 +256,7 @@ const Movie = ({
       </MovieWrapper>
       <Header title="Recommended" subtitle="movies" />
       {renderRecommended(recommended, base_url)}
-    </React.Fragment>
+    </Wrapper>
   );
 };
 

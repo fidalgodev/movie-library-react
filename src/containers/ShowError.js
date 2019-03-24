@@ -10,7 +10,7 @@ import Button from '../components/Button';
 
 const Wrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 15rem);
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

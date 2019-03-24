@@ -20,7 +20,6 @@ const Wrapper = styled.div`
 
 const WrapperLink = styled(Link)`
   text-decoration: none;
-  margin-bottom: 2rem;
 `;
 
 const Pagination = ({ movies, scrollToMyRef }) => {

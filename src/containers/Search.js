@@ -3,10 +3,17 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
 import NotFound from '../components/NotFound';
+import styled from 'styled-components';
 
 import { getMoviesSearch, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
 import Loader from '../components/Loader';
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
 
 const Search = ({
   geral,
@@ -41,10 +48,10 @@ const Search = ({
   // Else show the results
   else {
     return (
-      <React.Fragment>
+      <Wrapper>
         <Header title={query} subtitle="search results" />
         <MoviesList movies={movies} baseUrl={base_url} />;
-      </React.Fragment>
+      </Wrapper>
     );
   }
 };
