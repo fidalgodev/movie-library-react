@@ -26,7 +26,10 @@ const CastItem = ({ person, baseUrl }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <LinkWrapper loaded={loaded ? 1 : 0} to={`/person/${person.id}`}>
+    <LinkWrapper
+      loaded={loaded ? 1 : 0}
+      to={`${process.env.PUBLIC_URL}/person/${person.id}`}
+    >
       <MovieImg
         src={`${baseUrl}w185${person.profile_path}`}
         // Image loaded, set loaded to true

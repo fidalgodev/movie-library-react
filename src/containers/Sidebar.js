@@ -143,7 +143,6 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
 
   useEffect(() => {
     changeMobile();
-    console.log('runned');
     window.addEventListener('resize', changeMobile);
     return () => window.removeEventListener('resize', changeMobile);
   }, []);
@@ -205,7 +204,7 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
 function renderStatic(categories, selected, setisOpened) {
   return categories.map((category, i) => (
     <LinkWrap
-      to={`/discover/${category}`}
+      to={`${process.env.PUBLIC_URL}/discover/${category}`}
       key={i}
       onClick={setisOpened ? () => setisOpened(false) : null}
     >
@@ -221,7 +220,7 @@ function renderStatic(categories, selected, setisOpened) {
 function renderGenres(genres, selected, setisOpened) {
   return genres.map(genre => (
     <LinkWrap
-      to={`/genres/${genre.name}`}
+      to={`${process.env.PUBLIC_URL}/genres/${genre.name}`}
       key={genre.id}
       onClick={setisOpened ? () => setisOpened(false) : null}
     >

@@ -54,7 +54,6 @@ html {
 }
 
 body {
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   line-height: 1.6;

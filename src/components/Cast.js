@@ -67,11 +67,3 @@ const Credits = ({ cast, baseUrl }) => {
 };
 
 export default Credits;
-
-// return cast.map(person => (
-//   <Link to={`/cast/${person.id}`} key={person.id}>
-//     <h3>{person.name}</h3>
-//     <p>Featuring: {person.character}</p>
-//     <ImgWrapper src={`${baseUrl}w342${person.profile_path}`} />
-//   </Link>
-// ));

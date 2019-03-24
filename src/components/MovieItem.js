@@ -135,7 +135,10 @@ const MovieItem = ({ movie, baseUrl }) => {
   const [error, setError] = useState(false);
 
   return (
-    <MovieWrapper loaded={loaded ? 1 : 0} to={`/movie/${movie.id}`}>
+    <MovieWrapper
+      loaded={loaded ? 1 : 0}
+      to={`${process.env.PUBLIC_URL}/movie/${movie.id}`}
+    >
       <MovieImg
         error={error ? 1 : 0}
         src={`${baseUrl}w780${movie.poster_path}`}

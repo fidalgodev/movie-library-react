@@ -91,7 +91,7 @@ const SearchBar = () => {
     }
     setInput('');
     setState(false);
-    history.push(`/search/${input}`);
+    history.push(`${process.env.PUBLIC_URL}/search/${input}`);
   }
 
   return (

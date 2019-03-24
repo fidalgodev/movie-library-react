@@ -52,7 +52,7 @@ const ShowError = ({ errors, clearError }) => {
   }, []);
 
   if (errors.length === 0) {
-    history.push('/');
+    history.push(`${process.env.PUBLIC_URL}/`);
     return null;
   }
   return (
@@ -62,7 +62,7 @@ const ShowError = ({ errors, clearError }) => {
         <SubTitle>{errors.data.status_message}</SubTitle>
       </TitleWrapper>
       <Svg src={`${ErrorSvg}`} alt="Not found" />
-      <LinkWrapper to="/">
+      <LinkWrapper to={`${process.env.PUBLIC_URL}/`}>
         <Button title="Home" solid icon="home" left />
       </LinkWrapper>
     </Wrapper>

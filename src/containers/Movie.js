@@ -447,7 +447,10 @@ function renderRecommended(recommended, base_url) {
 // Render Genres with links
 function renderGenres(genres) {
   return genres.map(genre => (
-    <StyledLink to={`/genres/${genre.name}`} key={genre.id}>
+    <StyledLink
+      to={`${process.env.PUBLIC_URL}/genres/${genre.name}`}
+      key={genre.id}
+    >
       <FontAwesomeIcon
         icon="dot-circle"
         size="1x"

@@ -88,6 +88,7 @@ const App = ({ init, isLoading }) => {
   useEffect(() => {
     init();
   }, []);
+  console.log(process.env.PUBLIC_URL);
   return isLoading ? (
     <ContentWrapper>
       <Loader />

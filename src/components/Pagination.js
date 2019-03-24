@@ -33,7 +33,10 @@ const Pagination = ({ movies, scrollToMyRef }) => {
   if (page < total_pages && page === 1) {
     return (
       <Wrapper>
-        <WrapperLink to={`?page=${page + 1}`} onClick={() => scrollToMyRef()}>
+        <WrapperLink
+          to={`${process.env.PUBLIC_URL}?page=${page + 1}`}
+          onClick={() => scrollToMyRef()}
+        >
           <Button solid title={`Page ${page + 1}`} icon="arrow-right" />
         </WrapperLink>
       </Wrapper>
@@ -44,10 +47,16 @@ const Pagination = ({ movies, scrollToMyRef }) => {
   else if (page < total_pages) {
     return (
       <Wrapper type="both">
-        <WrapperLink to={`?page=${page - 1}`} onClick={() => scrollToMyRef()}>
+        <WrapperLink
+          to={`${process.env.PUBLIC_URL}?page=${page - 1}`}
+          onClick={() => scrollToMyRef()}
+        >
           <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
         </WrapperLink>
-        <WrapperLink to={`?page=${page + 1}`} onClick={() => scrollToMyRef()}>
+        <WrapperLink
+          to={`${process.env.PUBLIC_URL}?page=${page + 1}`}
+          onClick={() => scrollToMyRef()}
+        >
           <Button solid title={`Page ${page + 1}`} icon="arrow-right" />
         </WrapperLink>
       </Wrapper>
@@ -58,7 +67,10 @@ const Pagination = ({ movies, scrollToMyRef }) => {
   else {
     return (
       <Wrapper type="one">
-        <WrapperLink to={`?page=${page - 1}`} onClick={() => scrollToMyRef()}>
+        <WrapperLink
+          to={`${process.env.PUBLIC_URL}?page=${page - 1}`}
+          onClick={() => scrollToMyRef()}
+        >
           <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
         </WrapperLink>
       </Wrapper>
