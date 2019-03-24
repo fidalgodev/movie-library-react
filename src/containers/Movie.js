@@ -75,14 +75,14 @@ const LinksWrapper = styled.div`
 
 const MovieDetails = styled.div`
   width: 60%;
-  padding: 5rem;
+  padding: 4rem;
   flex: 1 1 60%;
 `;
 
 const ImageWrapper = styled.div`
   width: 40%;
   flex: 1 1 40%;
-  padding: 2rem;
+  padding: 4rem;
 `;
 
 const MovieImg = styled.img`
@@ -90,7 +90,7 @@ const MovieImg = styled.img`
   height: ${props => (props.error ? '58rem' : 'auto')};
   object-fit: ${props => (props.error ? 'contain' : 'cover')};
   padding: ${props => (props.error ? '4rem' : '')};
-  max-width: 90%;
+  max-width: 100%;
   border-radius: 0.8rem;
   box-shadow: 0rem 2rem 5rem var(--shadow-color-dark);
 `;

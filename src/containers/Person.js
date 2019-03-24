@@ -17,6 +17,12 @@ import MoviesList from '../components/MoviesList';
 import Button from '../components/Button';
 import PersonAvatar from '../svg/person.svg';
 
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
+
 const PersonWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -32,14 +38,14 @@ const PersonWrapper = styled.div`
 
 const PersonDetails = styled.div`
   width: 60%;
-  padding: 5rem;
+  padding: 4rem;
   flex: 1 1 60%;
 `;
 
 const ImageWrapper = styled.div`
   width: 40%;
   flex: 1 1 40%;
-  padding: 2rem;
+  padding: 4rem;
 `;
 
 const MovieImg = styled.img`
@@ -47,7 +53,7 @@ const MovieImg = styled.img`
   height: ${props => (props.error ? '58rem' : 'auto')};
   object-fit: ${props => (props.error ? 'contain' : 'cover')};
   padding: ${props => (props.error ? '2rem' : '')};
-  max-width: 90%;
+  max-width: 100%;
   border-radius: 0.8rem;
   box-shadow: ${props =>
     props.error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark);'};
@@ -139,7 +145,7 @@ const Person = ({
   }
 
   return (
-    <React.Fragment>
+    <Wrapper>
       <PersonWrapper loaded={loaded ? 1 : 0}>
         <ImageWrapper>
           <MovieImg
@@ -180,7 +186,7 @@ const Person = ({
       </PersonWrapper>
       <Header title="Also enters in" subtitle="movies" />
       {renderPersonMovies(moviesPerson, base_url)}
-    </React.Fragment>
+    </Wrapper>
   );
 };
 
