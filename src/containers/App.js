@@ -4,6 +4,7 @@ import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import history from '../history';
 import { connect } from 'react-redux';
 import { init } from '../actions';
+import StickyBox from 'react-sticky-box';
 
 import Sidebar from './Sidebar';
 import Discover from './Discover';
@@ -56,6 +57,7 @@ library.add(
 
 const MainWrapper = styled.div`
   display: flex;
+  align-items: flex-start;
   user-select: none;
 `;
 
@@ -79,7 +81,9 @@ const App = ({ init, isLoading }) => {
     <Router history={history}>
       <React.Fragment>
         <MainWrapper>
-          <Sidebar />
+          <StickyBox>
+            <Sidebar />
+          </StickyBox>
           <ContentWrapper>
             <SearchBar />
             <Switch>
