@@ -85,7 +85,6 @@ const ContentWrapper = styled.div`
 `;
 
 const App = ({ init, isLoading }) => {
-  console.log(process.env.PUBLIC_URL);
   useEffect(() => {
     init();
   }, []);
@@ -102,7 +101,7 @@ const App = ({ init, isLoading }) => {
             <SearchBar />
             <Switch>
               <Route
-                path="/"
+                path={process.env.PUBLIC_URL + '/'}
                 exact
                 render={() => (
                   <Redirect
