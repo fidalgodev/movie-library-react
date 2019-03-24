@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { device } from '../utils/_devices';
 
 const StyledButton = styled.button`
   display: flex;
@@ -41,6 +42,18 @@ const StyledButton = styled.button`
     box-shadow: ${props =>
       props.solid ? 'none' : '0 1rem 5rem var(--shadow-color)'};
     transition: all 600ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  @media only screen and ${device.large} {
+    padding: 1.2rem 2rem;
+  }
+
+  @media only screen and ${device.small} {
+    padding: 1.3rem 1.6rem;
+  }
+
+  @media only screen and ${device.smaller} {
+    padding: 1rem 1.3rem;
   }
 
   &:active {

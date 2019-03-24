@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import history from '../history';
+import { device } from '../utils/_devices';
 
 import {
   getPerson,
@@ -30,22 +31,79 @@ const PersonWrapper = styled.div`
   width: 100%;
   max-width: 120rem;
   margin: 0 auto;
-  margin-bottom: 4rem;
+  margin-bottom: 7rem;
   opacity: ${props => (props.loaded ? '1' : '0')};
   visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
   transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  @media only screen and ${device.largest} {
+    max-width: 105rem;
+  }
+
+  @media only screen and ${device.larger} {
+    max-width: 110rem;
+    margin-bottom: 6rem;
+  }
+
+  @media only screen and ${device.large} {
+    max-width: 110rem;
+    margin-bottom: 5rem;
+  }
+
+  @media only screen and ${device.medium} {
+    flex-direction: column;
+    margin-bottom: 3rem;
+  }
 `;
 
 const PersonDetails = styled.div`
   width: 60%;
   padding: 4rem;
   flex: 1 1 60%;
+
+  @media only screen and ${device.largest} {
+    padding: 3rem;
+  }
+
+  @media only screen and ${device.large} {
+    padding: 2rem;
+  }
+
+  @media only screen and ${device.smaller} {
+    padding: 1rem;
+  }
+
+  @media only screen and ${device.smallest} {
+    padding: 0rem;
+  }
+
+  @media only screen and ${device.medium} {
+    width: 100%;
+    flex: 1 1 100%;
+  }
 `;
 
 const ImageWrapper = styled.div`
   width: 40%;
   flex: 1 1 40%;
   padding: 4rem;
+
+  @media only screen and ${device.largest} {
+    padding: 3rem;
+  }
+
+  @media only screen and ${device.large} {
+    padding: 2rem;
+  }
+
+  @media only screen and ${device.smaller} {
+    margin-bottom: 2rem;
+  }
+
+  @media only screen and ${device.medium} {
+    width: 60%;
+    flex: 1 1 60%;
+  }
 `;
 
 const MovieImg = styled.img`
@@ -69,6 +127,10 @@ const Heading = styled.h3`
   text-transform: uppercase;
   margin-bottom: 1rem;
   font-size: 1.4rem;
+
+  @media only screen and ${device.medium} {
+    font-size: 1.2rem;
+  }
 `;
 
 const DetailsWrapper = styled.div`
@@ -92,14 +154,27 @@ const Text = styled.p`
 const ButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
+
+  @media only screen and ${device.small} {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const LeftButtons = styled.div`
   margin-right: auto;
   display: flex;
 
+  @media only screen and ${device.small} {
+    margin-bottom: 2rem;
+  }
+
   & > *:not(:last-child) {
     margin-right: 2rem;
+
+    @media only screen and ${device.large} {
+      margin-right: 1rem;
+    }
   }
 `;
 
@@ -205,7 +280,7 @@ function renderBack() {
   if (history.action === 'PUSH') {
     return (
       <div onClick={history.goBack}>
-        <Button title="Go back" solid left icon="arrow-left" />
+        <Button title="Back" solid left icon="arrow-left" />
       </div>
     );
   }

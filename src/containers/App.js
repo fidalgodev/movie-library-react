@@ -4,7 +4,7 @@ import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import history from '../history';
 import { connect } from 'react-redux';
 import { init } from '../actions';
-import StickyBox from 'react-sticky-box';
+import { device } from '../utils/_devices';
 
 import Sidebar from './Sidebar';
 import Discover from './Discover';
@@ -57,8 +57,10 @@ library.add(
 
 const MainWrapper = styled.div`
   display: flex;
+  position: relative;
   align-items: flex-start;
   height: 100%;
+  width: 100%;
   user-select: none;
 `;
 
@@ -71,7 +73,15 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 6rem 4rem;
-  position: relative;
+
+  @media only screen and ${device.large} {
+    margin-top: 2rem;
+    padding: 6rem 2rem;
+  }
+
+  @media only screen and ${device.large3} {
+    padding: 6rem 3rem;
+  }
 `;
 
 const App = ({ init, isLoading }) => {
@@ -86,9 +96,7 @@ const App = ({ init, isLoading }) => {
     <Router history={history}>
       <React.Fragment>
         <MainWrapper>
-          <StickyBox>
-            <Sidebar />
-          </StickyBox>
+          <Sidebar />
           <ContentWrapper>
             <SearchBar />
             <Switch>

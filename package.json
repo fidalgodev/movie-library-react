@@ -13,6 +13,7 @@
     "node-sass": "^4.11.0",
     "query-string": "^6.4.0",
     "react": "^16.8.4",
+    "react-burger-menu": "^2.6.5",
     "react-dom": "^16.8.4",
     "react-items-carousel": "^2.3.0",
     "react-modal-video": "^1.2.1",

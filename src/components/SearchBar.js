@@ -87,7 +87,6 @@ const SearchBar = () => {
   function onFormSubmit(e) {
     e.preventDefault();
     if (input.length === 0) {
-      console.log('invalid');
       return;
     }
     setInput('');

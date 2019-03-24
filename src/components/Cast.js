@@ -4,9 +4,16 @@ import Loader from './Loader';
 import CastItem from './CastItem';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { device } from '../utils/_devices';
 
 const Wrapper = styled.div`
   margin-bottom: 5rem;
+
+  @media only screen and ${device.medium} {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+  }
 `;
 
 const Credits = ({ cast, baseUrl }) => {
@@ -19,7 +26,7 @@ const Credits = ({ cast, baseUrl }) => {
 
   // Set amount of items to show on slider based on the width of the element
   const changeTotalShow = () => {
-    const totalItems = Math.round(sliderElement.current.offsetWidth / 60);
+    const totalItems = Math.round(sliderElement.current.offsetWidth / 70);
     setTotalShow(totalItems);
   };
 

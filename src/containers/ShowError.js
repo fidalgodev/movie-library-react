@@ -21,6 +21,7 @@ const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 6rem;
 `;
 
 const Title = styled.h1`
@@ -42,6 +43,7 @@ const LinkWrapper = styled(Link)`
 const Svg = styled.img`
   max-width: 100%;
   height: 35vh;
+  margin-bottom: 6rem;
 `;
 
 const ShowError = ({ errors, clearError }) => {
