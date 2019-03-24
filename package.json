@@ -48,5 +48,5 @@
     "babel-plugin-styled-components": "^1.10.0",
     "gh-pages": "^2.0.1"
   },
-  "homepage": "https://fidalgodev.github.io/movie-library-react/"
+  "homepage": "https://fidalgodev.github.io/movie-library-react"
 }
