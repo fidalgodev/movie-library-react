@@ -85,10 +85,10 @@ const ContentWrapper = styled.div`
 `;
 
 const App = ({ init, isLoading }) => {
+  console.log(process.env.PUBLIC_URL);
   useEffect(() => {
     init();
   }, []);
-  console.log(process.env.PUBLIC_URL);
   return isLoading ? (
     <ContentWrapper>
       <Loader />
