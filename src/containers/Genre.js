@@ -33,13 +33,21 @@ const Genre = ({
   const params = queryString.parse(location.search);
   const { base_url } = geral.base.images;
 
-  // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
+  // When mounts go up
   useEffect(() => {
-    setSelectedMenu(match.params.name);
     window.scrollTo({
       top: (0, 0),
       behavior: 'smooth',
     });
+  }, []);
+
+  // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
+  useEffect(() => {
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
+    setSelectedMenu(match.params.name);
     // Clean up to remove selected menu from state
     return () => setSelectedMenu();
   }, [match.params.name]);
@@ -76,11 +84,11 @@ function useFetchMoviesGenre(
   clearMovies
 ) {
   useEffect(() => {
-    getMoviesGenre(genre, params.page, option.value);
     window.scrollTo({
       top: (0, 0),
       behavior: 'smooth',
     });
+    getMoviesGenre(genre, params.page, option.value);
     return () => clearMovies();
   }, [genre, params.page, option]);
 }

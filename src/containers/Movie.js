@@ -254,6 +254,14 @@ const Movie = ({
   const { base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
+  // When mounts go up
+  useEffect(() => {
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
+  }, []);
+
   // Fetch movie id when id on the url changes
   useEffect(() => {
     window.scrollTo({

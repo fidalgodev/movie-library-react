@@ -27,6 +27,14 @@ const Search = ({
   const params = queryString.parse(location.search);
   const { base_url } = geral.base.images;
 
+  // When mounts go up
+  useEffect(() => {
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
+  }, []);
+
   // Fetch movies hook
   useFetchMoviesSearch(query, getMoviesSearch, params, clearMovies);
 
@@ -59,11 +67,11 @@ const Search = ({
 // Hook to fetch the movies, will be called everytime the route for the search changes
 function useFetchMoviesSearch(query, getMoviesSearch, params, clearMovies) {
   useEffect(() => {
-    getMoviesSearch(query, params.page);
     window.scrollTo({
       top: (0, 0),
       behavior: 'smooth',
     });
+    getMoviesSearch(query, params.page);
     return () => clearMovies();
   }, [query, params.page]);
 }

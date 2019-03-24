@@ -198,13 +198,21 @@ const Person = ({
   const { base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
-  // Fetch person when id on url changes
+  // When mounts go up
   useEffect(() => {
-    getPerson(match.params.id);
     window.scrollTo({
       top: (0, 0),
       behavior: 'smooth',
     });
+  }, []);
+
+  // Fetch person when id on url changes
+  useEffect(() => {
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
+    getPerson(match.params.id);
     return () => clearPerson();
   }, [match.params.id]);
 

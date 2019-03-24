@@ -27,13 +27,21 @@ const Discover = ({
   const params = queryString.parse(location.search);
   const { base_url } = geral.base.images;
 
-  // Send url to setSelected Action Creator, it will check if is valid
+  // When mounts go up
   useEffect(() => {
-    setSelectedMenu(match.params.name);
     window.scrollTo({
       top: (0, 0),
       behavior: 'smooth',
     });
+  }, []);
+
+  // Send url to setSelected Action Creator, it will check if is valid
+  useEffect(() => {
+    window.scrollTo({
+      top: (0, 0),
+      behavior: 'smooth',
+    });
+    setSelectedMenu(match.params.name);
     // Clean up to remove selected menu from state
     return () => setSelectedMenu();
   }, [match.params.name]);
@@ -64,11 +72,11 @@ const Discover = ({
 function useFetchMoviesDiscover(name, getMoviesDiscover, params, clearMovies) {
   const query = name.replace(/\s+/g, '_').toLowerCase();
   useEffect(() => {
-    getMoviesDiscover(query, params.page);
     window.scrollTo({
       top: (0, 0),
       behavior: 'smooth',
     });
+    getMoviesDiscover(query, params.page);
     return () => clearMovies();
   }, [query, params.page]);
 }

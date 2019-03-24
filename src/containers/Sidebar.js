@@ -75,6 +75,21 @@ const StyledCoffe = styled.a`
   }
 `;
 
+const CopyRight = styled.div`
+  display: flex;
+  align-self: center;
+  align-items: center;
+  color: ${props => (props.mobile ? '#fff' : 'var(--color-primary-dark)')};
+  margin-bottom: ${props => (props.mobile ? '2rem' : '')};
+`;
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 4px;
+  color: inherit;
+`;
+
 var styles = {
   bmBurgerButton: {
     position: 'absolute',
@@ -89,6 +104,7 @@ var styles = {
   bmCrossButton: {
     height: '24px',
     width: '24px',
+    marginRight: '1rem',
   },
   bmCross: {
     background: '#fafafa',
@@ -99,6 +115,7 @@ var styles = {
   },
   bmMenu: {
     background: '#263238',
+    overflowY: 'scroll',
     padding: '2.5em 1.5em',
   },
   bmItemList: {
@@ -148,6 +165,12 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
         />
         <span style={{ marginLeft: '5px' }}>Buy me a coffee</span>
       </StyledCoffe>
+      <CopyRight mobile={true}>
+        Copyright ©
+        <StyledLink href="https://www.github.com/fidalgo.dev">
+          Fidalgo
+        </StyledLink>
+      </CopyRight>
     </Menu>
   ) : (
     <StickyBox>
@@ -168,6 +191,12 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
           />
           <span style={{ marginLeft: '5px' }}>Buy me a coffee</span>
         </StyledCoffe>
+        <CopyRight>
+          Copyright ©
+          <StyledLink href="https://www.github.com/fidalgo.dev">
+            Fidalgo
+          </StyledLink>
+        </CopyRight>
       </Wrapper>
     </StickyBox>
   );
