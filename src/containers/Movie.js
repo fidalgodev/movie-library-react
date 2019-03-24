@@ -283,6 +283,10 @@ const Movie = ({
     return <Loader />;
   }
 
+  if (movie.status_code) {
+    history.push(process.env.PUBLIC_URL + '/404');
+  }
+
   return (
     <Wrapper>
       <MovieWrapper loaded={loaded ? 1 : 0}>

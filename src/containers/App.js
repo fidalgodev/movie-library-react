@@ -103,20 +103,48 @@ const App = ({ init, isLoading }) => {
               <Route
                 path="/"
                 exact
-                render={() => <Redirect from="/" to="/discover/Popular" />}
+                render={() => (
+                  <Redirect
+                    from={process.env.PUBLIC_URL + '/'}
+                    to={process.env.PUBLIC_URL + '/discover/Popular'}
+                  />
+                )}
               />
-              <Route path="/genres/:name" exact component={Genre} />
-              <Route path="/discover/:name" exact component={Discover} />
-              <Route path="/search/:query" exact component={Search} />
-              <Route path="/movie/:id" exact component={Movie} />
-              <Route path="/person/:id" exact component={Person} />
+              <Route
+                path={process.env.PUBLIC_URL + '/genres/:name'}
+                exact
+                component={Genre}
+              />
+              <Route
+                path={process.env.PUBLIC_URL + '/discover/:name'}
+                exact
+                component={Discover}
+              />
+              <Route
+                path={process.env.PUBLIC_URL + '/search/:query'}
+                exact
+                component={Search}
+              />
+              <Route
+                path={process.env.PUBLIC_URL + '/movie/:id'}
+                exact
+                component={Movie}
+              />
+              <Route
+                path={process.env.PUBLIC_URL + '/person/:id'}
+                exact
+                component={Person}
+              />
               <Route
                 path="/404"
                 component={() => (
                   <NotFound title="Upps!" subtitle={`This doesn't exist...`} />
                 )}
               />
-              <Route path="/error" component={ShowError} />
+              <Route
+                path={process.env.PUBLIC_URL + '/error'}
+                component={ShowError}
+              />
               <Route
                 component={() => (
                   <NotFound title="Upps!" subtitle={`This doesn't exist...`} />

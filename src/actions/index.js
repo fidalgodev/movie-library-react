@@ -42,7 +42,7 @@ export const setSelectedMenu = name => (dispatch, getState) => {
       payload: name,
     });
   } else {
-    history.push('/404');
+    history.push(process.env.PUBLIC_URL + '/404');
   }
 };
 
@@ -75,7 +75,7 @@ export const getMoviesGenre = (name, page, sort) => async (
     dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
   } catch (err) {
     dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
-    history.push('/error');
+    history.push(process.env.PUBLIC_URL + '/error');
   }
 };
 
@@ -99,7 +99,7 @@ export const getMoviesDiscover = (name, page) => async (dispatch, getState) => {
     dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
   } catch (err) {
     dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
-    history.push('/error');
+    history.push(process.env.PUBLIC_URL + '/error');
   }
 };
 
@@ -120,7 +120,7 @@ export const getMoviesSearch = (query, page) => async dispatch => {
     dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
   } catch (err) {
     dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
-    history.push('/error');
+    history.push(process.env.PUBLIC_URL + '/error');
   }
 };
 
@@ -148,7 +148,7 @@ export const getMovie = id => async dispatch => {
     dispatch({ type: TYPES.FETCH_MOVIE_FINISHED });
   } catch (err) {
     dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
-    history.push('/error');
+    history.push(process.env.PUBLIC_URL + '/error');
   }
 };
 
@@ -171,7 +171,7 @@ export const getCredits = () => async (dispatch, getState) => {
     });
   } catch (err) {
     dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
-    history.push('/error');
+    history.push(process.env.PUBLIC_URL + '/error');
   }
 };
 
@@ -191,7 +191,7 @@ export const getRecommendations = (id, page) => async dispatch => {
     dispatch({ type: TYPES.FETCH_RECOMMENDATIONS_FINISHED });
   } catch (err) {
     dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
-    history.push('/error');
+    history.push(process.env.PUBLIC_URL + '/error');
   }
 };
 
@@ -214,7 +214,7 @@ export const getPerson = id => async dispatch => {
     dispatch({ type: TYPES.FETCH_PERSON_FINISHED });
   } catch (err) {
     dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
-    history.push('/error');
+    history.push(process.env.PUBLIC_URL + '/error');
   }
 };
 
@@ -242,7 +242,7 @@ export const getMoviesforPerson = (id, page) => async dispatch => {
     dispatch({ type: TYPES.FETCH_MOVIESPERSON_FINISHED });
   } catch (err) {
     dispatch({ type: TYPES.INSERT_ERROR, payload: err.response });
-    history.push('/error');
+    history.push(process.env.PUBLIC_URL + '/error');
   }
 };
 
