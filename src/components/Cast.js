@@ -4,12 +4,11 @@ import Loader from './Loader';
 import CastItem from './CastItem';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { device } from '../utils/_devices';
 
 const Wrapper = styled.div`
   margin-bottom: 5rem;
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     width: 90%;
     margin: 0 auto;
     margin-bottom: 3rem;

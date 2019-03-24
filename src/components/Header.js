@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { device } from '../utils/_devices';
 
 const Title = styled.h1`
   font-size: ${props => (props.size === '2' ? '4rem' : '2.5rem')};
@@ -11,11 +10,11 @@ const Title = styled.h1`
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     font-size: ${props => (props.size === '2' ? '2.7rem' : '2.2rem')};
   }
 
-  @media only screen and ${device.small} {
+  @media ${props => props.theme.mediaQueries.small} {
     font-size: ${props => (props.size === '2' ? '2.2rem' : '2rem')};
   }
 `;
@@ -27,7 +26,7 @@ const Subtitle = styled.h2`
   font-size: ${props => (props.size === '2' ? '1.7rem' : '1.2rem')};
   font-weight: 700;
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     font-size: ${props => (props.size === '2' ? '1.3rem' : '1.1rem')};
   }
 `;

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import history from '../history';
-import { device } from '../utils/_devices';
 
 import {
   getPerson,
@@ -36,21 +35,21 @@ const PersonWrapper = styled.div`
   visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
   transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
 
-  @media only screen and ${device.largest} {
+  @media ${props => props.theme.mediaQueries.largest} {
     max-width: 105rem;
   }
 
-  @media only screen and ${device.larger} {
+  @media ${props => props.theme.mediaQueries.larger} {
     max-width: 110rem;
     margin-bottom: 6rem;
   }
 
-  @media only screen and ${device.large} {
+  @media ${props => props.theme.mediaQueries.large} {
     max-width: 110rem;
     margin-bottom: 5rem;
   }
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     flex-direction: column;
     margin-bottom: 3rem;
   }
@@ -61,23 +60,23 @@ const PersonDetails = styled.div`
   padding: 4rem;
   flex: 1 1 60%;
 
-  @media only screen and ${device.largest} {
+  @media ${props => props.theme.mediaQueries.largest} {
     padding: 3rem;
   }
 
-  @media only screen and ${device.large} {
+  @media ${props => props.theme.mediaQueries.large} {
     padding: 2rem;
   }
 
-  @media only screen and ${device.smaller} {
+  @media ${props => props.theme.mediaQueries.smaller} {
     padding: 1rem;
   }
 
-  @media only screen and ${device.smallest} {
+  @media ${props => props.theme.mediaQueries.smallest} {
     padding: 0rem;
   }
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     width: 100%;
     flex: 1 1 100%;
   }
@@ -88,19 +87,19 @@ const ImageWrapper = styled.div`
   flex: 1 1 40%;
   padding: 4rem;
 
-  @media only screen and ${device.largest} {
+  @media ${props => props.theme.mediaQueries.largest} {
     padding: 3rem;
   }
 
-  @media only screen and ${device.large} {
+  @media ${props => props.theme.mediaQueries.large} {
     padding: 2rem;
   }
 
-  @media only screen and ${device.smaller} {
+  @media ${props => props.theme.mediaQueries.smaller} {
     margin-bottom: 2rem;
   }
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     width: 60%;
     flex: 1 1 60%;
   }
@@ -128,7 +127,7 @@ const Heading = styled.h3`
   margin-bottom: 1rem;
   font-size: 1.4rem;
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     font-size: 1.2rem;
   }
 `;
@@ -155,7 +154,7 @@ const ButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media only screen and ${device.small} {
+  @media ${props => props.theme.mediaQueries.small} {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -165,14 +164,14 @@ const LeftButtons = styled.div`
   margin-right: auto;
   display: flex;
 
-  @media only screen and ${device.small} {
+  @media ${props => props.theme.mediaQueries.small} {
     margin-bottom: 2rem;
   }
 
   & > *:not(:last-child) {
     margin-right: 2rem;
 
-    @media only screen and ${device.large} {
+    @media ${props => props.theme.mediaQueries.large} {
       margin-right: 1rem;
     }
   }

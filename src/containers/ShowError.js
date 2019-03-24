@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import history from '../history';
-import { device } from '../utils/_devices';
 
 import { clearError } from '../actions';
 import ErrorSvg from '../svg/error.svg';
@@ -17,7 +16,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-evenly;
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     width: 65%;
   }
 `;
