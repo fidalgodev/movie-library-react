@@ -1,5 +1,7 @@
 # Movie Library w/ ReactJS
 
+## [Check it live here](https://movie-library-fidalgo.herokuapp.com/discover/Popular)
+
 ![Thumbnail](thumbnail.png)
 
 A Movie Library made with ReactJS using The Movie Database API
