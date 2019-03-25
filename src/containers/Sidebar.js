@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import StickyBox from 'react-sticky-box';
 import { slide as Menu } from 'react-burger-menu';
-import { device } from '../utils/_devices';
 
 import Logo from '../components/Logo';
 import TmdbLogo from '../svg/tmdb.svg';
@@ -143,7 +142,7 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
 
   // Set amount of items to show on slider based on the width of the element
   const changeMobile = () => {
-    window.matchMedia(`${device.large}`).matches
+    window.matchMedia('(max-width: 80em)').matches
       ? setisMobile(true)
       : setisMobile(false);
   };

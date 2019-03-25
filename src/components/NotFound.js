@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { device } from '../utils/_devices';
 
 import NotfoundSvg from '../svg/empty.svg';
 import Button from './Button';
@@ -14,7 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-evenly;
 
-  @media only screen and ${device.medium} {
+  @media ${props => props.theme.mediaQueries.medium} {
     width: 65%;
   }
 `;

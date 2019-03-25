@@ -4,7 +4,6 @@ import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import history from '../history';
 import { connect } from 'react-redux';
 import { init } from '../actions';
-import { device } from '../utils/_devices';
 
 import Sidebar from './Sidebar';
 import Discover from './Discover';
@@ -74,12 +73,12 @@ const ContentWrapper = styled.div`
   justify-content: center;
   padding: 6rem 4rem;
 
-  @media only screen and ${device.large} {
+  @media ${props => props.theme.mediaQueries.larger} {
     margin-top: 2rem;
     padding: 6rem 2rem;
   }
 
-  @media only screen and ${device.large3} {
+  @media ${props => props.theme.mediaQueries.large} {
     padding: 6rem 3rem;
   }
 `;
