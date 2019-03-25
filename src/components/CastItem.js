@@ -9,6 +9,7 @@ const LinkWrapper = styled(Link)`
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   opacity: ${props => (props.loaded ? '1' : '0')};
   visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
 `;

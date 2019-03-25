@@ -7,6 +7,7 @@ import { slide as Menu } from 'react-burger-menu';
 import { device } from '../utils/_devices';
 
 import Logo from '../components/Logo';
+import Loader from '../components/Loader';
 import MenuItem from '../components/MenuItem';
 
 const Wrapper = styled.div`
@@ -14,9 +15,12 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 25rem;
   padding: 2rem;
+  opacity: ${props => (props.isMobile ? '0' : '1')};
+  visibility: ${props => (props.isMobile ? 'hidden' : 'visible')};
   margin: top: 4rem;
   color: var(--color-primary-dark);
   border-right: 1px solid var(--border-color);
+  transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
 `;
 
 const Heading = styled.h2`
@@ -132,13 +136,14 @@ var styles = {
 
 const Sidebar = ({ genres, staticCategories, selected }) => {
   const [isMobile, setisMobile] = useState(false);
+  const [isDesktop, setisDesktop] = useState(false);
   const [isOpened, setisOpened] = useState(false);
 
   // Set amount of items to show on slider based on the width of the element
   const changeMobile = () => {
     window.matchMedia(`${device.large}`).matches
-      ? setisMobile(true)
-      : setisMobile(false);
+      ? setisMobile(!isMobile)
+      : setisDesktop(!isDesktop);
   };
 
   useEffect(() => {
@@ -146,6 +151,10 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
     window.addEventListener('resize', changeMobile);
     return () => window.removeEventListener('resize', changeMobile);
   }, []);
+
+  if (!isMobile && !isDesktop) {
+    return null;
+  }
 
   return isMobile ? (
     <Menu isOpen={isOpened} styles={styles}>
@@ -173,7 +182,7 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
     </Menu>
   ) : (
     <StickyBox>
-      <Wrapper>
+      <Wrapper isMobile={isMobile}>
         <Logo />
         <Heading>Discover</Heading>
         {renderStatic(staticCategories, selected)}

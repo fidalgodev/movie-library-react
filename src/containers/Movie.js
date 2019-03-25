@@ -95,7 +95,8 @@ const LinksWrapper = styled.div`
 `;
 
 const MovieDetails = styled.div`
-  width: 60%;
+  width: 100%;
+  max-width: 60%
   padding: 4rem;
   flex: 1 1 60%;
 
@@ -116,13 +117,14 @@ const MovieDetails = styled.div`
   }
 
   @media only screen and ${device.medium} {
-    width: 100%;
+    max-width: 100%;
     flex: 1 1 100%;
   }
 `;
 
 const ImageWrapper = styled.div`
-  width: 40%;
+  width: 100%;
+  max-width: 40%
   flex: 1 1 40%;
   padding: 4rem;
 
@@ -139,7 +141,7 @@ const ImageWrapper = styled.div`
   }
 
   @media only screen and ${device.medium} {
-    width: 60%;
+    max-width: 60%;
     flex: 1 1 60%;
   }
 `;
