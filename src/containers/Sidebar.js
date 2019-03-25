@@ -166,7 +166,7 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
       </StyledCoffe>
       <CopyRight mobile={true}>
         Copyright ©
-        <StyledLink href="https://www.github.com/fidalgo.dev">
+        <StyledLink href="https://www.github.com/fidalgodev">
           Fidalgo
         </StyledLink>
       </CopyRight>
@@ -192,7 +192,7 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
         </StyledCoffe>
         <CopyRight>
           Copyright ©
-          <StyledLink href="https://www.github.com/fidalgo.dev">
+          <StyledLink href="https://www.github.com/fidalgodev">
             Fidalgo
           </StyledLink>
         </CopyRight>

@@ -25,7 +25,7 @@ Clone the Repository and run
 
 ```
 npm install
-npm start
+npm run dev
 ```
 
 ## Deployment

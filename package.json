@@ -48,7 +48,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.10.0",
-    "gh-pages": "^2.0.1"
+    "babel-plugin-styled-components": "^1.10.0"
   }
 }
