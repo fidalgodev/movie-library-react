@@ -37,6 +37,7 @@ const Credits = ({ cast, baseUrl }) => {
     infinite: true,
     autoplay: true,
     autoplaySpeed: 3000,
+    swipeToSlide: true,
     speed: 500,
     slidesToShow: totalShow,
     slidesToScroll: 1,
