@@ -141,7 +141,7 @@ const MovieItem = ({ movie, baseUrl }) => {
     >
       <MovieImg
         error={error ? 1 : 0}
-        src={`${baseUrl}w780${movie.poster_path}`}
+        src={`${baseUrl}w342${movie.poster_path}`}
         // Image loaded, set loaded to true
         onLoad={() => setLoaded(true)}
         // If no image, error will occurr, we set error to true
