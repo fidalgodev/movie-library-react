@@ -251,7 +251,7 @@ const Movie = ({
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [modalOpened, setmodalOpened] = useState(false);
-  const { base_url } = geral.base.images;
+  const { secure_base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
   // When mounts go up
@@ -293,7 +293,7 @@ const Movie = ({
         <ImageWrapper>
           <MovieImg
             error={error ? 1 : 0}
-            src={`${base_url}w780${movie.poster_path}`}
+            src={`${secure_base_url}w780${movie.poster_path}`}
             onLoad={() => setLoaded(true)}
             // If no image, error will occurr, we set error to true
             // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
@@ -331,7 +331,7 @@ const Movie = ({
               : 'There is no synopsis available...'}
           </Text>
           <Heading>The Cast</Heading>
-          <Cast cast={movie.cast} baseUrl={base_url} />
+          <Cast cast={movie.cast} baseUrl={secure_base_url} />
           <ButtonsWrapper>
             <LeftButtons>
               {renderWebsite(movie.homepage)}
@@ -343,7 +343,7 @@ const Movie = ({
         </MovieDetails>
       </MovieWrapper>
       <Header title="Recommended" subtitle="movies" />
-      {renderRecommended(recommended, base_url)}
+      {renderRecommended(recommended, secure_base_url)}
     </Wrapper>
   );
 };

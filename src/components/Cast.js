@@ -38,8 +38,8 @@ const Credits = ({ cast, baseUrl }) => {
 
   useEffect(() => {
     changeTotalShow();
-    window.addEventListener('resize', changeTotalShow);
-    return () => window.removeEventListener('resize', changeTotalShow);
+    document.addEventListener('resize', changeTotalShow);
+    return () => document.removeEventListener('resize', changeTotalShow);
   }, []);
 
   return (

@@ -195,7 +195,7 @@ const Person = ({
 }) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { base_url } = geral.base.images;
+  const { secure_base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
   // When mounts go up
@@ -233,7 +233,7 @@ const Person = ({
         <ImageWrapper>
           <MovieImg
             error={error ? 1 : 0}
-            src={`${base_url}w780${person.profile_path}`}
+            src={`${secure_base_url}w780${person.profile_path}`}
             onLoad={() => setLoaded(true)}
             // If no image, error will occurr, we set error to true
             // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
@@ -268,7 +268,7 @@ const Person = ({
         </PersonDetails>
       </PersonWrapper>
       <Header title="Also enters in" subtitle="movies" />
-      {renderPersonMovies(moviesPerson, base_url)}
+      {renderPersonMovies(moviesPerson, secure_base_url)}
     </Wrapper>
   );
 };

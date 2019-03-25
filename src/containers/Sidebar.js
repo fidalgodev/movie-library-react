@@ -93,8 +93,8 @@ const StyledLink = styled.a`
 var styles = {
   bmBurgerButton: {
     position: 'absolute',
-    width: '30px',
-    height: '25px',
+    width: '25px',
+    height: '20px',
     left: '20px',
     top: '20px',
   },
