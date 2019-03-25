@@ -7,7 +7,8 @@ import { slide as Menu } from 'react-burger-menu';
 import { device } from '../utils/_devices';
 
 import Logo from '../components/Logo';
-import Loader from '../components/Loader';
+import TmdbLogo from '../svg/tmdb.svg';
+import TmdbLogoGreen from '../svg/tmdbgreen.svg';
 import MenuItem from '../components/MenuItem';
 
 const Wrapper = styled.div`
@@ -15,12 +16,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 25rem;
   padding: 2rem;
-  opacity: ${props => (props.isMobile ? '0' : '1')};
-  visibility: ${props => (props.isMobile ? 'hidden' : 'visible')};
   margin: top: 4rem;
   color: var(--color-primary-dark);
   border-right: 1px solid var(--border-color);
-  transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
 `;
 
 const Heading = styled.h2`
@@ -94,6 +92,11 @@ const StyledLink = styled.a`
   color: inherit;
 `;
 
+const Svg = styled.img`
+  max-width: 100%;
+  height: 3rem;
+`;
+
 var styles = {
   bmBurgerButton: {
     position: 'absolute',
@@ -135,15 +138,14 @@ var styles = {
 };
 
 const Sidebar = ({ genres, staticCategories, selected }) => {
-  const [isMobile, setisMobile] = useState(false);
-  const [isDesktop, setisDesktop] = useState(false);
+  const [isMobile, setisMobile] = useState(null);
   const [isOpened, setisOpened] = useState(false);
 
   // Set amount of items to show on slider based on the width of the element
   const changeMobile = () => {
     window.matchMedia(`${device.large}`).matches
-      ? setisMobile(!isMobile)
-      : setisDesktop(!isDesktop);
+      ? setisMobile(true)
+      : setisMobile(false);
   };
 
   useEffect(() => {
@@ -152,7 +154,7 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
     return () => window.removeEventListener('resize', changeMobile);
   }, []);
 
-  if (!isMobile && !isDesktop) {
+  if (isMobile === null) {
     return null;
   }
 
@@ -179,10 +181,15 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
           Fidalgo
         </StyledLink>
       </CopyRight>
+      <Svg
+        src={`${TmdbLogoGreen}`}
+        alt="The Movie Database"
+        style={{ marginBottom: '2rem' }}
+      />
     </Menu>
   ) : (
     <StickyBox>
-      <Wrapper isMobile={isMobile}>
+      <Wrapper>
         <Logo />
         <Heading>Discover</Heading>
         {renderStatic(staticCategories, selected)}
@@ -205,6 +212,11 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
             Fidalgo
           </StyledLink>
         </CopyRight>
+        <Svg
+          src={`${TmdbLogo}`}
+          alt="The Movie Database"
+          style={{ margin: '2rem 0' }}
+        />
       </Wrapper>
     </StickyBox>
   );
