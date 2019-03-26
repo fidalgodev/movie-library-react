@@ -26,10 +26,6 @@ const Wrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-
-  @media ${props => props.theme.mediaQueries.medium} {
-    align-items: center;
-  }
 `;
 
 const MovieWrapper = styled.div`
@@ -127,8 +123,11 @@ const MovieDetails = styled.div`
 
 const ImageWrapper = styled.div`
   width: 100%;
-  max-width: 40%
+  max-width: 40%;
   flex: 1 1 40%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
   padding: 4rem;
 
   @media ${props => props.theme.mediaQueries.largest}} {
@@ -151,12 +150,13 @@ const ImageWrapper = styled.div`
 
 const MovieImg = styled.img`
   max-height: 100%;
-  height: ${props => (props.error ? '58rem' : 'auto')};
+  height: ${props => (props.error ? '25rem' : 'auto')};
   object-fit: ${props => (props.error ? 'contain' : 'cover')};
-  padding: ${props => (props.error ? '4rem' : '')};
+  padding: ${props => (props.error ? '2rem' : '')};
   max-width: 100%;
   border-radius: 0.8rem;
-  box-shadow: 0rem 2rem 5rem var(--shadow-color-dark);
+  box-shadow: ${props =>
+    props.error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark)'};
 `;
 
 const HeaderWrapper = styled.div`
