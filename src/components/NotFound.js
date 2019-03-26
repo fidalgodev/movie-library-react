@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: center;
   justify-content: space-evenly;
 
   @media ${props => props.theme.mediaQueries.medium} {
