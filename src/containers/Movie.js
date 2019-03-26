@@ -26,6 +26,10 @@ const Wrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+
+  @media ${props => props.theme.mediaQueries.medium} {
+    align-items: center;
+  }
 `;
 
 const MovieWrapper = styled.div`
