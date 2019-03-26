@@ -25,7 +25,7 @@ const Search = ({
 }) => {
   const { query } = match.params;
   const params = queryString.parse(location.search);
-  const { base_url } = geral.base.images;
+  const { secure_base_url } = geral.base.images;
 
   // When mounts go up
   useEffect(() => {
@@ -58,7 +58,7 @@ const Search = ({
     return (
       <Wrapper>
         <Header title={query} subtitle="search results" />
-        <MoviesList movies={movies} baseUrl={base_url} />;
+        <MoviesList movies={movies} baseUrl={secure_base_url} />;
       </Wrapper>
     );
   }

@@ -6,6 +6,8 @@ import StickyBox from 'react-sticky-box';
 import { slide as Menu } from 'react-burger-menu';
 
 import Logo from '../components/Logo';
+import TmdbLogo from '../svg/tmdb.svg';
+import TmdbLogoGreen from '../svg/tmdbgreen.svg';
 import MenuItem from '../components/MenuItem';
 
 const Wrapper = styled.div`
@@ -89,11 +91,16 @@ const StyledLink = styled.a`
   color: inherit;
 `;
 
+const Svg = styled.img`
+  max-width: 100%;
+  height: 3rem;
+`;
+
 var styles = {
   bmBurgerButton: {
     position: 'absolute',
-    width: '30px',
-    height: '25px',
+    width: '25px',
+    height: '20px',
     left: '20px',
     top: '20px',
   },
@@ -130,7 +137,7 @@ var styles = {
 };
 
 const Sidebar = ({ genres, staticCategories, selected }) => {
-  const [isMobile, setisMobile] = useState(false);
+  const [isMobile, setisMobile] = useState(null);
   const [isOpened, setisOpened] = useState(false);
 
   // Set amount of items to show on slider based on the width of the element
@@ -145,6 +152,10 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
     window.addEventListener('resize', changeMobile);
     return () => window.removeEventListener('resize', changeMobile);
   }, []);
+
+  if (isMobile === null) {
+    return null;
+  }
 
   return isMobile ? (
     <Menu isOpen={isOpened} styles={styles}>
@@ -165,10 +176,15 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
       </StyledCoffe>
       <CopyRight mobile={true}>
         Copyright ©
-        <StyledLink href="https://www.github.com/fidalgo.dev">
+        <StyledLink href="https://www.github.com/fidalgodev">
           Fidalgo
         </StyledLink>
       </CopyRight>
+      <Svg
+        src={`${TmdbLogoGreen}`}
+        alt="The Movie Database"
+        style={{ marginBottom: '2rem' }}
+      />
     </Menu>
   ) : (
     <StickyBox>
@@ -191,10 +207,15 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
         </StyledCoffe>
         <CopyRight>
           Copyright ©
-          <StyledLink href="https://www.github.com/fidalgo.dev">
+          <StyledLink href="https://www.github.com/fidalgodev">
             Fidalgo
           </StyledLink>
         </CopyRight>
+        <Svg
+          src={`${TmdbLogo}`}
+          alt="The Movie Database"
+          style={{ margin: '2rem 0' }}
+        />
       </Wrapper>
     </StickyBox>
   );

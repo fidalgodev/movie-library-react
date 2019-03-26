@@ -94,7 +94,8 @@ const LinksWrapper = styled.div`
 `;
 
 const MovieDetails = styled.div`
-  width: 60%;
+  width: 100%;
+  max-width: 60%
   padding: 4rem;
   flex: 1 1 60%;
 
@@ -115,17 +116,18 @@ const MovieDetails = styled.div`
   }
 
   @media ${props => props.theme.mediaQueries.medium} {
-    width: 100%;
+    max-width: 100%;
     flex: 1 1 100%;
   }
 `;
 
 const ImageWrapper = styled.div`
-  width: 40%;
+  width: 100%;
+  max-width: 40%
   flex: 1 1 40%;
   padding: 4rem;
 
-  @media ${props => props.theme.mediaQueries.largest} {
+  @media ${props => props.theme.mediaQueries.largest}} {
     padding: 3rem;
   }
 
@@ -138,7 +140,7 @@ const ImageWrapper = styled.div`
   }
 
   @media ${props => props.theme.mediaQueries.medium} {
-    width: 60%;
+    max-width: 60%;
     flex: 1 1 60%;
   }
 `;
@@ -250,7 +252,7 @@ const Movie = ({
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [modalOpened, setmodalOpened] = useState(false);
-  const { base_url } = geral.base.images;
+  const { secure_base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
   // When mounts go up
@@ -292,7 +294,7 @@ const Movie = ({
         <ImageWrapper>
           <MovieImg
             error={error ? 1 : 0}
-            src={`${base_url}w780${movie.poster_path}`}
+            src={`${secure_base_url}w780${movie.poster_path}`}
             onLoad={() => setLoaded(true)}
             // If no image, error will occurr, we set error to true
             // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
@@ -330,7 +332,7 @@ const Movie = ({
               : 'There is no synopsis available...'}
           </Text>
           <Heading>The Cast</Heading>
-          <Cast cast={movie.cast} baseUrl={base_url} />
+          <Cast cast={movie.cast} baseUrl={secure_base_url} />
           <ButtonsWrapper>
             <LeftButtons>
               {renderWebsite(movie.homepage)}
@@ -342,7 +344,7 @@ const Movie = ({
         </MovieDetails>
       </MovieWrapper>
       <Header title="Recommended" subtitle="movies" />
-      {renderRecommended(recommended, base_url)}
+      {renderRecommended(recommended, secure_base_url)}
     </Wrapper>
   );
 };
