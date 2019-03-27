@@ -57,6 +57,10 @@ const MovieImg = styled.img`
     border-radius: 0.8rem 0.8rem 0rem 0rem;
     box-shadow: none;
   }
+
+  @media ${props => props.theme.mediaQueries.smaller} {
+    height: 28rem;
+  }
 `;
 
 const Title = styled.h2`
@@ -79,6 +83,10 @@ const DetailsWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 3rem;
+
+  @media ${props => props.theme.mediaQueries.smaller} {
+    padding: 1.5rem 1.5rem;
+  }
 `;
 
 const RatingsWrapper = styled.div`

@@ -10,25 +10,18 @@ const StarsWrapper = styled(Stars)`
 const FontAwesome = styled(FontAwesomeIcon)`
   color: inherit;
   transition: color 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  margin-right: 10px;
+
+  @media ${props => props.theme.mediaQueries.smaller} {
+    margin-right: 5px;
+  }
 `;
 
 const Rating = ({ number }) => {
   return (
     <StarsWrapper
-      emptySymbol={
-        <FontAwesome
-          icon={['far', 'star']}
-          size="lg"
-          style={{ marginRight: '10px' }}
-        />
-      }
-      fullSymbol={
-        <FontAwesome
-          icon={['fas', 'star']}
-          size="lg"
-          style={{ marginRight: '10px' }}
-        />
-      }
+      emptySymbol={<FontAwesome icon={['far', 'star']} size="lg" />}
+      fullSymbol={<FontAwesome icon={['fas', 'star']} size="lg" />}
       initialRating={number}
       readonly
     />

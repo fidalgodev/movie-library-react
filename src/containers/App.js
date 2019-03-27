@@ -75,11 +75,11 @@ const ContentWrapper = styled.div`
 
   @media ${props => props.theme.mediaQueries.larger} {
     margin-top: 2rem;
-    padding: 6rem 2rem;
+    padding: 6rem 3rem;
   }
 
   @media ${props => props.theme.mediaQueries.large} {
-    padding: 6rem 3rem;
+    padding: 6rem 2rem;
   }
 `;
 
