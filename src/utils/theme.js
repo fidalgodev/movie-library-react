@@ -8,13 +8,12 @@ const theme = {
     link: '#444444',
   },
   breakpoints: [
+    '37.5em',
     '56.25em',
     '80em',
-    '90em',
-    '97em',
   ],
   mediaQueries: {
-    smallest: `only screen and (max-width: 25em)`, //275px
+    smallest: 'only screen and (max-width: 25em)', //275px
     smaller: 'only screen and (max-width: 31.25em)', //500px
     small: 'only screen and (max-width: 37.5em)', //600px
     medium: 'only screen and (max-width: 56.25em)', //900px

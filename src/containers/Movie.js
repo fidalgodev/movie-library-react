@@ -335,7 +335,10 @@ const Movie = ({
               ? movie.overview
               : 'There is no synopsis available...'}
           </Text>
-          <Heading>The Cast</Heading>
+          {!movie.cast || !movie.cast.length
+            ? null
+            : <Heading>The Cast</Heading>
+          }
           <Cast cast={movie.cast} baseUrl={secure_base_url} />
           <ButtonsWrapper>
             <LeftButtons>
