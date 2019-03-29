@@ -8,6 +8,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.7.2",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@rebass/grid": "^6.0.0",
     "add": "^2.0.6",
     "axios": "^0.18.0",
     "node-sass": "^4.11.0",
@@ -18,6 +19,7 @@
     "react-modal-video": "^1.2.1",
     "react-rating": "^1.6.2",
     "react-redux": "^6.0.1",
+    "react-redux-multilingual": "^2.0.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
     "react-select": "^2.4.2",
@@ -49,6 +51,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-react": "^7.0.0",
     "babel-plugin-styled-components": "^1.10.0"
   }
 }

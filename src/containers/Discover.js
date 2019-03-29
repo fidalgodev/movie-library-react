@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
 import styled from 'styled-components';
+
+import { withTranslate } from 'react-redux-multilingual'
 
 import { setSelectedMenu, getMoviesDiscover, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
@@ -23,6 +26,7 @@ const Discover = ({
   getMoviesDiscover,
   clearMovies,
   movies,
+  translate,
 }) => {
   const params = queryString.parse(location.search);
   const { secure_base_url } = geral.base.images;
@@ -62,6 +66,9 @@ const Discover = ({
   // Else return movies list
   return (
     <Wrapper>
+      <React.Fragment>
+        { translate('pages.discover.title') }
+      </React.Fragment>
       <Header title={geral.selected} subtitle="movies" />
       <MoviesList movies={movies} baseUrl={secure_base_url} />
     </Wrapper>
@@ -86,7 +93,15 @@ const mapStateToProps = ({ geral, movies }) => {
   return { geral, movies };
 };
 
-export default connect(
-  mapStateToProps,
-  { setSelectedMenu, getMoviesDiscover, clearMovies }
+// export default connect(
+//   mapStateToProps,
+//   { setSelectedMenu, getMoviesDiscover, clearMovies }
+// )(Discover);
+
+export default compose(
+    withTranslate,
+    connect(
+        mapStateToProps,
+        { setSelectedMenu, getMoviesDiscover, clearMovies }
+    )
 )(Discover);
