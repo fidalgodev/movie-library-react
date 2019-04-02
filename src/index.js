@@ -18,7 +18,7 @@ import '../node_modules/slick-carousel/slick/slick-theme.css';
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <IntlProvider translations={translations}>
+      <IntlProvider translations={translations} >
         <App />
         <GlobalStyle />
       </IntlProvider>

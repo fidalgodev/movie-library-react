@@ -13,4 +13,18 @@ export default {
             },
         },
     },
+    es: {
+        locale: 'es',
+        messages: {
+            pages: {
+                error: {
+                    message: '',
+                },
+                discover: {
+                    title: 'Discover ES',
+                    description: 'Discover ES',
+                }
+            },
+        },
+    },
 };

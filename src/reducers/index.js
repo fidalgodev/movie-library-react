@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { IntlReducer as Intl } from 'react-redux-multilingual';
+import Intl from 'react-redux-multilingual/src/reducer';
 
 import configReducer from './configReducer';
 import moviesReducer from './moviesReducer';

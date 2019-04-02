@@ -6,8 +6,7 @@ import reducers from '../reducers';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducers,
-    { Intl: { locale: 'en' } },
-  composeEnhancers(applyMiddleware(reduxThunk))
+  composeEnhancers(applyMiddleware(reduxThunk)),
 );
 
 export default store;
