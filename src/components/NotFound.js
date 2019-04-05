@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -53,9 +52,6 @@ const Svg = styled.img`
 const NotFound = ({ title, subtitle }) => {
   return (
     <Wrapper>
-      <Helmet>
-        <title>Oooops! Not found!</title>
-      </Helmet>
       <TitleWrapper>
         <Title>{title}</Title>
         <SubTitle>{subtitle}</SubTitle>
