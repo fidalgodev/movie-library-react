@@ -59,7 +59,6 @@ const Search = ({
     return (
       <Wrapper>
         <Helmet>
-          <meta charSet="utf-8" />
           <title>{`${query} - search results`}</title>
         </Helmet>
         <Header title={query} subtitle="search results" />
