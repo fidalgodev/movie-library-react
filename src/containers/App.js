@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import history from '../history';
@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { init } from '../actions';
 
 import Sidebar from './Sidebar';
+import MenuMobile from './MenuMobile';
 import Discover from './Discover';
 import Genre from './Genre';
 import Search from './Search';
@@ -56,6 +57,7 @@ library.add(
 
 const MainWrapper = styled.div`
   display: flex;
+  flex-direction: ${props => (props.isMobile ? 'column' : 'row')};
   position: relative;
   align-items: flex-start;
   height: 100%;
@@ -68,25 +70,47 @@ const ContentWrapper = styled.div`
   height: 100%;
   min-height: 100vh;
   display: flex;
-  fex-direction: column;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 6rem 4rem;
 
   @media ${props => props.theme.mediaQueries.larger} {
-    margin-top: 2rem;
     padding: 6rem 3rem;
   }
 
   @media ${props => props.theme.mediaQueries.large} {
+    margin-top: 2rem;
     padding: 6rem 2rem;
   }
+`;
+
+const SearhBarWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2rem;
 `;
 
 const App = ({ init, isLoading }) => {
   useEffect(() => {
     init();
   }, []);
+  const [isMobile, setisMobile] = useState(null);
+
+  // Set amount of items to show on slider based on the width of the element
+  const changeMobile = () => {
+    window.matchMedia('(max-width: 80em)').matches
+      ? setisMobile(true)
+      : setisMobile(false);
+  };
+
+  useEffect(() => {
+    changeMobile();
+    window.addEventListener('resize', changeMobile);
+    return () => window.removeEventListener('resize', changeMobile);
+  }, []);
+
   return isLoading ? (
     <ContentWrapper>
       <Loader />
@@ -94,10 +118,18 @@ const App = ({ init, isLoading }) => {
   ) : (
     <Router history={history}>
       <React.Fragment>
-        <MainWrapper>
-          <Sidebar />
+        <MainWrapper isMobile={isMobile}>
+          {isMobile ? (
+            <MenuMobile />
+          ) : (
+            <>
+              <Sidebar />
+              <SearhBarWrapper>
+                <SearchBar />
+              </SearhBarWrapper>
+            </>
+          )}
           <ContentWrapper>
-            <SearchBar />
             <Switch>
               <Route
                 path={process.env.PUBLIC_URL + '/'}

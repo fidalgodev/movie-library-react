@@ -1,21 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import StickyBox from 'react-sticky-box';
+import { slide as Menu } from 'react-burger-menu';
 
-import Logo from '../components/Logo';
-import TmdbLogo from '../svg/tmdb.svg';
+import SearchBar from '../components/SearchBar';
+import TmdbLogoGreen from '../svg/tmdbgreen.svg';
 import MenuItem from '../components/MenuItem';
 
-const Wrapper = styled.div`
+const WrapperStickyBox = styled(StickyBox)`
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: var(--text-color);
+  box-shadow: 0 1px 20px var(--shadow-color);
+`;
+
+const Hamburguer = styled.div`
+  border: none;
+  outline: none;
   display: flex;
   flex-direction: column;
-  width: 25rem;
-  padding: 2rem;
-  margin-top: 4rem;
-  color: var(--color-primary-dark);
-  border-right: 1px solid var(--border-color);
+  align-self: stretch;
+  justify-content: space-around;
+  width: 25px;
+  line-height: 1;
+  height: auto;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+const Bar = styled.span`
+  transition: all 0.3s;
+  border-radius: 10px;
+  height: 4px;
+  width: 100%;
+  display: inline-block;
+  background-color: var(--color-primary);
 `;
 
 const Heading = styled.h2`
@@ -92,15 +117,64 @@ const Svg = styled.img`
   height: 3rem;
 `;
 
-const Sidebar = ({ genres, staticCategories, selected }) => {
+var styles = {
+  bmBurgerButton: {
+    display: 'none',
+  },
+  bmCrossButton: {
+    height: '24px',
+    width: '24px',
+    marginRight: '1rem',
+  },
+  bmCross: {
+    background: '#fafafa',
+  },
+  bmMenuWrap: {
+    position: 'fixed',
+    height: '100%',
+    top: 0,
+    left: 0,
+  },
+  bmMenu: {
+    background: '#263238',
+    overflowY: 'scroll',
+    padding: '2.5em 1.5em',
+  },
+  bmItemList: {
+    color: '#fafafa',
+    padding: '0.8rem',
+  },
+  bmItem: {
+    outline: 'none',
+  },
+  bmOverlay: {
+    top: 0,
+    background: 'rgba(0, 0, 0, 0.3)',
+  },
+};
+
+const MenuMobile = ({ genres, staticCategories, selected }) => {
+  const [isOpened, setisOpened] = useState(false);
+
+  const isMenuOpen = ({ isOpened }) => {
+    setisOpened(isOpened);
+  };
+
   return (
-    <StickyBox>
-      <Wrapper>
-        <Logo />
+    <React.Fragment>
+      <WrapperStickyBox>
+        <Hamburguer onClick={() => setisOpened(true)}>
+          <Bar />
+          <Bar />
+          <Bar />
+        </Hamburguer>
+        <SearchBar />
+      </WrapperStickyBox>
+      <Menu isOpen={isOpened} onStateChange={isMenuOpen} styles={styles}>
         <Heading>Discover</Heading>
-        {renderStatic(staticCategories, selected)}
+        {renderStatic(staticCategories, selected, setisOpened)}
         <Heading>Genres</Heading>
-        {renderGenres(genres, selected)}
+        {renderGenres(genres, selected, setisOpened)}
         <StyledCoffe
           target="_blank"
           rel="noopener noreferrer"
@@ -112,19 +186,19 @@ const Sidebar = ({ genres, staticCategories, selected }) => {
           />
           <span style={{ marginLeft: '5px' }}>Buy me a coffee</span>
         </StyledCoffe>
-        <CopyRight>
+        <CopyRight mobile={true}>
           Copyright ©
           <StyledLink href="https://www.github.com/fidalgodev">
             Fidalgo
           </StyledLink>
         </CopyRight>
         <Svg
-          src={`${TmdbLogo}`}
+          src={`${TmdbLogoGreen}`}
           alt="The Movie Database"
-          style={{ margin: '2rem 0' }}
+          style={{ marginBottom: '2rem' }}
         />
-      </Wrapper>
-    </StickyBox>
+      </Menu>
+    </React.Fragment>
   );
 };
 
@@ -168,4 +242,4 @@ const mapStateToProps = ({ geral }) => {
   };
 };
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps)(MenuMobile);
