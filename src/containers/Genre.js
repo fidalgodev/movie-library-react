@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
@@ -68,6 +69,10 @@ const Genre = ({
 
   return (
     <Wrapper>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`${geral.selected} Movies`}</title>
+      </Helmet>
       <Header title={geral.selected} subtitle="movies" />
       <SortBy option={option} setOption={setOption} />
       <MoviesList movies={movies} baseUrl={secure_base_url} />

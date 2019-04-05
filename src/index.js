@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Helmet } from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
@@ -16,6 +17,12 @@ ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <Fragment>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Movie Library by Fidalgo</title>
+          <meta name="description" content="Movie Library by Fidalgo" />
+          <link rel="canonical" href="https://movies.fidalgo.dev" />
+        </Helmet>
         <App />
         <GlobalStyle />
       </Fragment>
