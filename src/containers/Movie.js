@@ -96,7 +96,7 @@ const LinksWrapper = styled.div`
 
 const MovieDetails = styled.div`
   width: 100%;
-  max-width: 60%
+  max-width: 60%;
   padding: 4rem;
   flex: 1 1 60%;
 
@@ -131,7 +131,7 @@ const ImageWrapper = styled.div`
   display: flex;
   padding: 4rem;
 
-  @media ${props => props.theme.mediaQueries.largest}} {
+  @media ${props => props.theme.mediaQueries.largest} {
     padding: 3rem;
   }
 
