@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import queryString from 'query-string';
@@ -294,6 +295,9 @@ const Movie = ({
 
   return (
     <Wrapper>
+      <Helmet>
+        <title>{`${movie.title} - Movie Library`}</title>
+      </Helmet>
       <MovieWrapper loaded={loaded ? 1 : 0}>
         <ImageWrapper>
           <MovieImg

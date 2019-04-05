@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
@@ -62,6 +63,10 @@ const Discover = ({
   // Else return movies list
   return (
     <Wrapper>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`${geral.selected} Movies`}</title>
+      </Helmet>
       <Header title={geral.selected} subtitle="movies" />
       <MoviesList movies={movies} baseUrl={secure_base_url} />
     </Wrapper>

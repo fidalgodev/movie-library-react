@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import queryString from 'query-string';
@@ -228,6 +229,9 @@ const Person = ({
 
   return (
     <Wrapper>
+      <Helmet>
+        <title>{`${person.name} - Movie Library`}</title>
+      </Helmet>
       <PersonWrapper loaded={loaded ? 1 : 0}>
         <ImageWrapper>
           <MovieImg
