@@ -18,9 +18,8 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <Fragment>
         <Helmet>
-          <meta charSet="utf-8" />
-          <title>Movie Library by Fidalgo</title>
-          <meta name="description" content="Movie Library by Fidalgo" />
+          <title>Movie Library</title>
+          <meta name="description" content="A Movie Library where you can check all your favorite movies, as well as the cast of it, and so mucnh more! Made with ❤️ by Fidalgo" />
           <link rel="canonical" href="https://movies.fidalgo.dev" />
         </Helmet>
         <App />

@@ -70,7 +70,6 @@ const Genre = ({
   return (
     <Wrapper>
       <Helmet>
-        <meta charSet="utf-8" />
         <title>{`${geral.selected} Movies`}</title>
       </Helmet>
       <Header title={geral.selected} subtitle="movies" />
