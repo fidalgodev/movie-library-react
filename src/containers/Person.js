@@ -11,6 +11,7 @@ import {
   getMoviesforPerson,
   clearMoviesforPerson,
 } from '../actions';
+import SortBy from '../components/ShortBy';
 import NotFound from '../components/NotFound';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
@@ -197,6 +198,10 @@ const Person = ({
   const [error, setError] = useState(false);
   const { secure_base_url } = geral.base.images;
   const params = queryString.parse(location.search);
+  const [option, setOption] = useState({
+    value: 'popularity.desc',
+    label: 'Popularity',
+  });
 
   // When mounts go up
   useEffect(() => {
@@ -218,9 +223,9 @@ const Person = ({
 
   // Fetch movies where person enters
   useEffect(() => {
-    getMoviesforPerson(match.params.id, params.page);
+    getMoviesforPerson(match.params.id, params.page, option.value);
     return () => clearMoviesforPerson();
-  }, [params.page]);
+  }, [params.page, option]);
 
   // If loading
   if (person.loading) {
@@ -271,7 +276,7 @@ const Person = ({
         </PersonDetails>
       </PersonWrapper>
       <Header title="Also enters in" subtitle="movies" />
-      {renderPersonMovies(moviesPerson, secure_base_url)}
+      {renderPersonMovies(moviesPerson, secure_base_url, option, setOption)}
     </Wrapper>
   );
 };
@@ -322,13 +327,18 @@ function renderImdb(id) {
 }
 
 // Render movies where person enters
-function renderPersonMovies(moviesPerson, base_url) {
+function renderPersonMovies(moviesPerson, base_url, option, setOption) {
   if (moviesPerson.loading) {
     return <Loader />;
   } else if (moviesPerson.total_results === 0) {
     return <NotFound title="Sorry!" subtitle={`There are no more movies...`} />;
   } else {
-    return <MoviesList movies={moviesPerson} baseUrl={base_url} />;
+    return (
+      <React.Fragment>
+        <SortBy option={option} setOption={setOption} />
+        <MoviesList movies={moviesPerson} baseUrl={base_url} />;
+      </React.Fragment>
+    );
   }
 }
 
