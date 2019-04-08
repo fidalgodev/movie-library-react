@@ -42,6 +42,27 @@ const Input = styled.input`
     font-size: 13px;
   }
 
+  /*** Styles added to fix the issue with zoom in on iphone ***/
+  /* iPhone < 5: */
+  @media screen and (device-aspect-ratio: 2/3) {
+    font-size: 16px;
+  }
+
+  /* iPhone 5, 5C, 5S, iPod Touch 5g */
+  @media screen and (device-aspect-ratio: 40/71) {
+    font-size: 16px;
+  }
+
+  /* iPhone 6, iPhone 6s, iPhone 7 portrait/landscape */
+  @media screen and (device-aspect-ratio: 375/667) {
+    font-size: 16px;
+  }
+
+  /* iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus portrait/landscape */
+  @media screen and (device-aspect-ratio: 9/16) {
+    font-size: 16px;
+  }
+
   &:focus,
   &:active {
     outline: none;
