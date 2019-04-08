@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import MovieItem from './MovieItem';
@@ -30,23 +30,14 @@ const MoviesList = ({ movies, baseUrl }) => {
     return null;
   }
 
-  const Element = useRef();
-
-  const scrollToMyRef = () => {
-    window.scrollTo({
-      top: (0, Element.current.offsetTop),
-      behavior: 'smooth',
-    });
-  };
-
   return (
     <React.Fragment>
-      <MoviesWrapper ref={Element}>
+      <MoviesWrapper>
         {movies.results.map(movie => (
           <MovieItem key={movie.id} movie={movie} baseUrl={baseUrl} />
         ))}
       </MoviesWrapper>
-      <Pagination movies={movies} scrollToMyRef={scrollToMyRef} />
+      <Pagination movies={movies} />
     </React.Fragment>
   );
 };

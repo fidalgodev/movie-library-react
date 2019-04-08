@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import history from '../history';
 import ModalVideo from 'react-modal-video';
+import { Element, animateScroll as scroll } from 'react-scroll';
 
 import {
   getMovie,
@@ -260,19 +261,12 @@ const Movie = ({
   const { secure_base_url } = geral.base.images;
   const params = queryString.parse(location.search);
 
-  // When mounts go up
-  useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
-    });
-  }, []);
-
   // Fetch movie id when id on the url changes
   useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
+    console.log('scrolling to top');
+    scroll.scrollToTop({
+      smooth: true,
+      delay: 500,
     });
     getMovie(match.params.id);
     return () => clearMovie();
@@ -449,7 +443,11 @@ function renderRecommended(recommended, base_url) {
       />
     );
   } else {
-    return <MoviesList movies={recommended} baseUrl={base_url} />;
+    return (
+      <Element name="scroll-to-element">
+        <MoviesList movies={recommended} baseUrl={base_url} />;
+      </Element>
+    );
   }
 }
 

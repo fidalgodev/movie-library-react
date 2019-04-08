@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import history from '../history';
+import { Element, animateScroll as scroll } from 'react-scroll';
 
 import {
   getPerson,
@@ -203,19 +204,11 @@ const Person = ({
     label: 'Popularity',
   });
 
-  // When mounts go up
-  useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
-    });
-  }, []);
-
   // Fetch person when id on url changes
   useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
+    scroll.scrollToTop({
+      smooth: true,
+      delay: 500,
     });
     getPerson(match.params.id);
     return () => clearPerson();
@@ -336,7 +329,9 @@ function renderPersonMovies(moviesPerson, base_url, option, setOption) {
     return (
       <React.Fragment>
         <SortBy option={option} setOption={setOption} />
-        <MoviesList movies={moviesPerson} baseUrl={base_url} />;
+        <Element name="scroll-to-element">
+          <MoviesList movies={moviesPerson} baseUrl={base_url} />;
+        </Element>
       </React.Fragment>
     );
   }
