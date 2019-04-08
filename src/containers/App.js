@@ -80,8 +80,7 @@ const ContentWrapper = styled.div`
   }
 
   @media ${props => props.theme.mediaQueries.large} {
-    margin-top: 2rem;
-    padding: 6rem 2rem;
+    padding: 4rem 2rem;
   }
 `;
 
