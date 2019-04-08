@@ -25,6 +25,10 @@ const Form = styled.form`
     border: 1px solid transparent;
     padding: 1.5rem;
   }
+
+  @media ${props => props.theme.mediaQueries.smallest} {
+    max-width: 25rem;
+  }
 `;
 
 const Input = styled.input`
