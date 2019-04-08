@@ -34,7 +34,7 @@ const MoviesList = ({ movies, baseUrl }) => {
     <React.Fragment>
       <MoviesWrapper>
         {movies.results.map(movie => (
-          <MovieItem key={movie.id} movie={movie} baseUrl={baseUrl} />
+          <MovieItem movie={movie} key={movie.id} baseUrl={baseUrl} />
         ))}
       </MoviesWrapper>
       <Pagination movies={movies} />

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import queryString from 'query-string';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import history from '../history';
+import LazyLoad from 'react-lazyload';
 import ModalVideo from 'react-modal-video';
 import { Element, animateScroll as scroll } from 'react-scroll';
 
@@ -23,6 +24,7 @@ import Loader from '../components/Loader';
 import MoviesList from '../components/MoviesList';
 import Button from '../components/Button';
 import NothingSvg from '../svg/nothing.svg';
+import Loading from '../components/Loading';
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,8 +40,6 @@ const MovieWrapper = styled.div`
   max-width: 120rem;
   margin: 0 auto;
   margin-bottom: 7rem;
-  opacity: ${props => (props.loaded ? '1' : '0')};
-  visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
   transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
 
   @media ${props => props.theme.mediaQueries.largest} {
@@ -161,6 +161,21 @@ const MovieImg = styled.img`
     props.error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark)'};
 `;
 
+const ImgLoading = styled.div`
+  width: 100%;
+  max-width: 40%;
+  flex: 1 1 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  @media ${props => props.theme.mediaQueries.smaller} {
+    height: 28rem;
+  }
+`;
+
 const HeaderWrapper = styled.div`
   margin-bottom: 2rem;
 `;
@@ -263,13 +278,15 @@ const Movie = ({
 
   // Fetch movie id when id on the url changes
   useEffect(() => {
-    console.log('scrolling to top');
     scroll.scrollToTop({
       smooth: true,
       delay: 500,
     });
     getMovie(match.params.id);
-    return () => clearMovie();
+    return () => {
+      clearMovie();
+      setLoaded(false);
+    };
   }, [match.params.id]);
 
   // Fetch recommended movies everytime recommendations page change
@@ -287,64 +304,77 @@ const Movie = ({
     history.push(process.env.PUBLIC_URL + '/404');
   }
 
+  console.log(loaded);
+
   return (
     <Wrapper>
       <Helmet>
         <title>{`${movie.title} - Movie Library`}</title>
       </Helmet>
-      <MovieWrapper loaded={loaded ? 1 : 0}>
-        <ImageWrapper>
-          <MovieImg
-            error={error ? 1 : 0}
-            src={`${secure_base_url}w780${movie.poster_path}`}
-            onLoad={() => setLoaded(true)}
-            // If no image, error will occurr, we set error to true
-            // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
-            onError={e => {
-              setError(true);
-              if (e.target.src !== `${NothingSvg}`) {
-                e.target.src = `${NothingSvg}`;
-              }
-            }}
-          />
-        </ImageWrapper>
-        <MovieDetails>
-          <HeaderWrapper>
-            <Header size="2" title={movie.title} subtitle={movie.tagline} />
-          </HeaderWrapper>
-          <DetailsWrapper>
-            <RatingsWrapper>
-              <Rating number={movie.vote_average / 2} />
-              <RatingNumber>{movie.vote_average}</RatingNumber>
-            </RatingsWrapper>
-            <Info>
-              {renderInfo(
-                movie.spoken_languages,
-                movie.runtime,
-                splitYear(movie.release_date)
-              )}
-            </Info>
-          </DetailsWrapper>
-          <Heading>The Genres</Heading>
-          <LinksWrapper>{renderGenres(movie.genres)}</LinksWrapper>
-          <Heading>The Synopsis</Heading>
-          <Text>
-            {movie.overview
-              ? movie.overview
-              : 'There is no synopsis available...'}
-          </Text>
-          <Heading>The Cast</Heading>
-          <Cast cast={movie.cast} baseUrl={secure_base_url} />
-          <ButtonsWrapper>
-            <LeftButtons>
-              {renderWebsite(movie.homepage)}
-              {renderImdb(movie.imdb_id)}
-              {renderTrailer(movie.videos.results, modalOpened, setmodalOpened)}
-            </LeftButtons>
-            {renderBack()}
-          </ButtonsWrapper>
-        </MovieDetails>
-      </MovieWrapper>
+      <LazyLoad height={500}>
+        <MovieWrapper>
+          {!loaded ? (
+            <ImgLoading>
+              <Loading />
+            </ImgLoading>
+          ) : null}
+          <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
+            <MovieImg
+              error={error ? 1 : 0}
+              src={`${secure_base_url}w780${movie.poster_path}`}
+              onLoad={() => setLoaded(true)}
+              // If no image, error will occurr, we set error to true
+              // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
+              onError={e => {
+                setError(true);
+                if (e.target.src !== `${NothingSvg}`) {
+                  e.target.src = `${NothingSvg}`;
+                }
+              }}
+            />
+          </ImageWrapper>
+          <MovieDetails>
+            <HeaderWrapper>
+              <Header size="2" title={movie.title} subtitle={movie.tagline} />
+            </HeaderWrapper>
+            <DetailsWrapper>
+              <RatingsWrapper>
+                <Rating number={movie.vote_average / 2} />
+                <RatingNumber>{movie.vote_average}</RatingNumber>
+              </RatingsWrapper>
+              <Info>
+                {renderInfo(
+                  movie.spoken_languages,
+                  movie.runtime,
+                  splitYear(movie.release_date)
+                )}
+              </Info>
+            </DetailsWrapper>
+            <Heading>The Genres</Heading>
+            <LinksWrapper>{renderGenres(movie.genres)}</LinksWrapper>
+            <Heading>The Synopsis</Heading>
+            <Text>
+              {movie.overview
+                ? movie.overview
+                : 'There is no synopsis available...'}
+            </Text>
+            <Heading>The Cast</Heading>
+            <Cast cast={movie.cast} baseUrl={secure_base_url} />
+            <ButtonsWrapper>
+              <LeftButtons>
+                {renderWebsite(movie.homepage)}
+                {renderImdb(movie.imdb_id)}
+                {renderTrailer(
+                  movie.videos.results,
+                  modalOpened,
+                  setmodalOpened
+                )}
+              </LeftButtons>
+              {renderBack()}
+            </ButtonsWrapper>
+          </MovieDetails>
+        </MovieWrapper>
+      </LazyLoad>
       <Header title="Recommended" subtitle="movies" />
       {renderRecommended(recommended, secure_base_url)}
     </Wrapper>
