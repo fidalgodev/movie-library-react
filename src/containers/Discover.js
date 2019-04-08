@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { compose } from 'redux';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
@@ -67,6 +67,10 @@ const Discover = ({
   // Else return movies list
   return (
     <Wrapper>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`${geral.selected} Movies`}</title>
+      </Helmet>
       <React.Fragment>
         { translate('pages.discover.title') }
           <span

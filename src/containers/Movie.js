@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import queryString from 'query-string';
@@ -95,7 +96,7 @@ const LinksWrapper = styled.div`
 
 const MovieDetails = styled.div`
   width: 100%;
-  max-width: 60%
+  max-width: 60%;
   padding: 4rem;
   flex: 1 1 60%;
 
@@ -130,7 +131,7 @@ const ImageWrapper = styled.div`
   display: flex;
   padding: 4rem;
 
-  @media ${props => props.theme.mediaQueries.largest}} {
+  @media ${props => props.theme.mediaQueries.largest} {
     padding: 3rem;
   }
 
@@ -294,6 +295,9 @@ const Movie = ({
 
   return (
     <Wrapper>
+      <Helmet>
+        <title>{`${movie.title} - Movie Library`}</title>
+      </Helmet>
       <MovieWrapper loaded={loaded ? 1 : 0}>
         <ImageWrapper>
           <MovieImg

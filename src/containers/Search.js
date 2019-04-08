@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
@@ -57,6 +58,9 @@ const Search = ({
   else {
     return (
       <Wrapper>
+        <Helmet>
+          <title>{`${query} - search results`}</title>
+        </Helmet>
         <Header title={query} subtitle="search results" />
         <MoviesList movies={movies} baseUrl={secure_base_url} />;
       </Wrapper>

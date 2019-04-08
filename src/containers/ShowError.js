@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -62,6 +63,9 @@ const ShowError = ({ errors, clearError }) => {
   }
   return (
     <Wrapper>
+      <Helmet>
+        <title>Oooops!</title>
+      </Helmet>
       <TitleWrapper>
         <Title>Something went wrong!</Title>
         <SubTitle>{errors.data.status_message}</SubTitle>
