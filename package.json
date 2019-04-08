@@ -15,6 +15,7 @@
     "react": "^16.8.4",
     "react-burger-menu": "^2.6.5",
     "react-dom": "^16.8.4",
+    "react-ga": "^2.5.7",
     "react-helmet": "^6.0.0-beta",
     "react-lazyload": "^2.5.0",
     "react-modal-video": "^1.2.1",

@@ -304,8 +304,6 @@ const Movie = ({
     history.push(process.env.PUBLIC_URL + '/404');
   }
 
-  console.log(loaded);
-
   return (
     <Wrapper>
       <Helmet>
