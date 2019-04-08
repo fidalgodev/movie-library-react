@@ -12,13 +12,23 @@ const Form = styled.form`
   box-shadow: 0 4px 8px var(--shadow-color);
   background-color: var(--color-primary-dark);
   border: 1px solid var(--color-primary);
-  width: ${props => (props.state ? '30rem' : '4rem')};
+  width: ${props => (props.state ? '30rem' : '2rem')};
   cursor: ${props => (props.state ? 'auto' : 'pointer')};
   padding: 2rem;
-  height: 4rem;
+  height: 2rem;
   outline: none;
   border-radius: 10rem;
   transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  @media ${props => props.theme.mediaQueries.large} {
+    background-color: var(--color-primary);
+    border: 1px solid transparent;
+    padding: 1.5rem;
+  }
+
+  @media ${props => props.theme.mediaQueries.smallest} {
+    max-width: 25rem;
+  }
 `;
 
 const Input = styled.input`
@@ -31,6 +41,31 @@ const Input = styled.input`
   color: var(--text-color);
   border: none;
   transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  @media ${props => props.theme.mediaQueries.large} {
+    font-size: 13px;
+  }
+
+  /*** Styles added to fix the issue with zoom in on iphone ***/
+  /* iPhone < 5: */
+  @media screen and (device-aspect-ratio: 2/3) {
+    font-size: 16px;
+  }
+
+  /* iPhone 5, 5C, 5S, iPod Touch 5g */
+  @media screen and (device-aspect-ratio: 40/71) {
+    font-size: 16px;
+  }
+
+  /* iPhone 6, iPhone 6s, iPhone 7 portrait/landscape */
+  @media screen and (device-aspect-ratio: 375/667) {
+    font-size: 16px;
+  }
+
+  /* iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus portrait/landscape */
+  @media screen and (device-aspect-ratio: 9/16) {
+    font-size: 16px;
+  }
 
   &:focus,
   &:active {
@@ -50,6 +85,11 @@ const Button = styled.button`
   border: none;
   outline: none;
   color: var(--text-color);
+
+  @media ${props => props.theme.mediaQueries.large} {
+    color: var(--text-color);
+    font-size: 10px;
+  }
 `;
 
 const SearchBar = () => {

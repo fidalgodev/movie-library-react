@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
 import styled from 'styled-components';
+import { animateScroll as scroll } from 'react-scroll';
 
 import { setSelectedMenu, getMoviesGenre, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
@@ -34,20 +35,8 @@ const Genre = ({
   const params = queryString.parse(location.search);
   const { secure_base_url } = geral.base.images;
 
-  // When mounts go up
-  useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
-    });
-  }, []);
-
   // Send url to setSelected Action Creator, it will check if is valid, and set the header accordingly
   useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
-    });
     setSelectedMenu(match.params.name);
     // Clean up to remove selected menu from state
     return () => setSelectedMenu();
@@ -88,9 +77,8 @@ function useFetchMoviesGenre(
   clearMovies
 ) {
   useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
+    scroll.scrollToTop({
+      smooth: true,
     });
     getMoviesGenre(genre, params.page, option.value);
     return () => clearMovies();

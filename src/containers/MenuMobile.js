@@ -16,8 +16,8 @@ const WrapperStickyBox = styled(StickyBox)`
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  background-color: var(--text-color);
-  box-shadow: 0 1px 20px var(--shadow-color);
+  background-color: var(--color-primary-lighter);
+  box-shadow: 0 2px 40px var(--shadow-color);
 `;
 
 const Hamburguer = styled.div`
@@ -25,7 +25,7 @@ const Hamburguer = styled.div`
   outline: none;
   display: flex;
   flex-direction: column;
-  align-self: stretch;
+  align-self: center;
   justify-content: space-around;
   width: 25px;
   line-height: 1;
@@ -37,6 +37,7 @@ const Hamburguer = styled.div`
 const Bar = styled.span`
   transition: all 0.3s;
   border-radius: 10px;
+  margin: 2px 0;
   height: 4px;
   width: 100%;
   display: inline-block;
