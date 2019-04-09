@@ -32,7 +32,7 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
   font-weight: 300;
   background-color: transparent;
@@ -46,25 +46,12 @@ const Input = styled.input`
     font-size: 13px;
   }
 
-  /*** Styles added to fix the issue with zoom in on iphone ***/
-  /* iPhone < 5: */
-  @media screen and (device-aspect-ratio: 2/3) {
-    font-size: 16px;
+  @media ${props => props.theme.mediaQueries.medium} {
+    font-size: 12px;
   }
 
-  /* iPhone 5, 5C, 5S, iPod Touch 5g */
-  @media screen and (device-aspect-ratio: 40/71) {
-    font-size: 16px;
-  }
-
-  /* iPhone 6, iPhone 6s, iPhone 7 portrait/landscape */
-  @media screen and (device-aspect-ratio: 375/667) {
-    font-size: 16px;
-  }
-
-  /* iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus portrait/landscape */
-  @media screen and (device-aspect-ratio: 9/16) {
-    font-size: 16px;
+  @media ${props => props.theme.mediaQueries.small} {
+    font-size: 11px;
   }
 
   &:focus,
@@ -89,6 +76,11 @@ const Button = styled.button`
   @media ${props => props.theme.mediaQueries.large} {
     color: var(--text-color);
     font-size: 10px;
+  }
+
+  @media ${props => props.theme.mediaQueries.small} {
+    color: var(--text-color);
+    font-size: 8px;
   }
 `;
 
