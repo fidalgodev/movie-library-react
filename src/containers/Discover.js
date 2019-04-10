@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
 import styled from 'styled-components';
 import { animateScroll as scroll } from 'react-scroll';
+import DefaultLayout from '../layouts';
 
 import { withTranslate } from 'react-redux-multilingual';
 import { setLocale } from 'react-redux-multilingual/src/actions';
@@ -55,25 +56,25 @@ const Discover = ({
 
   // Else return movies list
   return (
-    <Wrapper>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>{`${geral.selected} Movies`}</title>
-      </Helmet>
-      <React.Fragment>
-        { translate('pages.discover.title') }
-          <span
-              onClick={() => {
-                  setLocale('en');
-              }}>EN</span>
-          <span
-              onClick={() => {
-                  setLocale('es');
-              }}>ES</span>
-      </React.Fragment>
-      <Header title={geral.selected} subtitle="movies" />
-      <MoviesList movies={movies} baseUrl={secure_base_url} />
-    </Wrapper>
+    <DefaultLayout
+      title={`${geral.selected} Movies`}
+    >
+        <Wrapper>
+            <React.Fragment>
+                { translate('pages.discover.title') }
+                <span
+                    onClick={() => {
+                        setLocale('en');
+                    }}>EN</span>
+                <span
+                    onClick={() => {
+                        setLocale('es');
+                    }}>ES</span>
+            </React.Fragment>
+            <Header title={geral.selected} subtitle="movies" />
+            <MoviesList movies={movies} baseUrl={secure_base_url} />
+        </Wrapper>
+    </DefaultLayout>
   );
 };
 
@@ -93,11 +94,6 @@ function useFetchMoviesDiscover(name, getMoviesDiscover, params, clearMovies) {
 const mapStateToProps = ({ geral, movies }) => {
   return { geral, movies };
 };
-
-// export default connect(
-//   mapStateToProps,
-//   { setSelectedMenu, getMoviesDiscover, clearMovies }
-// )(Discover);
 
 export default compose(
     withTranslate,

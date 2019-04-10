@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import history from '../history';
 import { animateScroll as scroll } from 'react-scroll';
+import DefaultLayout from '../layouts';
 
 import { clearError } from '../actions';
 import ErrorSvg from '../svg/error.svg';
@@ -66,19 +66,20 @@ const ShowError = ({ errors, clearError }) => {
     return null;
   }
   return (
-    <Wrapper>
-      <Helmet>
-        <title>Oooops!</title>
-      </Helmet>
-      <TitleWrapper>
-        <Title>Something went wrong!</Title>
-        <SubTitle>{errors.data.status_message}</SubTitle>
-      </TitleWrapper>
-      <Svg src={`${ErrorSvg}`} alt="Not found" />
-      <LinkWrapper to={`${process.env.PUBLIC_URL}/`}>
-        <Button title="Home" solid icon="home" left />
-      </LinkWrapper>
-    </Wrapper>
+    <DefaultLayout
+        title="Oooops!"
+    >
+        <Wrapper>
+            <TitleWrapper>
+                <Title>Something went wrong!</Title>
+                <SubTitle>{errors.data.status_message}</SubTitle>
+            </TitleWrapper>
+            <Svg src={`${ErrorSvg}`} alt="Not found" />
+            <LinkWrapper to={`${process.env.PUBLIC_URL}/`}>
+                <Button title="Home" solid icon="home" left />
+            </LinkWrapper>
+        </Wrapper>
+    </DefaultLayout>
   );
 };
 
