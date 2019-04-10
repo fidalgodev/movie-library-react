@@ -226,13 +226,14 @@ export const clearPerson = () => {
 };
 
 // Get movies from an actor
-export const getMoviesforPerson = (id, page) => async dispatch => {
+export const getMoviesforPerson = (id, page, sort) => async dispatch => {
   try {
     dispatch({ type: TYPES.FETCH_MOVIESPERSON_LOADING });
     const res = await tmdbAPI.get(`/discover/movie`, {
       params: {
         with_cast: id,
         page,
+        sort_by: sort,
       },
     });
     await dispatch({

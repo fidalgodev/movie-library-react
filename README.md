@@ -1,6 +1,6 @@
 # Movie Library w/ ReactJS
 
-## [Check it live here](https://movie-library-fidalgo.herokuapp.com/discover/Popular)
+## [Check it live here](https://movies.fidalgo.dev/)
 
 ![Thumbnail](thumbnail.png)
 

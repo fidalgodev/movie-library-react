@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
 import styled from 'styled-components';
+import { animateScroll as scroll } from 'react-scroll';
 
 import { withTranslate } from 'react-redux-multilingual';
 import { setLocale } from 'react-redux-multilingual/src/actions';
@@ -32,20 +33,8 @@ const Discover = ({
   const params = queryString.parse(location.search);
   const { secure_base_url } = geral.base.images;
 
-  // When mounts go up
-  useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
-    });
-  }, []);
-
   // Send url to setSelected Action Creator, it will check if is valid
   useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
-    });
     setSelectedMenu(match.params.name);
     // Clean up to remove selected menu from state
     return () => setSelectedMenu();
@@ -92,9 +81,8 @@ const Discover = ({
 function useFetchMoviesDiscover(name, getMoviesDiscover, params, clearMovies) {
   const query = name.replace(/\s+/g, '_').toLowerCase();
   useEffect(() => {
-    window.scrollTo({
-      top: (0, 0),
-      behavior: 'smooth',
+    scroll.scrollToTop({
+      smooth: true,
     });
     getMoviesDiscover(query, params.page);
     return () => clearMovies();

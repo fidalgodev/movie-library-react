@@ -21,6 +21,7 @@ const SortBy = ({ option, setOption }) => {
       value={option}
       onChange={handleChange}
       options={options}
+      isSearchable={false}
     />
   );
 };

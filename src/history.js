@@ -2,6 +2,4 @@
 // We use normal router because of this and pass it our history object
 import { createBrowserHistory } from 'history';
 
-const history = createBrowserHistory();
-
-export default history;
+export default createBrowserHistory();

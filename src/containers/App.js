@@ -4,6 +4,7 @@ import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import history from '../history';
 import { connect } from 'react-redux';
 import { init } from '../actions';
+import ReactGA from 'react-ga';
 
 import Sidebar from './Sidebar';
 import MenuMobile from './MenuMobile';
@@ -80,8 +81,7 @@ const ContentWrapper = styled.div`
   }
 
   @media ${props => props.theme.mediaQueries.large} {
-    margin-top: 2rem;
-    padding: 6rem 2rem;
+    padding: 4rem 2rem;
   }
 `;
 
@@ -91,6 +91,9 @@ const SearhBarWrapper = styled.div`
   right: 0;
   padding: 2rem;
 `;
+
+ReactGA.initialize('UA-137885307-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 const App = ({ init, isLoading }) => {
   useEffect(() => {
