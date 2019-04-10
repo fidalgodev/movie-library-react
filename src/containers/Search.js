@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import Header from '../components/Header';
 import NotFound from '../components/NotFound';
 import styled from 'styled-components';
 import { animateScroll as scroll } from 'react-scroll';
+import DefaultLayout from '../layouts';
 
 import { getMoviesSearch, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
@@ -50,13 +50,14 @@ const Search = ({
   // Else show the results
   else {
     return (
-      <Wrapper>
-        <Helmet>
-          <title>{`${query} - search results`}</title>
-        </Helmet>
-        <Header title={query} subtitle="search results" />
-        <MoviesList movies={movies} baseUrl={secure_base_url} />;
-      </Wrapper>
+      <DefaultLayout
+          title={`${query} - search results`}
+      >
+        <Wrapper>
+          <Header title={query} subtitle="search results" />
+          <MoviesList movies={movies} baseUrl={secure_base_url} />;
+        </Wrapper>
+      </DefaultLayout>
     );
   }
 };

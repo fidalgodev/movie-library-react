@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import queryString from 'query-string';
@@ -9,6 +8,7 @@ import history from '../history';
 import LazyLoad from 'react-lazyload';
 import ModalVideo from 'react-modal-video';
 import { Element, animateScroll as scroll } from 'react-scroll';
+import DefaultLayout from '../layouts';
 
 import {
   getMovie,
@@ -305,77 +305,78 @@ const Movie = ({
   }
 
   return (
-    <Wrapper>
-      <Helmet>
-        <title>{`${movie.title} - Movie Library`}</title>
-      </Helmet>
-      <LazyLoad height={500}>
-        <MovieWrapper>
-          {!loaded ? (
-            <ImgLoading>
-              <Loading />
-            </ImgLoading>
-          ) : null}
-          <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
-            <MovieImg
-              error={error ? 1 : 0}
-              src={`${secure_base_url}w780${movie.poster_path}`}
-              onLoad={() => setLoaded(true)}
-              // If no image, error will occurr, we set error to true
-              // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
-              onError={e => {
-                setError(true);
-                if (e.target.src !== `${NothingSvg}`) {
-                  e.target.src = `${NothingSvg}`;
-                }
-              }}
-            />
-          </ImageWrapper>
-          <MovieDetails>
-            <HeaderWrapper>
-              <Header size="2" title={movie.title} subtitle={movie.tagline} />
-            </HeaderWrapper>
-            <DetailsWrapper>
-              <RatingsWrapper>
-                <Rating number={movie.vote_average / 2} />
-                <RatingNumber>{movie.vote_average}</RatingNumber>
-              </RatingsWrapper>
-              <Info>
-                {renderInfo(
-                  movie.spoken_languages,
-                  movie.runtime,
-                  splitYear(movie.release_date)
-                )}
-              </Info>
-            </DetailsWrapper>
-            <Heading>The Genres</Heading>
-            <LinksWrapper>{renderGenres(movie.genres)}</LinksWrapper>
-            <Heading>The Synopsis</Heading>
-            <Text>
-              {movie.overview
-                ? movie.overview
-                : 'There is no synopsis available...'}
-            </Text>
-            <Heading>The Cast</Heading>
-            <Cast cast={movie.cast} baseUrl={secure_base_url} />
-            <ButtonsWrapper>
-              <LeftButtons>
-                {renderWebsite(movie.homepage)}
-                {renderImdb(movie.imdb_id)}
-                {renderTrailer(
-                  movie.videos.results,
-                  modalOpened,
-                  setmodalOpened
-                )}
-              </LeftButtons>
-              {renderBack()}
-            </ButtonsWrapper>
-          </MovieDetails>
-        </MovieWrapper>
-      </LazyLoad>
-      <Header title="Recommended" subtitle="movies" />
-      {renderRecommended(recommended, secure_base_url)}
-    </Wrapper>
+    <DefaultLayout
+        title={`${movie.title} - Movie Library`}
+    >
+      <Wrapper>
+        <LazyLoad height={500}>
+          <MovieWrapper>
+            {!loaded ? (
+                <ImgLoading>
+                  <Loading />
+                </ImgLoading>
+            ) : null}
+            <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
+              <MovieImg
+                  error={error ? 1 : 0}
+                  src={`${secure_base_url}w780${movie.poster_path}`}
+                  onLoad={() => setLoaded(true)}
+                  // If no image, error will occurr, we set error to true
+                  // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
+                  onError={e => {
+                    setError(true);
+                    if (e.target.src !== `${NothingSvg}`) {
+                      e.target.src = `${NothingSvg}`;
+                    }
+                  }}
+              />
+            </ImageWrapper>
+            <MovieDetails>
+              <HeaderWrapper>
+                <Header size="2" title={movie.title} subtitle={movie.tagline} />
+              </HeaderWrapper>
+              <DetailsWrapper>
+                <RatingsWrapper>
+                  <Rating number={movie.vote_average / 2} />
+                  <RatingNumber>{movie.vote_average}</RatingNumber>
+                </RatingsWrapper>
+                <Info>
+                  {renderInfo(
+                      movie.spoken_languages,
+                      movie.runtime,
+                      splitYear(movie.release_date)
+                  )}
+                </Info>
+              </DetailsWrapper>
+              <Heading>The Genres</Heading>
+              <LinksWrapper>{renderGenres(movie.genres)}</LinksWrapper>
+              <Heading>The Synopsis</Heading>
+              <Text>
+                {movie.overview
+                    ? movie.overview
+                    : 'There is no synopsis available...'}
+              </Text>
+              <Heading>The Cast</Heading>
+              <Cast cast={movie.cast} baseUrl={secure_base_url} />
+              <ButtonsWrapper>
+                <LeftButtons>
+                  {renderWebsite(movie.homepage)}
+                  {renderImdb(movie.imdb_id)}
+                  {renderTrailer(
+                      movie.videos.results,
+                      modalOpened,
+                      setmodalOpened
+                  )}
+                </LeftButtons>
+                {renderBack()}
+              </ButtonsWrapper>
+            </MovieDetails>
+          </MovieWrapper>
+        </LazyLoad>
+        <Header title="Recommended" subtitle="movies" />
+        {renderRecommended(recommended, secure_base_url)}
+      </Wrapper>
+    </DefaultLayout>
   );
 };
 

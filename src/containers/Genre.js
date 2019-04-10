@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import Header from '../components/Header';
 import styled from 'styled-components';
 import { animateScroll as scroll } from 'react-scroll';
+import DefaultLayout from '../layouts';
 
 import { setSelectedMenu, getMoviesGenre, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
@@ -57,14 +58,15 @@ const Genre = ({
   }
 
   return (
-    <Wrapper>
-      <Helmet>
-        <title>{`${geral.selected} Movies`}</title>
-      </Helmet>
-      <Header title={geral.selected} subtitle="movies" />
-      <SortBy option={option} setOption={setOption} />
-      <MoviesList movies={movies} baseUrl={secure_base_url} />
-    </Wrapper>
+    <DefaultLayout
+        title={`${geral.selected} Movies`}
+    >
+      <Wrapper>
+        <Header title={geral.selected} subtitle="movies" />
+        <SortBy option={option} setOption={setOption} />
+        <MoviesList movies={movies} baseUrl={secure_base_url} />
+      </Wrapper>
+    </DefaultLayout>
   );
 };
 

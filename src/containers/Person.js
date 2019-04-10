@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import LazyLoad from 'react-lazyload';
 import history from '../history';
 import { Element, animateScroll as scroll } from 'react-scroll';
+import DefaultLayout from '../layouts';
 
 import {
   getPerson,
@@ -241,58 +241,59 @@ const Person = ({
   }
 
   return (
-    <Wrapper>
-      <Helmet>
-        <title>{`${person.name} - Movie Library`}</title>
-      </Helmet>
-      <LazyLoad height={500}>
-        <PersonWrapper>
-          {!loaded ? (
-            <ImgLoading>
-              <Loading />
-            </ImgLoading>
-          ) : null}
-          <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
-            <MovieImg
-              error={error ? 1 : 0}
-              src={`${secure_base_url}w780${person.profile_path}`}
-              onLoad={() => setLoaded(true)}
-              // If no image, error will occurr, we set error to true
-              // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
-              onError={e => {
-                setError(true);
-                if (e.target.src !== `${PersonAvatar}`) {
-                  e.target.src = `${PersonAvatar}`;
-                }
-              }}
-            />
-          </ImageWrapper>
-          <PersonDetails>
-            <HeaderWrapper>
-              <Header size="2" title={person.name} subtitle="" />
-            </HeaderWrapper>
-            <DetailsWrapper>
-              {renderDate(person.birthday, person.deathday)}
-            </DetailsWrapper>
-            <Heading>The Biography</Heading>
-            <Text>
-              {person.biography
-                ? person.biography
-                : 'There is no biography available...'}
-            </Text>
-            <ButtonsWrapper>
-              <LeftButtons>
-                {renderWebsite(person.homepage)}
-                {renderImdb(person.imdb_id)}
-              </LeftButtons>
-              {renderBack()}
-            </ButtonsWrapper>
-          </PersonDetails>
-        </PersonWrapper>
-      </LazyLoad>
-      <Header title="Also enters in" subtitle="movies" />
-      {renderPersonMovies(moviesPerson, secure_base_url, option, setOption)}
-    </Wrapper>
+    <DefaultLayout
+        title={`${person.name} - Movie Library`}
+    >
+      <Wrapper>
+        <LazyLoad height={500}>
+          <PersonWrapper>
+            {!loaded ? (
+                <ImgLoading>
+                  <Loading />
+                </ImgLoading>
+            ) : null}
+            <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
+              <MovieImg
+                  error={error ? 1 : 0}
+                  src={`${secure_base_url}w780${person.profile_path}`}
+                  onLoad={() => setLoaded(true)}
+                  // If no image, error will occurr, we set error to true
+                  // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
+                  onError={e => {
+                    setError(true);
+                    if (e.target.src !== `${PersonAvatar}`) {
+                      e.target.src = `${PersonAvatar}`;
+                    }
+                  }}
+              />
+            </ImageWrapper>
+            <PersonDetails>
+              <HeaderWrapper>
+                <Header size="2" title={person.name} subtitle="" />
+              </HeaderWrapper>
+              <DetailsWrapper>
+                {renderDate(person.birthday, person.deathday)}
+              </DetailsWrapper>
+              <Heading>The Biography</Heading>
+              <Text>
+                {person.biography
+                    ? person.biography
+                    : 'There is no biography available...'}
+              </Text>
+              <ButtonsWrapper>
+                <LeftButtons>
+                  {renderWebsite(person.homepage)}
+                  {renderImdb(person.imdb_id)}
+                </LeftButtons>
+                {renderBack()}
+              </ButtonsWrapper>
+            </PersonDetails>
+          </PersonWrapper>
+        </LazyLoad>
+        <Header title="Also enters in" subtitle="movies" />
+        {renderPersonMovies(moviesPerson, secure_base_url, option, setOption)}
+      </Wrapper>
+    </DefaultLayout>
   );
 };
 
