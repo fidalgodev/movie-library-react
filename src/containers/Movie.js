@@ -42,21 +42,21 @@ const MovieWrapper = styled.div`
   margin-bottom: 7rem;
   transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
 
-  @media ${props => props.theme.mediaQueries.largest} {
+  @media ${(props) => props.theme.mediaQueries.largest} {
     max-width: 105rem;
   }
 
-  @media ${props => props.theme.mediaQueries.larger} {
+  @media ${(props) => props.theme.mediaQueries.larger} {
     max-width: 110rem;
     margin-bottom: 6rem;
   }
 
-  @media ${props => props.theme.mediaQueries.large} {
+  @media ${(props) => props.theme.mediaQueries.large} {
     max-width: 110rem;
     margin-bottom: 5rem;
   }
 
-  @media ${props => props.theme.mediaQueries.medium} {
+  @media ${(props) => props.theme.mediaQueries.medium} {
     flex-direction: column;
     margin-bottom: 5rem;
   }
@@ -101,23 +101,23 @@ const MovieDetails = styled.div`
   padding: 4rem;
   flex: 1 1 60%;
 
-  @media ${props => props.theme.mediaQueries.largest} {
+  @media ${(props) => props.theme.mediaQueries.largest} {
     padding: 3rem;
   }
 
-  @media ${props => props.theme.mediaQueries.large} {
+  @media ${(props) => props.theme.mediaQueries.large} {
     padding: 2rem;
   }
 
-  @media ${props => props.theme.mediaQueries.smaller} {
+  @media ${(props) => props.theme.mediaQueries.smaller} {
     padding: 1rem;
   }
 
-  @media ${props => props.theme.mediaQueries.smallest} {
+  @media ${(props) => props.theme.mediaQueries.smallest} {
     padding: 0rem;
   }
 
-  @media ${props => props.theme.mediaQueries.medium} {
+  @media ${(props) => props.theme.mediaQueries.medium} {
     max-width: 100%;
     flex: 1 1 100%;
   }
@@ -132,19 +132,19 @@ const ImageWrapper = styled.div`
   display: flex;
   padding: 4rem;
 
-  @media ${props => props.theme.mediaQueries.largest} {
+  @media ${(props) => props.theme.mediaQueries.largest} {
     padding: 3rem;
   }
 
-  @media ${props => props.theme.mediaQueries.large} {
+  @media ${(props) => props.theme.mediaQueries.large} {
     padding: 2rem;
   }
 
-  @media ${props => props.theme.mediaQueries.smaller} {
+  @media ${(props) => props.theme.mediaQueries.smaller} {
     margin-bottom: 2rem;
   }
 
-  @media ${props => props.theme.mediaQueries.medium} {
+  @media ${(props) => props.theme.mediaQueries.medium} {
     max-width: 60%;
     flex: 1 1 60%;
   }
@@ -152,12 +152,12 @@ const ImageWrapper = styled.div`
 
 const MovieImg = styled.img`
   max-height: 100%;
-  height: ${props => (props.error ? '25rem' : 'auto')};
-  object-fit: ${props => (props.error ? 'contain' : 'cover')};
-  padding: ${props => (props.error ? '2rem' : '')};
+  height: ${(props) => (props.error ? '25rem' : 'auto')};
+  object-fit: ${(props) => (props.error ? 'contain' : 'cover')};
+  padding: ${(props) => (props.error ? '2rem' : '')};
   max-width: 100%;
   border-radius: 0.8rem;
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark)'};
 `;
 
@@ -171,7 +171,7 @@ const ImgLoading = styled.div`
   height: 100%;
   transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
 
-  @media ${props => props.theme.mediaQueries.smaller} {
+  @media ${(props) => props.theme.mediaQueries.smaller} {
     height: 28rem;
   }
 `;
@@ -187,7 +187,7 @@ const Heading = styled.h3`
   margin-bottom: 1rem;
   font-size: 1.4rem;
 
-  @media ${props => props.theme.mediaQueries.medium} {
+  @media ${(props) => props.theme.mediaQueries.medium} {
     font-size: 1.2rem;
   }
 `;
@@ -231,7 +231,7 @@ const ButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media ${props => props.theme.mediaQueries.small} {
+  @media ${(props) => props.theme.mediaQueries.small} {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -241,14 +241,14 @@ const LeftButtons = styled.div`
   margin-right: auto;
   display: flex;
 
-  @media ${props => props.theme.mediaQueries.small} {
+  @media ${(props) => props.theme.mediaQueries.small} {
     margin-bottom: 2rem;
   }
 
   & > *:not(:last-child) {
     margin-right: 2rem;
 
-    @media ${props => props.theme.mediaQueries.large} {
+    @media ${(props) => props.theme.mediaQueries.large} {
       margin-right: 1rem;
     }
   }
@@ -282,18 +282,16 @@ const Movie = ({
       smooth: true,
       delay: 500,
     });
+
     getMovie(match.params.id);
+    getRecommendations(match.params.id, params.page);
+
     return () => {
       clearMovie();
+      clearRecommendations();
       setLoaded(false);
     };
   }, [match.params.id]);
-
-  // Fetch recommended movies everytime recommendations page change
-  useEffect(() => {
-    getRecommendations(match.params.id, params.page);
-    return () => clearRecommendations();
-  }, [params.page]);
 
   // If loading
   if (movie.loading) {
@@ -323,7 +321,7 @@ const Movie = ({
               onLoad={() => setLoaded(true)}
               // If no image, error will occurr, we set error to true
               // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
-              onError={e => {
+              onError={(e) => {
                 setError(true);
                 if (e.target.src !== `${NothingSvg}`) {
                   e.target.src = `${NothingSvg}`;
@@ -420,7 +418,7 @@ function renderTrailer(videos, modalOpened, setmodalOpened) {
     return;
   }
   const { key } = videos.find(
-    video => video.type === 'Trailer' && video.site === 'YouTube'
+    (video) => video.type === 'Trailer' && video.site === 'YouTube'
   );
   return (
     <React.Fragment>
@@ -454,8 +452,8 @@ function renderInfo(languages, time, data) {
   }
   info.push(time, data);
   return info
-    .filter(el => el !== null)
-    .map(el => (typeof el === 'number' ? `${el} min.` : el))
+    .filter((el) => el !== null)
+    .map((el) => (typeof el === 'number' ? `${el} min.` : el))
     .map((el, i, array) => (i !== array.length - 1 ? `${el} / ` : el));
 }
 
@@ -481,7 +479,7 @@ function renderRecommended(recommended, base_url) {
 
 // Render Genres with links
 function renderGenres(genres) {
-  return genres.map(genre => (
+  return genres.map((genre) => (
     <StyledLink
       to={`${process.env.PUBLIC_URL}/genres/${genre.name}`}
       key={genre.id}
@@ -503,7 +501,9 @@ const mapStateToProps = ({ movie, geral, recommended }) => ({
   recommended,
 });
 
-export default connect(
-  mapStateToProps,
-  { getMovie, clearMovie, getRecommendations, clearRecommendations }
-)(Movie);
+export default connect(mapStateToProps, {
+  getMovie,
+  clearMovie,
+  getRecommendations,
+  clearRecommendations,
+})(Movie);
