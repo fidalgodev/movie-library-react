@@ -10,7 +10,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "add": "^2.0.6",
     "axios": "^0.18.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "query-string": "^6.4.0",
     "react": "^16.8.4",
     "react-burger-menu": "^2.6.5",
