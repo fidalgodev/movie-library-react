@@ -13,7 +13,7 @@ import {
   getMoviesforPerson,
   clearMoviesforPerson,
 } from '../actions';
-import SortBy from '../components/ShortBy';
+import SortBy from '../components/SortBy';
 import NotFound from '../components/NotFound';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
