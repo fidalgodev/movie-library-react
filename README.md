@@ -2,7 +2,7 @@
 
 ## [Check it live here](https://movies.fidalgo.dev/)
 
-![Thumbnail](thumbnail.png)
+![Thumbnail](https://i.ibb.co/V2zgVT4/thumbnail.png)
 
 A Movie Library made with ReactJS using The Movie Database API
 
@@ -13,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 You need to create an API KEY in [The Movie Database API](https://www.themoviedb.org/documentation/api)
-Create an .env.local file on the root of the project and put your API key
+Create an `.env.local` file on the root of the project and put your API key
 
 ```
 REACT_APP_API=yourapikeyhere
