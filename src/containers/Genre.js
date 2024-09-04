@@ -8,7 +8,7 @@ import { animateScroll as scroll } from 'react-scroll';
 
 import { setSelectedMenu, getMoviesGenre, clearMovies } from '../actions';
 import MoviesList from '../components/MoviesList';
-import SortBy from '../components/ShortBy';
+import SortBy from '../components/SortBy';
 import Loader from '../components/Loader';
 
 const Wrapper = styled.div`
