@@ -9,141 +9,100 @@ const MovieWrapper = styled(Link)`
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  background-color: transparent;
-  border-radius: 0.8rem;
-  transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1),
-    transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1),
-    box-shadow 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
-  position: relative;
+  background: transparent;
+  transition: transform 350ms cubic-bezier(0.215, 0.61, 0.355, 1);
 
   &:hover {
-    transform: scale(1.03);
-    background-color: var(--color-primary);
-    box-shadow: 0rem 2rem 5rem var(--shadow-color-dark);
+    transform: translateY(-0.8rem);
+  }
+`;
+
+const PosterWrapper = styled.div`
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: var(--color-primary-dark);
+  box-shadow: 0 1.2rem 2.4rem var(--shadow-color);
+  transition: box-shadow 350ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  position: relative;
+
+  ${MovieWrapper}:hover & {
+    box-shadow: 0 2.4rem 4rem var(--shadow-color-dark);
   }
 `;
 
 const MovieImg = styled.img`
   width: 100%;
-  height: 38rem;
+  height: 100%;
   object-fit: ${props => (props.$error ? 'contain' : 'cover')};
-  border-radius: 0.8rem;
-  padding: ${props => (props.$error ? '2rem' : '')};
-  background-color: var(--color-primary-dark);
-  box-shadow: 0rem 2rem 5rem var(--shadow-color);
-  transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  padding: ${props => (props.$error ? '2rem' : '0')};
+  display: block;
+  transition: transform 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
 
   ${MovieWrapper}:hover & {
-    border-radius: 0.8rem 0.8rem 0rem 0rem;
-    box-shadow: none;
-  }
-
-  @media ${props => props.theme.mediaQueries.smaller} {
-    height: 28rem;
-  }
-`;
-
-const Title = styled.h2`
-  text-align: center;
-  font-size: 1.3rem;
-  font-weight: 400;
-  color: var(--color-primary-light);
-  margin-bottom: 1rem;
-  line-height: 1.4;
-  transition: color 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
-
-  ${MovieWrapper}:hover & {
-    color: var(--text-color);
+    transform: scale(1.06);
   }
 `;
 
 const DetailsWrapper = styled.div`
+  padding: 1.6rem 0.4rem 0.4rem;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 3rem;
+  gap: 0.8rem;
+`;
 
-  @media ${props => props.theme.mediaQueries.smaller} {
-    padding: 1.5rem 1.5rem;
+const Title = styled.h2`
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  line-height: 1.3;
+  transition: color 250ms ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3.65rem;
+
+  ${MovieWrapper}:hover & {
+    color: var(--color-primary);
   }
 `;
 
 const RatingsWrapper = styled.div`
   display: flex;
-  position: relative;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 0.5rem;
   color: var(--color-primary);
-
-  ${MovieWrapper}:hover & {
-    color: var(--color-primary-lighter);
-  }
+  font-size: 1.2rem;
 `;
 
-const Tooltip = styled.span`
-  visibility: hidden;
-  opacity: 0;
-  width: 120px;
-  font-weight: 500;
-  font-size: 1.1rem;
-  background-color: var(--color-primary-light);
-  color: var(--text-color);
-  text-align: center;
-  border-radius: 6px;
-  padding: 1rem;
-  position: absolute;
-  z-index: 999;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -60px;
-  transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
-    border-color: var(--color-primary-light) transparent transparent transparent;
-  }
-
-  ${RatingsWrapper}:hover & {
-    visibility: visible;
-    opacity: 1;
-  }
-`;
-
-// Function to render list of movies
 const MovieItem = ({ movie, baseUrl }) => {
   const [error, setError] = useState(false);
 
   return (
     <MovieWrapper to={`/movie/${movie.id}`}>
-      <MovieImg
-        $error={error}
-        src={`${baseUrl}w342${movie.poster_path}`}
-        alt={movie.title}
-        loading="lazy"
-        // If no image, error will occur, we set error to true
-        // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
-        onError={e => {
-          setError(true);
-          if (e.target.src !== `${NothingSvg}`) {
-            e.target.src = `${NothingSvg}`;
-          }
-        }}
-      />
+      <PosterWrapper>
+        <MovieImg
+          $error={error}
+          src={`${baseUrl}w342${movie.poster_path}`}
+          alt={movie.title}
+          loading="lazy"
+          // If no image, error will occur, we set error to true
+          // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
+          onError={e => {
+            setError(true);
+            if (e.target.src !== `${NothingSvg}`) {
+              e.target.src = `${NothingSvg}`;
+            }
+          }}
+        />
+      </PosterWrapper>
       <DetailsWrapper>
         <Title>{movie.title}</Title>
         <RatingsWrapper>
           <Rating number={movie.vote_average / 2} />
-          <Tooltip>
-            {movie.vote_average} average rating on {movie.vote_count} votes
-          </Tooltip>
         </RatingsWrapper>
       </DetailsWrapper>
     </MovieWrapper>

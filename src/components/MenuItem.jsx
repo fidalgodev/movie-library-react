@@ -6,40 +6,55 @@ const StyledItem = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  font-weight: 600;
+  padding: 1rem 1.6rem;
+  font-size: 1.3rem;
+  font-weight: 500;
   line-height: 1;
-  opacity: ${props => (props.$selected ? '1' : '.6')};
-  color: ${props => {
-    if (props.$mobile) {
-      if (props.$selected) {
-        return 'var(--text-color)';
-      }
-      return 'rgba(255, 255, 255, .7)';
-    } else {
-      if (props.$selected) {
-        return 'var(--color-primary-dark)';
-      }
-      return 'var(--color-primary-light)';
-    }
-  }};
-  border-color: ${props =>
+  border-radius: 0.8rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 200ms ease, color 200ms ease, transform 200ms ease;
+
+  /* Desktop sidebar context (light background) */
+  color: ${props =>
+    props.$mobile
+      ? props.$selected
+        ? 'var(--text-color)'
+        : 'rgba(255, 255, 255, 0.65)'
+      : props.$selected
+        ? 'var(--text-color)'
+        : 'var(--color-primary-light)'};
+
+  background-color: ${props =>
     props.$selected
       ? 'var(--color-primary-dark)'
-      : 'var(--color-primary-light)'};
-  border: ${props => (props.$selected ? '1px solid' : '1px solid transparent')};
-  border-radius: 2rem;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 100ms cubic-bezier(0.075, 0.82, 0.165, 1);
+      : 'transparent'};
 
-  &:not(:last-child) {
-    margin-bottom: 3rem;
+  svg {
+    width: 1.4rem;
+    margin-right: 1.2rem;
+    opacity: ${props => (props.$selected ? 1 : 0.55)};
+    transition: opacity 200ms ease;
   }
 
   &:hover {
-    border: 1px solid;
+    background-color: ${props =>
+      props.$selected
+        ? 'var(--color-primary-dark)'
+        : props.$mobile
+          ? 'rgba(255, 255, 255, 0.08)'
+          : 'rgba(38, 50, 56, 0.08)'};
+    color: ${props =>
+      props.$selected
+        ? 'var(--text-color)'
+        : props.$mobile
+          ? 'var(--text-color)'
+          : 'var(--color-primary-dark)'};
+    transform: translateX(2px);
+
+    svg {
+      opacity: 1;
+    }
   }
 `;
 
@@ -59,11 +74,7 @@ function renderIcon(title) {
 const MenuItem = ({ title, selected, mobile }) => {
   return (
     <StyledItem $selected={!!selected} $mobile={!!mobile}>
-      <FontAwesomeIcon
-        icon={renderIcon(title)}
-        size="1x"
-        style={{ marginRight: '10px' }}
-      />
+      <FontAwesomeIcon icon={renderIcon(title)} size="1x" />
       {title}
     </StyledItem>
   );
