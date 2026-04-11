@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { connect } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import queryString from 'query-string';
 import LazyLoad from 'react-lazyload';
-import history from '../history';
 import { Element, animateScroll as scroll } from 'react-scroll';
 
-import {
-  getPerson,
-  clearPerson,
-  getMoviesforPerson,
-  clearMoviesforPerson,
-} from '../actions';
+import { fetchPerson, clearPerson } from '../slices/personSlice';
+import { fetchMoviesForPerson, clearMoviesForPerson } from '../slices/moviesForPersonSlice';
 import SortBy from '../components/SortBy';
 import NotFound from '../components/NotFound';
 import Header from '../components/Header';
@@ -38,21 +33,21 @@ const PersonWrapper = styled.div`
   margin-bottom: 7rem;
   transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
 
-  @media ${props => props.theme.mediaQueries.largest} {
+  @media ${(props) => props.theme.mediaQueries.largest} {
     max-width: 105rem;
   }
 
-  @media ${props => props.theme.mediaQueries.larger} {
+  @media ${(props) => props.theme.mediaQueries.larger} {
     max-width: 110rem;
     margin-bottom: 6rem;
   }
 
-  @media ${props => props.theme.mediaQueries.large} {
+  @media ${(props) => props.theme.mediaQueries.large} {
     max-width: 110rem;
     margin-bottom: 5rem;
   }
 
-  @media ${props => props.theme.mediaQueries.medium} {
+  @media ${(props) => props.theme.mediaQueries.medium} {
     flex-direction: column;
     margin-bottom: 5rem;
   }
@@ -63,23 +58,23 @@ const PersonDetails = styled.div`
   padding: 4rem;
   flex: 1 1 60%;
 
-  @media ${props => props.theme.mediaQueries.largest} {
+  @media ${(props) => props.theme.mediaQueries.largest} {
     padding: 3rem;
   }
 
-  @media ${props => props.theme.mediaQueries.large} {
+  @media ${(props) => props.theme.mediaQueries.large} {
     padding: 2rem;
   }
 
-  @media ${props => props.theme.mediaQueries.smaller} {
+  @media ${(props) => props.theme.mediaQueries.smaller} {
     padding: 1rem;
   }
 
-  @media ${props => props.theme.mediaQueries.smallest} {
+  @media ${(props) => props.theme.mediaQueries.smallest} {
     padding: 0rem;
   }
 
-  @media ${props => props.theme.mediaQueries.medium} {
+  @media ${(props) => props.theme.mediaQueries.medium} {
     width: 100%;
     flex: 1 1 100%;
   }
@@ -90,19 +85,19 @@ const ImageWrapper = styled.div`
   flex: 1 1 40%;
   padding: 4rem;
 
-  @media ${props => props.theme.mediaQueries.largest} {
+  @media ${(props) => props.theme.mediaQueries.largest} {
     padding: 3rem;
   }
 
-  @media ${props => props.theme.mediaQueries.large} {
+  @media ${(props) => props.theme.mediaQueries.large} {
     padding: 2rem;
   }
 
-  @media ${props => props.theme.mediaQueries.smaller} {
+  @media ${(props) => props.theme.mediaQueries.smaller} {
     margin-bottom: 2rem;
   }
 
-  @media ${props => props.theme.mediaQueries.medium} {
+  @media ${(props) => props.theme.mediaQueries.medium} {
     width: 60%;
     flex: 1 1 60%;
   }
@@ -110,12 +105,12 @@ const ImageWrapper = styled.div`
 
 const MovieImg = styled.img`
   max-height: 100%;
-  height: ${props => (props.error ? '58rem' : 'auto')};
-  object-fit: ${props => (props.error ? 'contain' : 'cover')};
-  padding: ${props => (props.error ? '2rem' : '')};
+  height: ${(props) => (props.error ? '58rem' : 'auto')};
+  object-fit: ${(props) => (props.error ? 'contain' : 'cover')};
+  padding: ${(props) => (props.error ? '2rem' : '')};
   max-width: 100%;
   border-radius: 0.8rem;
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark);'};
 `;
 
@@ -129,7 +124,7 @@ const ImgLoading = styled.div`
   height: 100%;
   transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
 
-  @media ${props => props.theme.mediaQueries.smaller} {
+  @media ${(props) => props.theme.mediaQueries.smaller} {
     height: 28rem;
   }
 `;
@@ -145,7 +140,7 @@ const Heading = styled.h3`
   margin-bottom: 1rem;
   font-size: 1.4rem;
 
-  @media ${props => props.theme.mediaQueries.medium} {
+  @media ${(props) => props.theme.mediaQueries.medium} {
     font-size: 1.2rem;
   }
 `;
@@ -172,7 +167,7 @@ const ButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media ${props => props.theme.mediaQueries.small} {
+  @media ${(props) => props.theme.mediaQueries.small} {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -182,14 +177,14 @@ const LeftButtons = styled.div`
   margin-right: auto;
   display: flex;
 
-  @media ${props => props.theme.mediaQueries.small} {
+  @media ${(props) => props.theme.mediaQueries.small} {
     margin-bottom: 2rem;
   }
 
   & > *:not(:last-child) {
     margin-right: 2rem;
 
-    @media ${props => props.theme.mediaQueries.large} {
+    @media ${(props) => props.theme.mediaQueries.large} {
       margin-right: 1rem;
     }
   }
@@ -199,25 +194,22 @@ const AWrapper = styled.a`
   text-decoration: none;
 `;
 
-const Person = ({
-  location,
-  geral,
-  match,
-  getPerson,
-  clearPerson,
-  getMoviesforPerson,
-  clearMoviesforPerson,
-  person,
-  moviesPerson,
-}) => {
+// Person Component
+const Person = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(false);
-  const { secure_base_url } = geral.base.images;
-  const params = queryString.parse(location.search);
+  const [imgError, setImgError] = useState(false);
   const [option, setOption] = useState({
     value: 'popularity.desc',
     label: 'Popularity',
   });
+
+  const { data: personData, loading } = useSelector((state) => state.person);
+  const moviesForPerson = useSelector((state) => state.moviesForPerson);
+  const base = useSelector((state) => state.config.base);
+  const secure_base_url = base?.images?.secure_base_url ?? '';
 
   // Fetch person when id on url changes
   useEffect(() => {
@@ -225,25 +217,34 @@ const Person = ({
       smooth: true,
       delay: 500,
     });
-    getPerson(match.params.id);
-    return () => clearPerson();
-  }, [match.params.id]);
+    dispatch(fetchPerson(id));
 
-  // Fetch movies where person enters
+    return () => {
+      dispatch(clearPerson());
+      setLoaded(false);
+    };
+  }, [id, dispatch]);
+
+  // Fetch movies where person appears (re-fetch when sort option changes)
   useEffect(() => {
-    getMoviesforPerson(match.params.id, params.page, option.value);
-    return () => clearMoviesforPerson();
-  }, [params.page, option]);
+    dispatch(fetchMoviesForPerson({ id, page: 1, sort: option.value }));
 
-  // If loading
-  if (person.loading) {
+    return () => {
+      dispatch(clearMoviesForPerson());
+    };
+  }, [id, option, dispatch]);
+
+  const canGoBack = window.history.state?.idx > 0;
+
+  // If loading or data not yet available
+  if (loading || !personData) {
     return <Loader />;
   }
 
   return (
     <Wrapper>
       <Helmet>
-        <title>{`${person.name} - Movie Library`}</title>
+        <title>{`${personData.name} - Movie Library`}</title>
       </Helmet>
       <LazyLoad height={500}>
         <PersonWrapper>
@@ -254,13 +255,13 @@ const Person = ({
           ) : null}
           <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
             <MovieImg
-              error={error ? 1 : 0}
-              src={`${secure_base_url}w780${person.profile_path}`}
+              error={imgError ? 1 : 0}
+              src={`${secure_base_url}w780${personData.profile_path}`}
               onLoad={() => setLoaded(true)}
-              // If no image, error will occurr, we set error to true
-              // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
-              onError={e => {
-                setError(true);
+              // If no image, error will occur, we set imgError to true
+              // And only change the src to the avatar svg if it isn't already, to avoid infinite callback
+              onError={(e) => {
+                setImgError(true);
                 if (e.target.src !== `${PersonAvatar}`) {
                   e.target.src = `${PersonAvatar}`;
                 }
@@ -269,29 +270,33 @@ const Person = ({
           </ImageWrapper>
           <PersonDetails>
             <HeaderWrapper>
-              <Header size="2" title={person.name} subtitle="" />
+              <Header size="2" title={personData.name} subtitle="" />
             </HeaderWrapper>
             <DetailsWrapper>
-              {renderDate(person.birthday, person.deathday)}
+              {renderDate(personData.birthday, personData.deathday)}
             </DetailsWrapper>
             <Heading>The Biography</Heading>
             <Text>
-              {person.biography
-                ? person.biography
+              {personData.biography
+                ? personData.biography
                 : 'There is no biography available...'}
             </Text>
             <ButtonsWrapper>
               <LeftButtons>
-                {renderWebsite(person.homepage)}
-                {renderImdb(person.imdb_id)}
+                {renderWebsite(personData.homepage)}
+                {renderImdb(personData.imdb_id)}
               </LeftButtons>
-              {renderBack()}
+              {canGoBack && (
+                <div onClick={() => navigate(-1)}>
+                  <Button title="Back" solid left icon="arrow-left" />
+                </div>
+              )}
             </ButtonsWrapper>
           </PersonDetails>
         </PersonWrapper>
       </LazyLoad>
       <Header title="Also enters in" subtitle="movies" />
-      {renderPersonMovies(moviesPerson, secure_base_url, option, setOption)}
+      {renderPersonMovies(moviesForPerson, secure_base_url, option, setOption)}
     </Wrapper>
   );
 };
@@ -303,17 +308,6 @@ function renderDate(birthday, deathday) {
     return `${birthday} - ${deathday}`;
   } else {
     return birthday;
-  }
-}
-
-// Render back button
-function renderBack() {
-  if (history.action === 'PUSH') {
-    return (
-      <div onClick={history.goBack}>
-        <Button title="Back" solid left icon="arrow-left" />
-      </div>
-    );
   }
 }
 
@@ -341,32 +335,22 @@ function renderImdb(id) {
   );
 }
 
-// Render movies where person enters
-function renderPersonMovies(moviesPerson, base_url, option, setOption) {
-  if (moviesPerson.loading) {
+// Render movies where person appears
+function renderPersonMovies(moviesForPerson, base_url, option, setOption) {
+  if (moviesForPerson.loading) {
     return <Loader />;
-  } else if (moviesPerson.total_results === 0) {
+  } else if (moviesForPerson.total_results === 0) {
     return <NotFound title="Sorry!" subtitle={`There are no more movies...`} />;
   } else {
     return (
       <React.Fragment>
         <SortBy option={option} setOption={setOption} />
         <Element name="scroll-to-element">
-          <MoviesList movies={moviesPerson} baseUrl={base_url} />;
+          <MoviesList movies={moviesForPerson} baseUrl={base_url} />;
         </Element>
       </React.Fragment>
     );
   }
 }
 
-// Get state from store and pass as props to component
-const mapStateToProps = ({ person, geral, moviesPerson }) => ({
-  person,
-  geral,
-  moviesPerson,
-});
-
-export default connect(
-  mapStateToProps,
-  { getPerson, clearPerson, getMoviesforPerson, clearMoviesforPerson }
-)(Person);
+export default Person;
