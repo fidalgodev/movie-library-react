@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import StickyBox from 'react-sticky-box';
 import { slide as Menu } from 'react-burger-menu';
 
 import SearchBar from '../components/SearchBar';
 import TmdbLogoGreen from '../svg/tmdbgreen.svg';
 import MenuItem from '../components/MenuItem';
+import { STATIC_CATEGORIES } from '../constants';
 
 const WrapperStickyBox = styled(StickyBox)`
   width: 100%;
@@ -154,8 +155,12 @@ var styles = {
   },
 };
 
-const MenuMobile = ({ genres, staticCategories, selected }) => {
+const MenuMobile = () => {
   const [isOpened, setisOpened] = useState(false);
+  const genres = useSelector((state) => state.config.genres);
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   const isMenuOpen = ({ isOpened }) => {
     setisOpened(isOpened);
@@ -173,9 +178,33 @@ const MenuMobile = ({ genres, staticCategories, selected }) => {
       </WrapperStickyBox>
       <Menu isOpen={isOpened} onStateChange={isMenuOpen} styles={styles}>
         <Heading>Discover</Heading>
-        {renderStatic(staticCategories, selected, setisOpened)}
+        {STATIC_CATEGORIES.map((category, i) => (
+          <LinkWrap
+            to={`/discover/${category}`}
+            key={i}
+            onClick={() => setisOpened(false)}
+          >
+            <MenuItem
+              mobile={1}
+              title={category}
+              selected={isActive(`/discover/${category}`)}
+            />
+          </LinkWrap>
+        ))}
         <Heading>Genres</Heading>
-        {renderGenres(genres, selected, setisOpened)}
+        {genres.map(genre => (
+          <LinkWrap
+            to={`/genres/${genre.name}`}
+            key={genre.id}
+            onClick={() => setisOpened(false)}
+          >
+            <MenuItem
+              mobile={1}
+              title={genre.name}
+              selected={isActive(`/genres/${genre.name}`)}
+            />
+          </LinkWrap>
+        ))}
         <StyledCoffe
           target="_blank"
           rel="noopener noreferrer"
@@ -203,44 +232,4 @@ const MenuMobile = ({ genres, staticCategories, selected }) => {
   );
 };
 
-function renderStatic(categories, selected, setisOpened) {
-  return categories.map((category, i) => (
-    <LinkWrap
-      to={`${process.env.PUBLIC_URL}/discover/${category}`}
-      key={i}
-      onClick={setisOpened ? () => setisOpened(false) : null}
-    >
-      <MenuItem
-        mobile={setisOpened ? 1 : 0}
-        title={category}
-        selected={category === selected ? true : false}
-      />
-    </LinkWrap>
-  ));
-}
-
-function renderGenres(genres, selected, setisOpened) {
-  return genres.map(genre => (
-    <LinkWrap
-      to={`${process.env.PUBLIC_URL}/genres/${genre.name}`}
-      key={genre.id}
-      onClick={setisOpened ? () => setisOpened(false) : null}
-    >
-      <MenuItem
-        mobile={setisOpened ? 1 : 0}
-        title={genre.name}
-        selected={genre.name === selected ? true : false}
-      />
-    </LinkWrap>
-  ));
-}
-
-const mapStateToProps = ({ geral }) => {
-  return {
-    staticCategories: geral.staticCategories,
-    genres: geral.genres,
-    selected: geral.selected,
-  };
-};
-
-export default connect(mapStateToProps)(MenuMobile);
+export default MenuMobile;
