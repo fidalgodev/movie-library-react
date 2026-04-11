@@ -15,7 +15,9 @@ const personSlice = createSlice({
     data: null,
     loading: true,
   },
-  reducers: {},
+  reducers: {
+    clearPerson: () => ({ data: null, loading: true }),
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPerson.pending, (state) => {
@@ -24,8 +26,13 @@ const personSlice = createSlice({
       .addCase(fetchPerson.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loading = false;
+      })
+      .addCase(fetchPerson.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
+
+export const { clearPerson } = personSlice.actions;
 
 export default personSlice.reducer;

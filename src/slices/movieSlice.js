@@ -26,14 +26,20 @@ const movieSlice = createSlice({
     cast: [],
     loading: true,
   },
-  reducers: {},
+  reducers: {
+    clearMovie: () => ({ data: null, cast: [], loading: true }),
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMovie.pending, (state) => {
         state.loading = true;
+        state.cast = [];
       })
       .addCase(fetchMovie.fulfilled, (state, action) => {
         state.data = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchMovie.rejected, (state) => {
         state.loading = false;
       })
       .addCase(fetchCredits.fulfilled, (state, action) => {
@@ -41,5 +47,7 @@ const movieSlice = createSlice({
       });
   },
 });
+
+export const { clearMovie } = movieSlice.actions;
 
 export default movieSlice.reducer;

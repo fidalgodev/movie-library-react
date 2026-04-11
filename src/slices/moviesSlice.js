@@ -50,7 +50,9 @@ const moviesSlice = createSlice({
     page: 1,
     loading: true,
   },
-  reducers: {},
+  reducers: {
+    clearMovies: () => ({ results: [], total_pages: 0, total_results: 0, page: 1, loading: true }),
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(
@@ -73,8 +75,20 @@ const moviesSlice = createSlice({
           Object.assign(state, action.payload);
           state.loading = false;
         }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchMoviesDiscover.rejected,
+          fetchMoviesGenre.rejected,
+          fetchMoviesSearch.rejected
+        ),
+        (state) => {
+          state.loading = false;
+        }
       );
   },
 });
+
+export const { clearMovies } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

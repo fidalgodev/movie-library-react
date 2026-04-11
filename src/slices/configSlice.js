@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import tmdbAPI from '../api/tmdb';
+import { STATIC_CATEGORIES } from '../constants';
 
 export const bootstrap = createAsyncThunk(
   'config/bootstrap',
@@ -45,7 +46,6 @@ export default configSlice.reducer;
 export const selectIsValidMenuName = (name) => (state) => {
   if (!name) return false;
   const { genres } = state.config;
-  const STATIC_CATEGORIES = ['Popular', 'Top Rated', 'Upcoming'];
   return (
     STATIC_CATEGORIES.includes(name) ||
     genres.some((g) => g.name === name)

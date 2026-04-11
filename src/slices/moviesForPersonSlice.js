@@ -20,10 +20,13 @@ const moviesForPersonSlice = createSlice({
   initialState: {
     results: [],
     total_pages: 0,
+    total_results: 0,
     page: 1,
     loading: true,
   },
-  reducers: {},
+  reducers: {
+    clearMoviesForPerson: () => ({ results: [], total_pages: 0, total_results: 0, page: 1, loading: true }),
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMoviesForPerson.pending, (state) => {
@@ -32,8 +35,13 @@ const moviesForPersonSlice = createSlice({
       .addCase(fetchMoviesForPerson.fulfilled, (state, action) => {
         Object.assign(state, action.payload);
         state.loading = false;
+      })
+      .addCase(fetchMoviesForPerson.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
+
+export const { clearMoviesForPerson } = moviesForPersonSlice.actions;
 
 export default moviesForPersonSlice.reducer;
