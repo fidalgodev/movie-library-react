@@ -169,7 +169,7 @@ const Sidebar = () => {
           <CopyRight>
             Copyright ©
             <StyledLink
-              href="https://www.github.com/fidalgodev"
+              href="https://fidalgo.dev"
               target="_blank"
               rel="noopener noreferrer"
             >

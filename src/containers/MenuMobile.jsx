@@ -218,7 +218,11 @@ const MenuMobile = () => {
         </StyledCoffe>
         <CopyRight $mobile>
           Copyright ©
-          <StyledLink href="https://www.github.com/fidalgodev">
+          <StyledLink
+            href="https://fidalgo.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Fidalgo
           </StyledLink>
         </CopyRight>
