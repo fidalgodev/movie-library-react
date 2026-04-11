@@ -44,7 +44,7 @@ const Pagination = ({ movies }) => {
     return (
       <Wrapper>
         <WrapperLink
-          to={`${process.env.PUBLIC_URL}?page=${page + 1}`}
+          to={`?page=${page + 1}`}
           onClick={scrollTo}
         >
           <Button solid title={`Page ${page + 1}`} icon="arrow-right" />
@@ -58,13 +58,13 @@ const Pagination = ({ movies }) => {
     return (
       <Wrapper type="both">
         <WrapperLink
-          to={`${process.env.PUBLIC_URL}?page=${page - 1}`}
+          to={`?page=${page - 1}`}
           onClick={scrollTo}
         >
           <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />
         </WrapperLink>
         <WrapperLink
-          to={`${process.env.PUBLIC_URL}?page=${page + 1}`}
+          to={`?page=${page + 1}`}
           onClick={scrollTo}
         >
           <Button solid title={`Page ${page + 1}`} icon="arrow-right" />
@@ -78,7 +78,7 @@ const Pagination = ({ movies }) => {
     return (
       <Wrapper type="one">
         <WrapperLink
-          to={`${process.env.PUBLIC_URL}?page=${page - 1}`}
+          to={`?page=${page - 1}`}
           onClick={scrollTo}
         >
           <Button solid left title={`Page ${page - 1}`} icon="arrow-left" />

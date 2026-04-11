@@ -29,7 +29,7 @@ const CastItem = ({ person, baseUrl }) => {
   return (
     <LinkWrapper
       loaded={loaded ? 1 : 0}
-      to={`${process.env.PUBLIC_URL}/person/${person.id}`}
+      to={`/person/${person.id}`}
     >
       <MovieImg
         src={`${baseUrl}w185${person.profile_path}`}

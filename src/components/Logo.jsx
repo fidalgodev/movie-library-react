@@ -19,7 +19,7 @@ const LogoWrapper = styled.img`
 
 const Logo = () => {
   return (
-    <LinkWrapper to={process.env.PUBLIC_URL + '/'}>
+    <LinkWrapper to={'/'}>
       <LogoWrapper src={LogoSvg} />
     </LinkWrapper>
   );
