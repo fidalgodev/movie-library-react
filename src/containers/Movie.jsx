@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import LazyLoad from 'react-lazyload';
 import ModalVideo from 'react-modal-video';
 import { Element, animateScroll as scroll } from 'react-scroll';
 
@@ -295,8 +294,7 @@ const Movie = () => {
       <Helmet>
         <title>{`${data.title} - Movie Library`}</title>
       </Helmet>
-      <LazyLoad height={500}>
-        <MovieWrapper>
+      <MovieWrapper>
           {!loaded ? (
             <ImgLoading>
               <Loading />
@@ -305,6 +303,7 @@ const Movie = () => {
           <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
             <MovieImg
               error={imgError ? 1 : 0}
+              loading="lazy"
               src={`${secure_base_url}w780${data.poster_path}`}
               onLoad={() => setLoaded(true)}
               // If no image, error will occur, we set imgError to true
@@ -362,7 +361,6 @@ const Movie = () => {
             </ButtonsWrapper>
           </MovieDetails>
         </MovieWrapper>
-      </LazyLoad>
       <Header title="Recommended" subtitle="movies" />
       {renderRecommended(recommendations, secure_base_url)}
     </Wrapper>
@@ -456,7 +454,7 @@ function renderRecommended(recommended, base_url) {
   } else {
     return (
       <Element name="scroll-to-element">
-        <MoviesList movies={recommended} baseUrl={base_url} />;
+        <MoviesList movies={recommended} baseUrl={base_url} />
       </Element>
     );
   }

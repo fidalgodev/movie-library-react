@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import LazyLoad from 'react-lazyload';
 import { Element, animateScroll as scroll } from 'react-scroll';
 
 import { fetchPerson, clearPerson } from '../slices/personSlice';
@@ -246,8 +245,7 @@ const Person = () => {
       <Helmet>
         <title>{`${personData.name} - Movie Library`}</title>
       </Helmet>
-      <LazyLoad height={500}>
-        <PersonWrapper>
+      <PersonWrapper>
           {!loaded ? (
             <ImgLoading>
               <Loading />
@@ -256,6 +254,7 @@ const Person = () => {
           <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
             <MovieImg
               error={imgError ? 1 : 0}
+              loading="lazy"
               src={`${secure_base_url}w780${personData.profile_path}`}
               onLoad={() => setLoaded(true)}
               // If no image, error will occur, we set imgError to true
@@ -294,7 +293,6 @@ const Person = () => {
             </ButtonsWrapper>
           </PersonDetails>
         </PersonWrapper>
-      </LazyLoad>
       <Header title="Also enters in" subtitle="movies" />
       {renderPersonMovies(moviesForPerson, secure_base_url, option, setOption)}
     </Wrapper>
@@ -346,7 +344,7 @@ function renderPersonMovies(moviesForPerson, base_url, option, setOption) {
       <React.Fragment>
         <SortBy option={option} setOption={setOption} />
         <Element name="scroll-to-element">
-          <MoviesList movies={moviesForPerson} baseUrl={base_url} />;
+          <MoviesList movies={moviesForPerson} baseUrl={base_url} />
         </Element>
       </React.Fragment>
     );
