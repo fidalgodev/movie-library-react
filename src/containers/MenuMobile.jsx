@@ -103,8 +103,8 @@ const CopyRight = styled.div`
   display: flex;
   align-self: center;
   align-items: center;
-  color: ${props => (props.mobile ? '#fff' : 'var(--color-primary-dark)')};
-  margin-bottom: ${props => (props.mobile ? '2rem' : '')};
+  color: ${props => (props.$mobile ? '#fff' : 'var(--color-primary-dark)')};
+  margin-bottom: ${props => (props.$mobile ? '2rem' : '')};
 `;
 
 const StyledLink = styled.a`
@@ -216,7 +216,7 @@ const MenuMobile = () => {
           />
           <span style={{ marginLeft: '5px' }}>Buy me a coffee</span>
         </StyledCoffe>
-        <CopyRight mobile={true}>
+        <CopyRight $mobile>
           Copyright ©
           <StyledLink href="https://www.github.com/fidalgodev">
             Fidalgo

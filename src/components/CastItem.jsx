@@ -10,8 +10,9 @@ const LinkWrapper = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: ${props => (props.loaded ? '1' : '0')};
-  visibility: ${props => (props.loaded ? 'visible' : 'hidden')};
+  opacity: ${props => (props.$loaded ? '1' : '0')};
+  visibility: ${props => (props.$loaded ? 'visible' : 'hidden')};
+  transition: opacity 200ms ease;
 `;
 
 const MovieImg = styled.img`
@@ -28,7 +29,7 @@ const CastItem = ({ person, baseUrl }) => {
 
   return (
     <LinkWrapper
-      loaded={loaded ? 1 : 0}
+      $loaded={loaded}
       to={`/person/${person.id}`}
     >
       <MovieImg

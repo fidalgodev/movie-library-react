@@ -145,13 +145,13 @@ const ImageWrapper = styled.div`
 
 const MovieImg = styled.img`
   max-height: 100%;
-  height: ${(props) => (props.error ? '25rem' : 'auto')};
-  object-fit: ${(props) => (props.error ? 'contain' : 'cover')};
-  padding: ${(props) => (props.error ? '2rem' : '')};
+  height: ${(props) => (props.$error ? '25rem' : 'auto')};
+  object-fit: ${(props) => (props.$error ? 'contain' : 'cover')};
+  padding: ${(props) => (props.$error ? '2rem' : '')};
   max-width: 100%;
   border-radius: 0.8rem;
   box-shadow: ${(props) =>
-    props.error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark)'};
+    props.$error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark)'};
 `;
 
 const ImgLoading = styled.div`
@@ -302,8 +302,7 @@ const Movie = () => {
           ) : null}
           <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
             <MovieImg
-              error={imgError ? 1 : 0}
-              loading="lazy"
+              $error={imgError}
               src={`${secure_base_url}w780${data.poster_path}`}
               onLoad={() => setLoaded(true)}
               // If no image, error will occur, we set imgError to true

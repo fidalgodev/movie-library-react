@@ -10,25 +10,25 @@ const StyledItem = styled.div`
   font-size: 1.2rem;
   font-weight: 600;
   line-height: 1;
-  opacity: ${props => (props.selected ? '1' : '.6')};
+  opacity: ${props => (props.$selected ? '1' : '.6')};
   color: ${props => {
-    if (props.mobile) {
-      if (props.selected) {
+    if (props.$mobile) {
+      if (props.$selected) {
         return 'var(--text-color)';
       }
       return 'rgba(255, 255, 255, .7)';
     } else {
-      if (props.selected) {
+      if (props.$selected) {
         return 'var(--color-primary-dark)';
       }
       return 'var(--color-primary-light)';
     }
   }};
   border-color: ${props =>
-    props.selected
+    props.$selected
       ? 'var(--color-primary-dark)'
       : 'var(--color-primary-light)'};
-  border: ${props => (props.selected ? '1px solid' : '1px solid transparent')};
+  border: ${props => (props.$selected ? '1px solid' : '1px solid transparent')};
   border-radius: 2rem;
   text-decoration: none;
   cursor: pointer;
@@ -58,7 +58,7 @@ function renderIcon(title) {
 
 const MenuItem = ({ title, selected, mobile }) => {
   return (
-    <StyledItem selected={selected} mobile={mobile}>
+    <StyledItem $selected={!!selected} $mobile={!!mobile}>
       <FontAwesomeIcon
         icon={renderIcon(title)}
         size="1x"

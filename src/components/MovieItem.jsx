@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import NothingSvg from '../svg/nothing.svg';
 import Rating from '../components/Rating';
-import Loading from '../components/Loading';
 
 const MovieWrapper = styled(Link)`
   display: flex;
@@ -46,9 +45,10 @@ const MovieWrapper = styled(Link)`
 const MovieImg = styled.img`
   width: 100%;
   height: 38rem;
-  object-fit: ${props => (props.error ? 'contain' : 'cover')};
+  object-fit: ${props => (props.$error ? 'contain' : 'cover')};
   border-radius: 0.8rem;
-  padding: ${props => (props.error ? '2rem' : '')};
+  padding: ${props => (props.$error ? '2rem' : '')};
+  background-color: var(--color-primary-dark);
   box-shadow: 0rem 2rem 5rem var(--shadow-color);
   transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
 
@@ -60,18 +60,6 @@ const MovieImg = styled.img`
   @media ${props => props.theme.mediaQueries.smaller} {
     height: 28rem;
   }
-`;
-
-const ImgLoading = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  min-height: 300px;
-  border-radius: 0.8rem;
-  box-shadow: 0rem 2rem 5rem var(--shadow-color);
-  transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
 `;
 
 const Title = styled.h2`
@@ -150,27 +138,16 @@ const Tooltip = styled.span`
 
 // Function to render list of movies
 const MovieItem = ({ movie, baseUrl }) => {
-  const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-
-  useEffect(() => {
-    return () => setLoaded(false);
-  }, []);
 
   return (
     <MovieWrapper to={`/movie/${movie.id}`}>
-      {!loaded ? (
-        <ImgLoading>
-          <Loading />
-        </ImgLoading>
-      ) : null}
       <MovieImg
-        error={error ? 1 : 0}
-        onLoad={() => setLoaded(true)}
-        style={!loaded ? { display: 'none' } : {}}
+        $error={error}
         src={`${baseUrl}w342${movie.poster_path}`}
+        alt={movie.title}
         loading="lazy"
-        // If no image, error will occurr, we set error to true
+        // If no image, error will occur, we set error to true
         // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
         onError={e => {
           setError(true);

@@ -11,8 +11,6 @@ import GlobalStyle from './utils/globals';
 import App from './App';
 
 import 'react-modal-video/scss/modal-video.scss';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 const root = createRoot(document.querySelector('#root'));
 

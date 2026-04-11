@@ -77,8 +77,7 @@ const CopyRight = styled.div`
   display: flex;
   align-self: center;
   align-items: center;
-  color: ${props => (props.mobile ? '#fff' : 'var(--color-primary-dark)')};
-  margin-bottom: ${props => (props.mobile ? '2rem' : '')};
+  color: var(--color-primary-dark);
 `;
 
 const StyledLink = styled.a`
