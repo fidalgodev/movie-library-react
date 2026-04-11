@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
@@ -57,7 +57,7 @@ const Search = () => {
           <title>{`${query} - search results`}</title>
         </Helmet>
         <Header title={query} subtitle="search results" />
-        <MoviesList movies={movies} baseUrl={secureBaseUrl} />;
+        <MoviesList movies={movies} baseUrl={secureBaseUrl} />
       </Wrapper>
     );
   }

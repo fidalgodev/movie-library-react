@@ -162,8 +162,8 @@ const MenuMobile = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  const isMenuOpen = ({ isOpened }) => {
-    setisOpened(isOpened);
+  const isMenuOpen = ({ isOpen }) => {
+    setisOpened(isOpen);
   };
 
   return (
