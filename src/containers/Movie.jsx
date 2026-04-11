@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { connect } from 'react-redux';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import queryString from 'query-string';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import history from '../history';
 import LazyLoad from 'react-lazyload';
 import ModalVideo from 'react-modal-video';
 import { Element, animateScroll as scroll } from 'react-scroll';
 
-import {
-  getMovie,
-  getRecommendations,
-  clearRecommendations,
-  clearMovie,
-} from '../actions';
+import { fetchMovie, fetchCredits, clearMovie } from '../slices/movieSlice';
+import { fetchRecommendations, clearRecommendations } from '../slices/recommendationsSlice';
 import Rating from '../components/Rating';
 import NotFound from '../components/NotFound';
 import Header from '../components/Header';
@@ -258,54 +252,48 @@ const AWrapper = styled.a`
   text-decoration: none;
 `;
 
-//Movie Component
-const Movie = ({
-  location,
-  geral,
-  match,
-  movie,
-  getMovie,
-  clearMovie,
-  recommended,
-  getRecommendations,
-  clearRecommendations,
-}) => {
+// Movie Component
+const Movie = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(false);
-  const [modalOpened, setmodalOpened] = useState(false);
-  const { secure_base_url } = geral.base.images;
-  const params = queryString.parse(location.search);
+  const [imgError, setImgError] = useState(false);
+  const [modalOpened, setModalOpened] = useState(false);
 
-  // Fetch movie id when id on the url changes
+  const { data, cast, loading } = useSelector((state) => state.movie);
+  const recommendations = useSelector((state) => state.recommendations);
+  const base = useSelector((state) => state.config.base);
+  const secure_base_url = base?.images?.secure_base_url ?? '';
+
   useEffect(() => {
     scroll.scrollToTop({
       smooth: true,
       delay: 500,
     });
 
-    getMovie(match.params.id);
-    getRecommendations(match.params.id, params.page);
+    dispatch(fetchMovie(id));
+    dispatch(fetchCredits(id));
+    dispatch(fetchRecommendations({ id, page: 1 }));
 
     return () => {
-      clearMovie();
-      clearRecommendations();
+      dispatch(clearMovie());
+      dispatch(clearRecommendations());
       setLoaded(false);
     };
-  }, [match.params.id]);
+  }, [id, dispatch]);
 
-  // If loading
-  if (movie.loading) {
+  const canGoBack = window.history.state?.idx > 0;
+
+  // If loading or data not yet available
+  if (loading || !data) {
     return <Loader />;
-  }
-
-  if (movie.status_code) {
-    history.push(process.env.PUBLIC_URL + '/404');
   }
 
   return (
     <Wrapper>
       <Helmet>
-        <title>{`${movie.title} - Movie Library`}</title>
+        <title>{`${data.title} - Movie Library`}</title>
       </Helmet>
       <LazyLoad height={500}>
         <MovieWrapper>
@@ -316,13 +304,13 @@ const Movie = ({
           ) : null}
           <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
             <MovieImg
-              error={error ? 1 : 0}
-              src={`${secure_base_url}w780${movie.poster_path}`}
+              error={imgError ? 1 : 0}
+              src={`${secure_base_url}w780${data.poster_path}`}
               onLoad={() => setLoaded(true)}
-              // If no image, error will occurr, we set error to true
+              // If no image, error will occur, we set imgError to true
               // And only change the src to the nothing svg if it isn't already, to avoid infinite callback
               onError={(e) => {
-                setError(true);
+                setImgError(true);
                 if (e.target.src !== `${NothingSvg}`) {
                   e.target.src = `${NothingSvg}`;
                 }
@@ -331,62 +319,55 @@ const Movie = ({
           </ImageWrapper>
           <MovieDetails>
             <HeaderWrapper>
-              <Header size="2" title={movie.title} subtitle={movie.tagline} />
+              <Header size="2" title={data.title} subtitle={data.tagline} />
             </HeaderWrapper>
             <DetailsWrapper>
               <RatingsWrapper>
-                <Rating number={movie.vote_average / 2} />
-                <RatingNumber>{movie.vote_average}</RatingNumber>
+                <Rating number={data.vote_average / 2} />
+                <RatingNumber>{data.vote_average}</RatingNumber>
               </RatingsWrapper>
               <Info>
                 {renderInfo(
-                  movie.spoken_languages,
-                  movie.runtime,
-                  splitYear(movie.release_date)
+                  data.spoken_languages,
+                  data.runtime,
+                  splitYear(data.release_date)
                 )}
               </Info>
             </DetailsWrapper>
             <Heading>The Genres</Heading>
-            <LinksWrapper>{renderGenres(movie.genres)}</LinksWrapper>
+            <LinksWrapper>{renderGenres(data.genres)}</LinksWrapper>
             <Heading>The Synopsis</Heading>
             <Text>
-              {movie.overview
-                ? movie.overview
+              {data.overview
+                ? data.overview
                 : 'There is no synopsis available...'}
             </Text>
             <Heading>The Cast</Heading>
-            <Cast cast={movie.cast} baseUrl={secure_base_url} />
+            <Cast cast={cast} baseUrl={secure_base_url} />
             <ButtonsWrapper>
               <LeftButtons>
-                {renderWebsite(movie.homepage)}
-                {renderImdb(movie.imdb_id)}
+                {renderWebsite(data.homepage)}
+                {renderImdb(data.imdb_id)}
                 {renderTrailer(
-                  movie.videos.results,
+                  data.videos?.results ?? [],
                   modalOpened,
-                  setmodalOpened
+                  setModalOpened
                 )}
               </LeftButtons>
-              {renderBack()}
+              {canGoBack && (
+                <div onClick={() => navigate(-1)}>
+                  <Button title="Back" solid left icon="arrow-left" />
+                </div>
+              )}
             </ButtonsWrapper>
           </MovieDetails>
         </MovieWrapper>
       </LazyLoad>
       <Header title="Recommended" subtitle="movies" />
-      {renderRecommended(recommended, secure_base_url)}
+      {renderRecommended(recommendations, secure_base_url)}
     </Wrapper>
   );
 };
-
-//Render the back button if user was pushed into page
-function renderBack() {
-  if (history.action === 'PUSH') {
-    return (
-      <div onClick={history.goBack}>
-        <Button title="Back" solid left icon="arrow-left" />
-      </div>
-    );
-  }
-}
 
 // Render Personal Website button
 function renderWebsite(link) {
@@ -413,23 +394,27 @@ function renderImdb(id) {
 }
 
 // Render Trailer button. On click triggers state to open modal of trailer
-function renderTrailer(videos, modalOpened, setmodalOpened) {
-  if (videos.length === 0) {
+function renderTrailer(videos, modalOpened, setModalOpened) {
+  if (!videos || videos.length === 0) {
     return;
   }
-  const { key } = videos.find(
+  const trailer = videos.find(
     (video) => video.type === 'Trailer' && video.site === 'YouTube'
   );
+  if (!trailer) {
+    return;
+  }
+  const { key } = trailer;
   return (
     <React.Fragment>
-      <div onClick={() => setmodalOpened(true)}>
+      <div onClick={() => setModalOpened(true)}>
         <Button title="Trailer" icon="play" />
       </div>
       <ModalVideo
         channel="youtube"
         isOpen={modalOpened}
         videoId={key}
-        onClose={() => setmodalOpened(false)}
+        onClose={() => setModalOpened(false)}
       />
     </React.Fragment>
   );
@@ -447,12 +432,12 @@ function splitYear(date) {
 // Render info of movie
 function renderInfo(languages, time, data) {
   const info = [];
-  if (languages.length !== 0) {
+  if (languages && languages.length !== 0) {
     info.push(languages[0].name);
   }
   info.push(time, data);
   return info
-    .filter((el) => el !== null)
+    .filter((el) => el !== null && el !== undefined)
     .map((el) => (typeof el === 'number' ? `${el} min.` : el))
     .map((el, i, array) => (i !== array.length - 1 ? `${el} / ` : el));
 }
@@ -479,9 +464,10 @@ function renderRecommended(recommended, base_url) {
 
 // Render Genres with links
 function renderGenres(genres) {
+  if (!genres) return null;
   return genres.map((genre) => (
     <StyledLink
-      to={`${process.env.PUBLIC_URL}/genres/${genre.name}`}
+      to={`/genres/${genre.name}`}
       key={genre.id}
     >
       <FontAwesomeIcon
@@ -494,16 +480,4 @@ function renderGenres(genres) {
   ));
 }
 
-// Get state from store and pass as props to component
-const mapStateToProps = ({ movie, geral, recommended }) => ({
-  movie,
-  geral,
-  recommended,
-});
-
-export default connect(mapStateToProps, {
-  getMovie,
-  clearMovie,
-  getRecommendations,
-  clearRecommendations,
-})(Movie);
+export default Movie;
