@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
 import NotFound from '../components/NotFound';
 import styled from 'styled-components';
-import { animateScroll as scroll } from 'react-scroll';
 
 import { fetchMoviesSearch, clearMovies } from '../slices/moviesSlice';
 import MoviesList from '../components/MoviesList';
@@ -29,7 +28,6 @@ const Search = () => {
   );
 
   useEffect(() => {
-    scroll.scrollToTop({ smooth: true });
     dispatch(fetchMoviesSearch({ query, page }));
     return () => dispatch(clearMovies());
   }, [query, page, dispatch]);

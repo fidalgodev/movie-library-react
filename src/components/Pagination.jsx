@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { scroller } from 'react-scroll';
 
 import Button from './Button';
 
@@ -26,12 +25,18 @@ const WrapperLink = styled(Link)`
 const Pagination = ({ movies }) => {
   const { page, total_pages } = movies;
 
+  // On pagination click, scroll the #scroll-to-element anchor into view if
+  // it exists (Movie/Person detail pages wrap their recommended/filmography
+  // list in that id). Otherwise scroll the window to the top (list pages
+  // like Discover/Genre/Search have no anchor — user lands at the top of
+  // the new list).
   const scrollTo = () => {
-    scroller.scrollTo('scroll-to-element', {
-      duration: 1500,
-      smooth: 'easeInOutQuart',
-      offset: -50,
-    });
+    const anchor = document.getElementById('scroll-to-element');
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   // If only 1 page

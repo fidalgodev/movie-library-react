@@ -4,7 +4,6 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
 import styled from 'styled-components';
-import { animateScroll as scroll } from 'react-scroll';
 
 import { fetchMoviesGenre, clearMovies } from '../slices/moviesSlice';
 import { selectIsValidMenuName } from '../slices/configSlice';
@@ -42,7 +41,6 @@ const Genre = () => {
       navigate('/404', { replace: true });
       return;
     }
-    scroll.scrollToTop({ smooth: true });
     dispatch(fetchMoviesGenre({ name, page, sort: option.value }));
     return () => dispatch(clearMovies());
   }, [isValidName, name, page, option, dispatch, navigate]);

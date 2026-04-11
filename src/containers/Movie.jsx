@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalVideo from 'react-modal-video';
-import { Element, animateScroll as scroll } from 'react-scroll';
 
 import { fetchMovie, fetchCredits, clearMovie } from '../slices/movieSlice';
 import { fetchRecommendations, clearRecommendations } from '../slices/recommendationsSlice';
@@ -266,11 +265,6 @@ const Movie = () => {
   const secure_base_url = base?.images?.secure_base_url ?? '';
 
   useEffect(() => {
-    scroll.scrollToTop({
-      smooth: true,
-      delay: 500,
-    });
-
     dispatch(fetchMovie(id));
     dispatch(fetchCredits(id));
     dispatch(fetchRecommendations({ id, page: 1 }));
@@ -452,9 +446,9 @@ function renderRecommended(recommended, base_url) {
     );
   } else {
     return (
-      <Element name="scroll-to-element">
+      <div id="scroll-to-element">
         <MoviesList movies={recommended} baseUrl={base_url} />
-      </Element>
+      </div>
     );
   }
 }

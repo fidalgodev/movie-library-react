@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { animateScroll as scroll } from 'react-scroll';
 
 import { clearError } from '../slices/errorsSlice';
 import ErrorSvg from '../svg/error.svg';
@@ -57,7 +56,6 @@ const ShowError = () => {
   // and doesn't redirect back to /error in a loop.
   const handleHomeClick = useCallback(() => {
     dispatch(clearError());
-    scroll.scrollToTop({ smooth: true });
     navigate('/');
   }, [dispatch, navigate]);
 

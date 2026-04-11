@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Element, animateScroll as scroll } from 'react-scroll';
 
 import { fetchPerson, clearPerson } from '../slices/personSlice';
 import { fetchMoviesForPerson, clearMoviesForPerson } from '../slices/moviesForPersonSlice';
@@ -212,10 +211,6 @@ const Person = () => {
 
   // Fetch person when id on url changes
   useEffect(() => {
-    scroll.scrollToTop({
-      smooth: true,
-      delay: 500,
-    });
     dispatch(fetchPerson(id));
 
     return () => {
@@ -342,9 +337,9 @@ function renderPersonMovies(moviesForPerson, base_url, option, setOption) {
     return (
       <React.Fragment>
         <SortBy option={option} setOption={setOption} />
-        <Element name="scroll-to-element">
+        <div id="scroll-to-element">
           <MoviesList movies={moviesForPerson} baseUrl={base_url} />
-        </Element>
+        </div>
       </React.Fragment>
     );
   }

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { bootstrap } from './slices/configSlice';
 import RouteGuard from './RouteGuard';
+import ScrollToTop from './ScrollToTop';
 
 import Sidebar from './containers/Sidebar';
 import MenuMobile from './containers/MenuMobile';
@@ -121,6 +122,7 @@ const App = () => {
   return (
     <Fragment>
       <RouteGuard />
+      <ScrollToTop />
       <MainWrapper $isMobile={isMobile}>
         {isMobile ? (
           <MenuMobile />

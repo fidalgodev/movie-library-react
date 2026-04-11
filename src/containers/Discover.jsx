@@ -4,7 +4,6 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
 import styled from 'styled-components';
-import { animateScroll as scroll } from 'react-scroll';
 
 import { fetchMoviesDiscover, clearMovies } from '../slices/moviesSlice';
 import { selectIsValidMenuName } from '../slices/configSlice';
@@ -36,7 +35,6 @@ const Discover = () => {
       navigate('/404', { replace: true });
       return;
     }
-    scroll.scrollToTop({ smooth: true });
     dispatch(fetchMoviesDiscover({ name, page }));
     return () => dispatch(clearMovies());
   }, [isValidName, name, page, dispatch, navigate]);
