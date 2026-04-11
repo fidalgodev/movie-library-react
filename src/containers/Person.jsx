@@ -13,7 +13,6 @@ import Loader from '../components/Loader';
 import MoviesList from '../components/MoviesList';
 import Button from '../components/Button';
 import PersonAvatar from '../svg/person.svg';
-import Loading from '../components/Loading';
 
 const Wrapper = styled.div`
   display: flex;
@@ -102,29 +101,14 @@ const ImageWrapper = styled.div`
 `;
 
 const MovieImg = styled.img`
-  max-height: 100%;
-  height: ${(props) => (props.$error ? '58rem' : 'auto')};
+  width: 100%;
+  aspect-ratio: 2 / 3;
   object-fit: ${(props) => (props.$error ? 'contain' : 'cover')};
   padding: ${(props) => (props.$error ? '2rem' : '')};
-  max-width: 100%;
   border-radius: 0.8rem;
+  background-color: var(--color-primary-lighter);
   box-shadow: ${(props) =>
     props.$error ? 'none' : '0rem 2rem 5rem var(--shadow-color-dark)'};
-`;
-
-const ImgLoading = styled.div`
-  width: 100%;
-  max-width: 40%;
-  flex: 1 1 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
-
-  @media ${(props) => props.theme.mediaQueries.smaller} {
-    height: 28rem;
-  }
 `;
 
 const HeaderWrapper = styled.div`
@@ -197,7 +181,6 @@ const Person = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
   const [option, setOption] = useState({
     value: 'popularity.desc',
@@ -215,7 +198,6 @@ const Person = () => {
 
     return () => {
       dispatch(clearPerson());
-      setLoaded(false);
     };
   }, [id, dispatch]);
 
@@ -241,16 +223,11 @@ const Person = () => {
         <title>{`${personData.name} - Movie Library`}</title>
       </Helmet>
       <PersonWrapper>
-          {!loaded ? (
-            <ImgLoading>
-              <Loading />
-            </ImgLoading>
-          ) : null}
-          <ImageWrapper style={!loaded ? { display: 'none' } : {}}>
+          <ImageWrapper>
             <MovieImg
               $error={imgError}
               src={`${secure_base_url}w780${personData.profile_path}`}
-              onLoad={() => setLoaded(true)}
+              alt={personData.name}
               // If no image, error will occur, we set imgError to true
               // And only change the src to the avatar svg if it isn't already, to avoid infinite callback
               onError={(e) => {

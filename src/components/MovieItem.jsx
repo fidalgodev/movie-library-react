@@ -11,34 +11,15 @@ const MovieWrapper = styled(Link)`
   text-decoration: none;
   background-color: transparent;
   border-radius: 0.8rem;
-  transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: background-color 300ms cubic-bezier(0.215, 0.61, 0.355, 1),
+    transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1),
+    box-shadow 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
   position: relative;
-  transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
 
   &:hover {
     transform: scale(1.03);
-
-    ::after {
-      transform: scaleY(1);
-      opacity: 1;
-    }
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 0.8rem;
-    transform: scaleY(0);
-    transform-origin: top;
-    opacity: 0;
     background-color: var(--color-primary);
-    z-index: -99;
     box-shadow: 0rem 2rem 5rem var(--shadow-color-dark);
-    transition: all 100ms cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 `;
 
