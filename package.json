@@ -1,50 +1,39 @@
 {
-  "name": "04_movie_react",
-  "version": "0.1.0",
+  "name": "movie-library-react",
   "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.15",
-    "@fortawesome/free-brands-svg-icons": "^5.8.1",
-    "@fortawesome/free-regular-svg-icons": "^5.7.2",
-    "@fortawesome/free-solid-svg-icons": "^5.7.2",
-    "@fortawesome/react-fontawesome": "^0.1.4",
-    "add": "^2.0.6",
-    "axios": "^0.18.0",
-    "node-sass": "^4.11.0",
-    "query-string": "^6.4.0",
-    "react": "^16.8.4",
-    "react-burger-menu": "^2.6.5",
-    "react-dom": "^16.8.4",
-    "react-ga": "^2.5.7",
-    "react-helmet": "^6.0.0-beta",
-    "react-lazyload": "^2.5.0",
-    "react-modal-video": "^1.2.1",
-    "react-rating": "^1.6.2",
-    "react-redux": "^6.0.1",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.8",
-    "react-scroll": "^1.7.11",
-    "react-select": "^2.4.2",
-    "react-slick": "^0.23.2",
-    "react-sticky-box": "^0.8.0",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "slick-carousel": "^1.8.1",
-    "styled-components": "^4.1.3"
-  },
+  "type": "module",
+  "version": "2.0.0",
   "scripts": {
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@reduxjs/toolkit": "^2.3.0",
+    "axios": "^1.7.9",
+    "react": "^19.0.0",
+    "react-burger-menu": "^3.1.0",
+    "react-dom": "^19.0.0",
+    "react-helmet-async": "^2.0.5",
+    "react-modal-video": "^2.0.2",
+    "react-rating": "^2.0.5",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.1.3",
+    "react-scroll": "^1.9.0",
+    "react-select": "^5.9.0",
+    "react-slick": "^0.30.3",
+    "react-sticky-box": "^2.0.5",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.14"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "sass": "^1.83.4",
+    "vite": "^6.0.7"
+  }
 }
