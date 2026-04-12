@@ -16,8 +16,10 @@ You need to create an API KEY in [The Movie Database API](https://www.themoviedb
 Create an .env.local file on the root of the project and put your API key
 
 ```
-REACT_APP_API=yourapikeyhere
+VITE_TMDB_KEY=yourapikeyhere
 ```
+
+Node 22 (see `.nvmrc`).
 
 ### Installing
 
@@ -38,11 +40,13 @@ npm run build
 
 ## Built With
 
-- [React JS](https://reactjs.org/)
-- [React Router](https://github.com/ReactTraining/react-router)
-- [Redux](https://redux.js.org/)
-- [Redux Thunk](https://github.com/reduxjs/redux-thunk)
-- [Styled Components](https://www.styled-components.com)
+- [Vite](https://vite.dev/)
+- [React 18](https://react.dev/)
+- [React Router v7](https://reactrouter.com/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Styled Components](https://styled-components.com/)
+
+Deployed on [Cloudflare Pages](https://pages.cloudflare.com/).
 
 ## Contributing
 
