@@ -28,8 +28,8 @@
     "styled-components": "^6.1.14"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^6.0.3",
     "sass": "^1.83.4",
-    "vite": "^6.0.7"
+    "vite": "^8.1.0"
   }
 }
